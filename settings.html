@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <!-- Webpage Pixel Icon -->
+    <link rel="icon" type="image/gif" href="./img/pixel-gif-drawing.gif">
+
+    <!-- Title of Webpage -->
+    <title>Track N&apos; Drive</title>
+
+    <!-- Specify character set for webpage content -->
+    <meta charset="utf-8">
+
+    <!-- Make sure webpage is compatible with Microsoft Edge -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- Mobile first functionality -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Stylesheet to be used for webpage -->
+    <link href="./css/style.css" type="text/css" rel="stylesheet">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+    >
+
+    <!-- jQuery library -->
+    <script
+        src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+    </script>
+
+    <!-- Latest compiled JavaScript -->
+    <script
+        src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js">
+    </script>
+
+</head>
+
+<body>
+
+<!--
+     This page functions as a way to enable users to quickly and easily change both of the
+     notification and contact settings in one spot.
+-->
+
+<!-- Bootstrap overall containment content -->
+<div class="container">
+
+    <!-- Bootstrap allocate page space for navbar -->
+    <div class="row">
+
+        <!-- Bootstrap allocate full width of page -->
+        <div class="col-md-12">
+
+            <!-- Start of Row for navbar -->
+            <div class="row">
+                <!-- Make a navbar for: Vehicle (dropdown),
+                     Notifications (dropdown), User (dropdown)
+                -->
+                <nav class="navbar navbar-default">
+
+                    <div class="container-fluid">
+
+                        <div class="navbar-header">
+                            <a class="navbar-brand brand" href="#">
+                                <img src="./img/logo-invert.png" alt="Home" height="70"/>
+                            </a>
+                        </div>
+
+                        <!-- Start of Navbar options -->
+                        <ul class="nav navbar-nav navbar-right">
+
+                            <!-- First Navbar menu option -->
+                            <li class="dropdown">
+
+                                <!-- Name of dropdown with caret -->
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                    Vehicles <span class="caret"></span>
+                                </a>
+
+                                <!-- Contents of dropdown menu -->
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="#">Car 1
+                                            <!-- Start of Button -->
+                                            <button type="button" class="btn btn-primary pull-right"
+                                                    title="Change who operates car">
+                                                Main <span class="glyphicon glyphicon-road"></span>
+                                            </button> <!-- End of button -->
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a href="#">Car 2
+                                            <!-- Start of Button -->
+                                            <button type="button" class="btn btn-primary pull-right"
+                                                    title="Change who operates car">
+                                                Wife's Car <span class="glyphicon glyphicon-road"></span>
+                                            </button> <!-- End of button -->
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a href="#">Car 3
+                                            <!-- Start of Button -->
+                                            <button type="button" class="btn btn-primary pull-right"
+                                                    title="Change who operates car">
+                                                Son's Car <span class="glyphicon glyphicon-road"></span>
+                                            </button> <!-- End of button -->
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a href="#">Add Car
+                                            <span class="glyphicon glyphicon-plus"></span>
+                                        </a>
+                                    </li>
+                                </ul>
+
+                            </li>
+
+                            <!-- Second Navbar menu option -->
+                            <li class="dropdown">
+
+                                <!-- Name of dropdown with caret -->
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                    Technicians <span class="caret"></span>
+                                </a>
+
+                                <ul class="dropdown-menu">
+                                    <li>
+
+                                        <a href="#">Mark O'Malay
+                                            <!-- Make Button -->
+                                            <button type="button" class="btn btn-primary pull-right"
+                                                    title="Disable as Main Technician">
+                                                Main <span class="glyphicon glyphicon-wrench"></span>
+                                            </button> <!-- End of button -->
+                                        </a>
+
+                                    </li>
+
+                                    <li>
+                                        <a href="#">Tim Monroe
+                                            <!-- Make Button -->
+                                            <button type="button" class="btn btn-primary pull-right"
+                                                    title="Enable as Main Technician">
+                                                <span class="glyphicon glyphicon-wrench"></span>
+                                            </button> <!-- End of button -->
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a href="#">David Phillips
+                                            <!-- Make Button -->
+                                            <button type="button" class="btn btn-primary pull-right"
+                                                    title="Enable as Main Technician">
+                                                <span class="glyphicon glyphicon-wrench"></span>
+                                            </button> <!-- End of button -->
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a href="#">Add Technician
+                                            <span class="glyphicon glyphicon-plus"></span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li> <!-- end of second navbar menu option  -->
+
+                            <!-- Third dropdown item -->
+                            <li>
+
+                                <!-- Name of dropdown with caret -->
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#"
+                                   title="Seeing how much money you have put into your car">
+                                    Statistics <span class="caret"></span>
+                                </a>
+
+                                <!-- Contents of dropdown menu -->
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="#">Car 1
+                                            <span class="glyphicon glyphicon-usd"></span>
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a href="#">Car 2
+                                            <span class="glyphicon glyphicon-usd"></span>
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a href="#">Car 3
+                                            <span class="glyphicon glyphicon-usd"></span>
+                                        </a>
+                                    </li>
+                                </ul>
+
+                            </li> <!-- End of third dropdown item -->
+
+                            <!-- Fourth dropdown item -->
+                            <li>
+
+                                <!-- Name of dropdown with caret -->
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                    User <span class="caret"></span>
+                                </a>
+
+                                <!-- Contents of dropdown menu -->
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="#">Profile
+                                            <span class="glyphicon glyphicon-user"></span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Settings
+                                            <span class="glyphicon glyphicon-asterisk"></span>
+                                        </a>
+                                    </li>
+                                </ul>
+
+                            </li> <!-- End of fourth dropdown item -->
+
+                        </ul> <!-- End of navbar options -->
+                    </div>
+                </nav>
+
+            </div> <!-- End of Row for column-md-12 navbar -->
+
+            <!-- Main Row Content for page components -->
+            <div class="row">
+
+                <!-- Column space for notifications, car image, info, and repairs -->
+                <div class="col-md-12">
+
+                    <!-- Row for Notification and Medium Settings -->
+                    <div class="row">
+
+                        <!-- Notification Settings column space -->
+                        <div class="col-md-6">
+                            <!-- Make a panel to contain content -->
+                            <div class="panel panel-default">
+
+                                <!-- Panel heading for Notification Settings -->
+                                <div class="panel-heading text-center">
+                                    <h3>
+                                        Notification Settings
+                                    </h3>
+                                </div> <!-- End of Notification Panel Heading -->
+
+                                <!-- Panel body for Notification Settings -->
+                                <div class="panel-body">
+
+                                    <!-- Notification Settings List -->
+                                    <ul class="list-group list-var">
+                                        <li>
+                                            <h3>
+                                                Email Address: jschmo@email.com
+                                                <!-- Edit Button -->
+                                                <button type="button" class = "btn btn-primary"
+                                                        title="Edit: Email Address Notification Timings">
+                                                    Edit <span class="glyphicon glyphicon-list-alt"></span>
+                                                </button> <!-- End of edit button -->
+                                            </h3>
+                                        </li>
+                                        <li>
+                                            <h3>
+                                                Mobile Phone: +1(555) 555-5555
+                                                <!-- Edit Button -->
+                                                <button type="button" class = "btn btn-primary"
+                                                        title="Edit: Text Message Notification Timings">
+                                                    Edit <span class="glyphicon glyphicon-list-alt"></span>
+                                                </button> <!-- End of edit button -->
+                                            </h3>
+                                        </li>
+                                    </ul> <!-- End of notification settings list -->
+
+                                </div> <!-- End of notification settings panel body -->
+
+                            </div> <!-- End of Panel -->
+
+                        </div> <!-- End of notification settings column space -->
+
+                        <!-- Contact Settings Column Space -->
+                        <div class="col-md-6">
+                            <!-- Make a panel to contain content -->
+                            <div class="panel panel-default">
+
+                                <!-- Panel heading for Contact Settings -->
+                                <div class="panel-heading text-center">
+                                    <h3>
+                                        Contact Settings
+                                    </h3>
+                                </div> <!-- End of Contact Panel Heading -->
+
+                                <!-- Panel body for Contact Settings -->
+                                <div class="panel-body">
+
+                                    <!-- Contact Settings List -->
+                                    <ul class="list-group list-var">
+                                        <li>
+                                            <h3>
+                                                Email Address: jschmo@email.com
+                                                <!-- Edit Button -->
+                                                <button type="button" class = "btn btn-primary"
+                                                        title="Edit: Email Address">
+                                                    Edit <span class="glyphicon glyphicon-list-alt"></span>
+                                                </button> <!-- End of edit button -->
+                                            </h3>
+                                            <!-- Add Button -->
+                                            <button type="button" class = "btn btn-primary"
+                                                    title="Add: Email Address">
+                                                Add <span class="glyphicon glyphicon-plus"></span>
+                                            </button> <!-- End of add button -->
+                                        </li>
+                                        <li>
+                                            <h3>
+                                                Mobile Phone: +1(555) 555-5555
+                                                <!-- Edit Button -->
+                                                <button type="button" class = "btn btn-primary"
+                                                        title="Edit: Mobile Phone Number">
+                                                    Edit <span class="glyphicon glyphicon-list-alt"></span>
+                                                </button> <!-- End of edit button -->
+                                            </h3>
+                                            <!-- Add Button -->
+                                            <button type="button" class = "btn btn-primary"
+                                                    title="Add: Mobile Phone Number">
+                                                Add <span class="glyphicon glyphicon-plus"></span>
+                                            </button> <!-- End of add button -->
+                                        </li>
+                                    </ul> <!-- End of notification settings list -->
+
+                                </div> <!-- End of notification settings panel body -->
+
+                            </div> <!-- End of Panel -->
+
+                        </div> <!-- End of Notification Settings panel -->
+
+                    </div> <!-- End of Contact settings column space -->
+
+                </div> <!-- End of Column space for notifications, user image, info, and repairs -->
+
+            </div> <!-- End of Main Row Content for page components -->
+
+        </div> <!-- End of column-md-12 -->
+
+
+    </div> <!-- End of row -->
+
+
+
+</div> <!-- container -->
+
+</body>
+
+</html>
+
+
