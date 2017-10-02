@@ -1,0 +1,36 @@
+.navbar {
+  position: relative;
+}
+
+.brand {
+  position: relative;
+  left: 10%;
+  margin-top: -25px !important;
+  display: block;
+}
+
+.items {
+  position: relative;
+  display: block;
+}
+
+.h-color {
+  background: grey;
+  border-radius: 2px;
+  text-align: center;
+}
+
+.img-pos {
+  text-align: center;
+}
+
+.dropdown-menu {
+    width: 200%;
+    vertical-align: middle;
+}
+
+.list-var {
+    list-style-type: none;
+}
+
+
