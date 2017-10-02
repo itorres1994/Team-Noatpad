@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <!-- Webpage Pixel Icon -->
+    <link rel="icon" type="image/gif" href="./img/pixel-gif-drawing.gif">
+
+    <!-- Title of Webpage -->
+    <title>Track N&apos; Drive</title>
+
+    <!-- Specify character set for webpage content -->
+    <meta charset="utf-8">
+
+    <!-- Make sure webpage is compatible with Microsoft Edge -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- Mobile first functionality -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Stylesheet to be used for webpage -->
+    <link href="./css/style.css" type="text/css" rel="stylesheet">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+    >
+
+    <!-- jQuery library -->
+    <script
+        src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+    </script>
+
+    <!-- Latest compiled JavaScript -->
+    <script
+        src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js">
+    </script>
+
+</head>
+
+<body>
+<!-- Page for technician info. It contains basic info + info added by customer + past repairs and notifications-->
+<!-- Bootstrap overall containment content -->
+<div class="container">
+
+    <!-- Bootstrap allocate page space for navbar -->
+    <div class="row">
+
+        <!-- Bootstrap allocate full width of page -->
+        <div class="col-md-12">
+
+            <!-- Start of Row for navbar -->
+            <div class="row">
+                <!-- Make a navbar for: Vehicle (dropdown),
+                     Notifications (dropdown), User (dropdown)
+                -->
+                <nav class="navbar navbar-default">
+
+                    <div class="container-fluid">
+
+                        <div class="navbar-header">
+                            <a class="navbar-brand brand" href="#">
+                                <img src="./img/logo-invert.png" alt="Home" height="70"/>
+                            </a>
+                        </div>
+
+                        <!-- Start of Navbar options -->
+                        <ul class="nav navbar-nav navbar-right">
+
+                            <!-- First Navbar menu option -->
+                            <li class="dropdown">
+
+                                <!-- Name of dropdown with caret -->
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                    Vehicles <span class="caret"></span>
+                                </a>
+
+                                <!-- Contents of dropdown menu -->
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="#">Car 1
+                                            <!-- Start of Button -->
+                                            <button type="button" class="btn btn-primary pull-right"
+                                                    title="Change who operates car">
+                                                Main <span class="glyphicon glyphicon-road"></span>
+                                            </button> <!-- End of button -->
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a href="#">Car 2
+                                            <!-- Start of Button -->
+                                            <button type="button" class="btn btn-primary pull-right"
+                                                    title="Change who operates car">
+                                                Wife's Car <span class="glyphicon glyphicon-road"></span>
+                                            </button> <!-- End of button -->
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a href="#">Car 3
+                                            <!-- Start of Button -->
+                                            <button type="button" class="btn btn-primary pull-right"
+                                                    title="Change who operates car">
+                                                Son's Car <span class="glyphicon glyphicon-road"></span>
+                                            </button> <!-- End of button -->
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a href="#">Add Car
+                                            <span class="glyphicon glyphicon-plus"></span>
+                                        </a>
+                                    </li>
+                                </ul>
+
+                            </li>
+
+                            <!-- Second Navbar menu option -->
+                            <li class="dropdown">
+
+                                <!-- Name of dropdown with caret -->
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                    Technicians <span class="caret"></span>
+                                </a>
+
+                                <ul class="dropdown-menu">
+                                    <li>
+
+                                        <a href="#">Mark O'Malay
+                                            <!-- Make Button -->
+                                            <button type="button" class="btn btn-primary pull-right"
+                                                    title="Disable as Main Technician">
+                                                Main <span class="glyphicon glyphicon-wrench"></span>
+                                            </button> <!-- End of button -->
+                                        </a>
+
+                                    </li>
+
+                                    <li>
+                                        <a href="#">Tim Monroe
+                                            <!-- Make Button -->
+                                            <button type="button" class="btn btn-primary pull-right"
+                                                    title="Enable as Main Technician">
+                                                <span class="glyphicon glyphicon-wrench"></span>
+                                            </button> <!-- End of button -->
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a href="#">David Phillips
+                                            <!-- Make Button -->
+                                            <button type="button" class="btn btn-primary pull-right"
+                                                    title="Enable as Main Technician">
+                                                <span class="glyphicon glyphicon-wrench"></span>
+                                            </button> <!-- End of button -->
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a href="#">Add Technician
+                                            <span class="glyphicon glyphicon-plus"></span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li> <!-- end of second navbar menu option  -->
+
+                            <!-- Third dropdown item -->
+                            <li>
+
+                                <!-- Name of dropdown with caret -->
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#"
+                                   title="Seeing how much money you have put into your car">
+                                    Statistics <span class="caret"></span>
+                                </a>
+
+                                <!-- Contents of dropdown menu -->
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="#">Car 1
+                                            <span class="glyphicon glyphicon-usd"></span>
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a href="#">Car 2
+                                            <span class="glyphicon glyphicon-usd"></span>
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a href="#">Car 3
+                                            <span class="glyphicon glyphicon-usd"></span>
+                                        </a>
+                                    </li>
+                                </ul>
+
+                            </li> <!-- End of third dropdown item -->
+
+                            <!-- Fourth dropdown item -->
+                            <li>
+
+                                <!-- Name of dropdown with caret -->
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                    User <span class="caret"></span>
+                                </a>
+
+                                <!-- Contents of dropdown menu -->
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="#">Profile
+                                            <span class="glyphicon glyphicon-user"></span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Settings
+                                            <span class="glyphicon glyphicon-asterisk"></span>
+                                        </a>
+                                    </li>
+                                </ul>
+
+                            </li> <!-- End of fourth dropdown item -->
+
+                        </ul> <!-- End of navbar options -->
+                    </div>
+                </nav>
+
+            </div> <!-- End of Row for column-md-12 navbar -->
+
+            <!-- Main Row Content for page components -->
+            <div class="row">
+
+                <!-- Column space for notifications, car image, info, and repairs -->
+                <div class="col-md-12">
+
+                    <!-- Notification Nav -->
+                    <div class="col-md-4">
+
+                        <!-- Start of Notification panel grouping -->
+                        <div class="panel-group">
+
+                            <!-- Notification Panel Contents -->
+                            <div class="panel panel-default">
+
+                                <!-- Notification heading -->
+                                <div class="panel-heading text-center">
+
+                                    <!-- Start of collapse title -->
+                                    <p class="panel-title">
+                                        <a data-toggle="collapse" data-parent="accordion"
+                                           href="#notif">
+                                            Notifications
+                                        </a>
+                                    </p> <!-- End of collapse title -->
+
+                                </div> <!-- End of Notification heading -->
+
+                                <!-- Get the reference from the Notification Panel -->
+                                <div id="notif" class="panel-collapse collapse">
+
+                                    <!-- Start of Notification Panel Body -->
+                                    <div class="panel-body">
+
+                                        <!-- Make a list group of panels -->
+                                        <ul class="list-group list-var">
+                                            <li>
+                                                <!-- Make Car 1 Panel group -->
+                                                <div class="panel-group">
+
+                                                    <!-- Start of Panel structure -->
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-heading text-center">
+                                                            <p class="panel-title">
+                                                                <a data-toggle="collapse" data-parent="accordion"
+                                                                   href="#car1">
+                                                                    Car 1
+                                                                </a>
+                                                            </p>
+                                                        </div>
+
+                                                        <!-- Start of collapsible body -->
+                                                        <div id="car1" class="panel-collapse collapse">
+
+                                                            <!-- Start of Panel body -->
+                                                            <div class="panel-body">
+                                                                <ul class="list-group list-var">
+
+                                                                    <li>
+                                                                        Engine Tune-up: $300 | Mark O'Malay | <br/>Nov 21, 2017
+                                                                        <hr>
+                                                                    </li>
+                                                                    <!-- Horizontal line -->
+
+                                                                    <li>
+                                                                        Get Inspection: $60 | Mark O'Malay | <br/>Dec 2, 2017
+                                                                        <hr>
+                                                                    </li>
+                                                                    <!-- Horizontal line -->
+
+                                                                    <li>
+                                                                        Change tires: $250 | Mark O'Malay | <br/>Jan 1, 2018
+                                                                        <hr>
+                                                                    </li>
+                                                                    <!-- Horizontal line -->
+
+                                                                    <li>
+                                                                        Oil Change: $50 | Mark O'Malay | <br/>May 1, 2018
+                                                                        <hr>
+                                                                    </li>
+                                                                    <!-- Horizontal line -->
+
+                                                                    <li>
+                                                                        A/C Recharge: $150 | Mark O'Malay | <br/>Feb 1, 2019
+                                                                        <hr>
+                                                                    </li>
+                                                                    <!-- Horizontal line -->
+
+                                                                    <li>
+                                                                        Engine Tune-up: $300 | Mark O'Malay | <br/>Nov 21, 2020
+                                                                        <hr>
+                                                                    </li>
+                                                                    <!-- Horizontal line -->
+
+                                                                    <li>
+                                                                        Change Brakes: $350 | Mark O'Malay | <br/>Nov 22, 2020
+                                                                        <hr>
+                                                                    </li>
+                                                                    <!-- Horizontal line -->
+
+                                                                    <li>
+                                                                        Renew Drivers License: $20 | DMV | <br/>Nov 23, 2020
+                                                                        <hr>
+                                                                    </li>
+                                                                    <!-- Horizontal line -->
+
+                                                                    <li>
+                                                                        Renew Registration: $150 | AAA | <br/>Jan 1, 2021
+                                                                    </li>
+
+                                                                </ul>
+                                                                <!-- Make a button group -->
+                                                                <div class="text-center btn-group">
+
+                                                                    <!-- First Button of group -->
+                                                                    <button type="button" class = "btn btn-primary">
+                                                                        Edit <span class="glyphicon glyphicon-list-alt"></span>
+                                                                    </button> <!-- End of first button of group -->
+
+                                                                    <!-- Second Button of group -->
+                                                                    <button type="button" class="btn btn-primary">
+                                                                        Add <span class="glyphicon glyphicon-plus"></span>
+                                                                    </button> <!-- End of second button of group -->
+
+                                                                </div> <!-- End of button group -->
+
+                                                            </div> <!-- End of Panel Body -->
+
+                                                        </div> <!-- End of collapsible body -->
+
+                                                    </div> <!-- End of Panel structure -->
+
+                                                </div> <!-- End of Car 1 panel group -->
+                                            </li>
+
+                                            <li>
+
+                                                <!-- Make Car 2 Panel group -->
+                                                <div class="panel-group">
+
+                                                    <!-- Start of Panel structure -->
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-heading text-center">
+                                                            <p class="panel-title">
+                                                                <a data-toggle="collapse" data-parent="accordion"
+                                                                   href="#car2">
+                                                                    Car 2
+                                                                </a>
+                                                            </p>
+                                                        </div>
+
+                                                        <!-- Start of collapsible body -->
+                                                        <div id="car2" class="panel-collapse collapse">
+
+                                                            <!-- Start of Panel body -->
+                                                            <div class="panel-body">
+                                                                <ul class="list-group list-var">
+
+                                                                    <li>
+                                                                        Engine Tune-up: $300 | Mark O'Malay | <br/>Nov 21, 2017
+                                                                        <hr>
+                                                                    </li>
+                                                                    <!-- Horizontal line -->
+
+                                                                    <li>
+                                                                        Get Inspection: $60 | Mark O'Malay | <br/>Dec 2, 2017
+                                                                        <hr>
+                                                                    </li>
+                                                                    <!-- Horizontal line -->
+
+                                                                    <li>
+                                                                        Change tires: $250 | Mark O'Malay | <br/>Jan 1, 2018
+                                                                        <hr>
+                                                                    </li>
+                                                                    <!-- Horizontal line -->
+
+                                                                    <li>
+                                                                        Oil Change: $50 | Mark O'Malay | <br/>May 1, 2018
+                                                                        <hr>
+                                                                    </li>
+                                                                    <!-- Horizontal line -->
+
+                                                                    <li>
+                                                                        A/C Recharge: $150 | Mark O'Malay | <br/>Feb 1, 2019
+                                                                        <hr>
+                                                                    </li>
+                                                                    <!-- Horizontal line -->
+
+                                                                    <li>
+                                                                        Engine Tune-up: $300 | Mark O'Malay | <br/>Nov 21, 2020
+                                                                        <hr>
+                                                                    </li>
+                                                                    <!-- Horizontal line -->
+
+                                                                    <li>
+                                                                        Change Brakes: $350 | Mark O'Malay | <br/>Nov 22, 2020
+                                                                        <hr>
+                                                                    </li>
+                                                                    <!-- Horizontal line -->
+
+                                                                    <li>
+                                                                        Renew Drivers License: $20 | DMV | <br/>Nov 23, 2020
+                                                                        <hr>
+                                                                    </li>
+                                                                    <!-- Horizontal line -->
+
+                                                                    <li>
+                                                                        Renew Registration: $150 | AAA | <br/>Jan 1, 2021
+                                                                    </li>
+
+                                                                </ul>
+
+                                                                <!-- Make a button group -->
+                                                                <div class="text-center btn-group">
+
+                                                                    <!-- First Button of group -->
+                                                                    <button type="button" class = "btn btn-primary">
+                                                                        Edit <span class="glyphicon glyphicon-list-alt"></span>
+                                                                    </button> <!-- End of first button of group -->
+
+                                                                    <!-- Second Button of group -->
+                                                                    <button type="button" class="btn btn-primary">
+                                                                        Add <span class="glyphicon glyphicon-plus"></span>
+                                                                    </button> <!-- End of second button of group -->
+
+                                                                </div> <!-- End of button group -->
+
+                                                            </div> <!-- End of Panel Body -->
+
+                                                        </div> <!-- End of collapsible body -->
+
+                                                    </div> <!-- End of Panel structure -->
+
+                                                </div> <!-- End of Car 2 panel group -->
+                                            </li>
+
+                                        </ul> <!-- End of list group of panels -->
+
+                                    </div> <!-- End of notification panel body -->
+
+                                </div> <!-- End of Notification Panel collapsible -->
+
+                            </div> <!-- End of notification panel contents -->
+
+                        </div> <!-- End of notification grouping -->
+
+                    </div> <!-- End of notification nav -->
+
+                    <!-- Columns to be used for repairs -->
+                    <div class="col-md-8">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <!-- Make a panel to hold user name and image -->
+                                <div class="panel panel-default">
+                                   <!-- No info, just picture-->
+                                    <div class="panel-heading text-center">
+                                        <h3>
+                                            Technician
+                                        </h3>
+                                    </div>
+                                    <div class="panel-body text-center">
+                                        <img class="center-block" src="./img/tech-guy_profile-pic.JPG" alt="tech1"
+                                             width="200"/>
+                                        <br/>
+                                        <button type="button" class="btn btn-primary">
+                                            Change Image <span class="glyphicon glyphicon-list-alt"></span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <!-- Make a panel to contain content -->
+                                <div class="panel panel-default">
+
+                                    <!-- Panel heading for User Info -->
+                                    <!-- Technician information,basic info + info added by customer -->
+                                    <div class="panel-heading text-center">
+                                        <h3>
+                                            Technician Info
+                                        </h3>
+                                    </div> <!-- End of User Info Panel Heading -->
+
+                                    <!-- Panel body for User Info -->
+                                    <div class="panel-body">
+                                        <h4 title="Editable field: Technician name">
+                                            Name: Mark O'Malay
+                                        </h4>
+                                        <h4 title="Non-Editable field: Cars worked on">
+                                            Works on: Car 1, Car 2, Car 3
+                                        </h4>
+                                        <h4 title="Editable field: Technician Employer Address">
+                                            Address: 1 First Tech Rd, Gosnold, MA 02713
+                                        </h4>
+                                        <h4 title="Editable field: Technician Employer">
+                                            Business: 1 Stop Shop
+                                        </h4>
+                                        <h4 title="Non-Editable field: Money Invested with Technician">
+                                            Money Invested: $2920
+                                        </h4>
+                                        <h4 title="Editable field: Technician Certifications">
+                                            Certifications: Inspection, Honda, Ford, GM
+                                        </h4>
+
+
+
+                                        <!-- Make a button group -->
+                                        <div class="text-center btn-group">
+
+                                            <!-- First Button of group -->
+                                            <button type="button" class = "btn btn-primary">
+                                                Edit <span class="glyphicon glyphicon-list-alt"></span>
+                                            </button> <!-- End of first button of group -->
+
+                                            <!-- Second Button of group -->
+                                            <button type="button" class="btn btn-primary">
+                                                Add <span class="glyphicon glyphicon-plus"></span>
+                                            </button> <!-- End of second button of group -->
+
+                                        </div> <!-- End of button group -->
+
+                                    </div> <!-- End of Car Info panel body -->
+
+                                </div> <!-- End of Panel -->
+
+                            </div> <!-- End of car info panel -->
+                        </div>
+
+                        <!-- Allocated for Repairs -->
+                        <div class="row">
+
+                            <!-- Get all available columns for repairs -->
+                            <div class="col-md-12">
+
+                                <!-- Start of Panel Content -->
+                                <div class="panel panel-default">
+
+                                    <!-- Start of Panel Heading  -->
+                                    <!-- Repair section, show repair for multiple cars-->
+
+                                    <div class="panel-heading text-center">
+                                        <h3>
+                                            Repairs
+                                        </h3>
+                                    </div> <!-- End of Panel Heading -->
+
+                                    <!-- Start of Panel Body  -->
+                                    <div class="panel-body">
+                                        <!-- Make a list group of panels -->
+                                        <ul class="list-group list-var">
+                                            <li>
+                                                <!-- Make Car 1 Panel group -->
+                                                <div class="panel-group">
+
+                                                    <!-- Start of Panel structure -->
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-heading text-center">
+                                                            <p class="panel-title">
+                                                                <a data-toggle="collapse" data-parent="accordion"
+                                                                   href="#car-repair1">
+                                                                    Car 1
+                                                                </a>
+                                                            </p>
+                                                        </div>
+
+                                                        <!-- Start of collapsible body -->
+                                                        <div id="car-repair1" class="panel-collapse collapse">
+
+                                                            <!-- Start of Panel body -->
+                                                            <div class="panel-body">
+                                                                <ul class="list-group list-var">
+
+                                                                    <li>
+                                                                        Engine Tune-up: $300 | Mark O'Malay | Nov 21, 2013
+                                                                        <hr>
+                                                                    </li>
+                                                                    <!-- Horizontal line -->
+
+                                                                    <li>
+                                                                        Get Inspection: $60 | Mark O'Malay | Dec 2, 2013
+                                                                        <hr>
+                                                                    </li>
+                                                                    <!-- Horizontal line -->
+
+                                                                    <li>
+                                                                        Change tires: $250 | Mark O'Malay | Jan 1, 2014
+                                                                        <hr>
+                                                                    </li>
+                                                                    <!-- Horizontal line -->
+
+                                                                    <li>
+                                                                        Oil Change: $50 | Mark O'Malay | May 1, 2015
+                                                                        <hr>
+                                                                    </li>
+                                                                    <!-- Horizontal line -->
+
+                                                                    <li>
+                                                                        A/C Recharge: $150 | Mark O'Malay | Feb 1, 2016
+                                                                        <hr>
+                                                                    </li>
+                                                                    <!-- Horizontal line -->
+
+                                                                    <li>
+                                                                        Engine Tune-up: $300 | Mark O'Malay | Nov 21, 2016
+                                                                        <hr>
+                                                                    </li>
+                                                                    <!-- Horizontal line -->
+
+                                                                    <li>
+                                                                        Change Brakes: $350 | Mark O'Malay | Nov 22, 2016
+                                                                    </li>
+
+                                                                </ul>
+                                                                <!-- Make a button group -->
+                                                                <div class="text-center btn-group">
+
+                                                                    <!-- First Button of group -->
+                                                                    <button type="button" class = "btn btn-primary">
+                                                                        Edit <span class="glyphicon glyphicon-list-alt"></span>
+                                                                    </button> <!-- End of first button of group -->
+
+                                                                    <!-- Second Button of group -->
+                                                                    <button type="button" class="btn btn-primary">
+                                                                        Add <span class="glyphicon glyphicon-plus"></span>
+                                                                    </button> <!-- End of second button of group -->
+
+                                                                </div> <!-- End of button group -->
+
+                                                            </div> <!-- End of Panel Body -->
+
+                                                        </div> <!-- End of collapsible body -->
+
+                                                    </div> <!-- End of Panel structure -->
+
+                                                </div> <!-- End of Car 1 panel group -->
+                                            </li>
+
+                                            <li>
+
+                                                <!-- Make Car 2 Panel group -->
+                                                <div class="panel-group">
+
+                                                    <!-- Start of Panel structure -->
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-heading text-center">
+                                                            <p class="panel-title">
+                                                                <a data-toggle="collapse" data-parent="accordion"
+                                                                   href="#car-repair2">
+                                                                    Car 2
+                                                                </a>
+                                                            </p>
+                                                        </div>
+
+                                                        <!-- Start of collapsible body -->
+                                                        <div id="car-repair2" class="panel-collapse collapse">
+
+                                                            <!-- Start of Panel body -->
+                                                            <div class="panel-body">
+                                                                <ul class="list-group list-var">
+
+                                                                    <li>
+                                                                        Engine Tune-up: $300 | Mark O'Malay | Nov 21, 2013
+                                                                        <hr>
+                                                                    </li>
+                                                                    <!-- Horizontal line -->
+
+                                                                    <li>
+                                                                        Get Inspection: $60 | Mark O'Malay | Dec 2, 2013
+                                                                        <hr>
+                                                                    </li>
+                                                                    <!-- Horizontal line -->
+
+                                                                    <li>
+                                                                        Change tires: $250 | Mark O'Malay | Jan 1, 2014
+                                                                        <hr>
+                                                                    </li>
+                                                                    <!-- Horizontal line -->
+
+                                                                    <li>
+                                                                        Oil Change: $50 | Mark O'Malay | May 1, 2015
+                                                                        <hr>
+                                                                    </li>
+                                                                    <!-- Horizontal line -->
+
+                                                                    <li>
+                                                                        A/C Recharge: $150 | Mark O'Malay | Feb 1, 2016
+                                                                        <hr>
+                                                                    </li>
+                                                                    <!-- Horizontal line -->
+
+                                                                    <li>
+                                                                        Engine Tune-up: $300 | Mark O'Malay | Nov 21, 2016
+                                                                        <hr>
+                                                                    </li>
+                                                                    <!-- Horizontal line -->
+
+                                                                    <li>
+                                                                        Change Brakes: $350 | Mark O'Malay | Nov 22, 2016
+                                                                    </li>
+
+                                                                </ul>
+
+                                                                <!-- Make a button group -->
+                                                                <div class="text-center btn-group">
+
+                                                                    <!-- First Button of group -->
+                                                                    <button type="button" class = "btn btn-primary">
+                                                                        Edit <span class="glyphicon glyphicon-list-alt"></span>
+                                                                    </button> <!-- End of first button of group -->
+
+                                                                    <!-- Second Button of group -->
+                                                                    <button type="button" class="btn btn-primary">
+                                                                        Add <span class="glyphicon glyphicon-plus"></span>
+                                                                    </button> <!-- End of second button of group -->
+
+                                                                </div> <!-- End of button group -->
+
+                                                            </div> <!-- End of Panel Body -->
+
+                                                        </div> <!-- End of collapsible body -->
+
+                                                    </div> <!-- End of Panel structure -->
+
+                                                </div> <!-- End of Car 2 panel group -->
+                                            </li>
+
+                                        </ul> <!-- End of list group of panels -->
+
+                                    </div> <!-- End of Panel Body -->
+
+                                </div> <!-- End of Panel Content -->
+
+                            </div> <!-- End of repair columns -->
+
+                        </div> <!-- End of repair space -->
+
+                    </div> <!-- Columns to be used for repairs -->
+
+                </div> <!-- End of Column space for notifications, user image, info, and repairs -->
+
+            </div> <!-- End of Main Row Content for page components -->
+
+        </div> <!-- End of column-md-12 -->
+
+
+    </div> <!-- End of row -->
+
+
+
+</div> <!-- container -->
+
+</body>
+
+</html>
+
+
