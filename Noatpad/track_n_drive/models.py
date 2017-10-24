@@ -172,3 +172,33 @@ class Email(models.Model):
         String for representing the Model object (in Admin site etc.)
         """
         return self.adress
+
+class Notifications(models.Model):
+    """
+    Model representing the notifications page."""
+    email_timings = models.ManyToManyField(PhoneTimings, help_text="When should you be notified?")
+    phone_timings = models.ManyToManyField(EmailTimings, help_text="When should you be notified?")
+    repair = models.ForeignKey(Repair, on_delete=models.CASCADE)
+    date = models.DateField(null=true, blank=false)
+    technician = models.ForeignKey(Technician, on_delete=models.CASCADE)
+
+    def __str__(self):
+        """
+        String for representing the Model object (in Admin site etc.)
+        """
+        return self.repair
+
+class License(object):
+    """
+    docstring for License.
+    """
+    unique_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    license_num = models.CharField(max_length = 50, help_text = "Enter your license number")
+    license_class = models.CharField(max_length = 50, help_text = "Enter your license class")
+    expiration_date = models.DateField(null=false, blank=false)
+
+    def __str__(self):
+        """
+        String for representing the Model object (in Admin site etc.)
+        """
+        return self.license_num
