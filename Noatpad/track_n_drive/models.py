@@ -10,14 +10,15 @@ class User(models.Model):
     lname = models.CharField(max_length=30, help_text="Enter your last name.")
     password = models.CharField(max_length=30, help_text="Enter your password.")
     cars = models.ManyToManyField(Car, help_text="Select a car for this User.")
-    #email = unique_id
-    #phone = unique_id
-    #license = add relation
-    #insurance
+    phone = models.ForeignKey(Phone, help_text="Select a phone for this User.")
+    license = models.ForeignKey(License, help_text="Select a license for this User.")
+    insurance = models.ForeignKey(Insurance, help_text="Select a insurance for this User.")
     technician = models.ManyToManyField(Technician, help_text="Select a Technician for this User.")
-    #other_info = unique_id
-    #settings = unique_id
-
+    other_info = models.ForeignKey(UserAddedInfo, help_text="Enter user info.")
+    settings =  models.ForeignKey(Settings, help_text="Select a phone for this User.")
+    notifications = models.ForeignKey(Notifications, help_text="Notifications for this User.")
+    unique_id = models.CharField(max_length=30, help_text="Enter your ID.")
+    
     def __str__(self):
         """
         String for representing the Model object (in Admin site etc.)
@@ -188,6 +189,22 @@ class Notifications(models.Model):
         """
         return self.repair
 
+
+class Notifications(models.Model):
+    """
+    Model representing the notifications page."""
+    email_timings = models.ManyToManyField(PhoneTimings, help_text="When should you be notified?")
+    phone_timings = models.ManyToManyField(EmailTimings, help_text="When should you be notified?")
+    repair = models.ForeignKey(Repair, on_delete=models.CASCADE)
+    date = models.DateField(null=true, blank=false)
+    technician = models.ForeignKey(Technician, on_delete=models.CASCADE)
+
+    def __str__(self):
+        """
+        String for representing the Model object (in Admin site etc.)
+        """
+        return self.repair
+
 class License(object):
     """
     docstring for License.
@@ -202,3 +219,20 @@ class License(object):
         String for representing the Model object (in Admin site etc.)
         """
         return self.license_num
+
+class Insurance(models.Model):
+    """
+    Model representing the insurance page."""
+    unique_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    insurance_num = models.CharField(max_length = 30, help_text = "Enter your insurance number")
+    company= models.CharField(max_length = 30, help_text = "Enter your company")
+    coverage = models.CharField(max_length = 30, help_text = "Enter your coverage")
+    policy = models.ForeignKey(Policy, on_delete=models.CASCADE)
+    expiration_date = models.DateField(null=true, blank=false)
+   
+    def __str__(self):
+        """
+        String for representing the Model object (in Admin site etc.)
+        """
+        return self.insurance_num
+
