@@ -189,22 +189,6 @@ class Notifications(models.Model):
         """
         return self.repair
 
-
-class Notifications(models.Model):
-    """
-    Model representing the notifications page."""
-    email_timings = models.ManyToManyField(PhoneTimings, help_text="When should you be notified?")
-    phone_timings = models.ManyToManyField(EmailTimings, help_text="When should you be notified?")
-    repair = models.ForeignKey(Repair, on_delete=models.CASCADE)
-    date = models.DateField(null=true, blank=false)
-    technician = models.ForeignKey(Technician, on_delete=models.CASCADE)
-
-    def __str__(self):
-        """
-        String for representing the Model object (in Admin site etc.)
-        """
-        return self.repair
-
 class License(object):
     """
     docstring for License.
