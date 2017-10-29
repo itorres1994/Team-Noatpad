@@ -55,7 +55,7 @@ class Repair(models.Model):
     name = models.CharField(max_length=200, help_text="Enter the name for the repair.")
     cost = models.IntegerField(max_length=20, help_text="Enter them cost for the repair")
     technician = models.CharField(Technician, help_text="Select the technician for the repair")#double check/unique_id??
-    date_made: models.DateField(null=true, blank=false)
+    date_made: models.DateField(null=True, blank=False)
 
     def __str__(self):
         """
@@ -85,28 +85,28 @@ class TechAddedInfo(models.Model):
     Model representing the Technician Information.
     """
     unique_id = models.ForeignKey(Technician, on_delete=models.CASCADE)#Add unique id to Technician
-    infornmation_name = models.CharField(max_length=200, help_text="Information Category")
-    infornmation_contents = models.CharField(max_length=200, help_text="Information to Add")
+    information_name = models.CharField(max_length=200, help_text="Information Category")
+    information_contents = models.CharField(max_length=200, help_text="Information to Add")
 
     def __str__(self):
         """
         String for representing the Model object (in Admin site etc.)
         """
-        return self.infornmation_name + " " + self.infornmation_contents
+        return self.information_name + " " + self.information_contents
 
 class UserAddedInfo(models.Model):
     """
     Model representing the User Information.
     """
     unique_id = models.ForeignKey(User, on_delete=models.CASCADE) #add unique id to User
-    infornmation_name = models.CharField(max_length=200, help_text="Information Category")
-    infornmation_contents = models.CharField(max_length=200, help_text="Information to Add")
+    information_name = models.CharField(max_length=200, help_text="Information Category")
+    information_contents = models.CharField(max_length=200, help_text="Information to Add")
 
     def __str__(self):
         """
         String for representing the Model object (in Admin site etc.)
         """
-        return self.infornmation_name + " " + self.infornmation_contents
+        return self.information_name + " " + self.information_contents
 
 class Phone(models.Model):
     """
@@ -166,13 +166,13 @@ class Email(models.Model):
     """
     unique_id = models.CharField(max_length=30, help_text="Enter your ID.")
     user =  models.CharField(max_length=30, help_text="Enter your Name.")
-    adress = models.EmailField(max_length=254, help_text="Enter your Email.")
+    address = models.EmailField(max_length=254, help_text="Enter your Email.")
 
     def __str__(self):
         """
         String for representing the Model object (in Admin site etc.)
         """
-        return self.adress
+        return self.address
 
 class Notifications(models.Model):
     """
@@ -180,7 +180,7 @@ class Notifications(models.Model):
     email_timings = models.ManyToManyField(PhoneTimings, help_text="When should you be notified?")
     phone_timings = models.ManyToManyField(EmailTimings, help_text="When should you be notified?")
     repair = models.ForeignKey(Repair, on_delete=models.CASCADE)
-    date = models.DateField(null=true, blank=false)
+    date = models.DateField(null=True, blank=False)
     technician = models.ForeignKey(Technician, on_delete=models.CASCADE)
 
     def __str__(self):
@@ -196,7 +196,7 @@ class License(object):
     unique_id = models.ForeignKey(User, on_delete=models.CASCADE)
     license_num = models.CharField(max_length = 50, help_text = "Enter your license number")
     license_class = models.CharField(max_length = 50, help_text = "Enter your license class")
-    expiration_date = models.DateField(null=false, blank=false)
+    expiration_date = models.DateField(null=False, blank=False)
 
     def __str__(self):
         """
@@ -212,7 +212,7 @@ class Insurance(models.Model):
     company= models.CharField(max_length = 30, help_text = "Enter your company")
     coverage = models.CharField(max_length = 30, help_text = "Enter your coverage")
     policy = models.ForeignKey(Policy, on_delete=models.CASCADE)
-    expiration_date = models.DateField(null=true, blank=false)
+    expiration_date = models.DateField(null=True, blank=False)
 
     def __str__(self):
         """
