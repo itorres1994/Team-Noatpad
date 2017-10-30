@@ -2,21 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="68768118-7da6-4627-8d31-38d26312f49a" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/dictionaries/ian.xml" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/track_n_drive/.#models.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/track_n_drive/migrations/0002_email.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/track_n_drive/migrations/0003_emailtimings.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/track_n_drive/migrations/0004_phonetimings.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/track_n_drive/migrations/0005_settings.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/track_n_drive/migrations/0006_car.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/track_n_drive/migrations/0007_auto_20171029_1725.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/track_n_drive/migrations/0008_useraddedinfo.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/track_n_drive/migrations/0009_notifications.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/track_n_drive/migrations/0010_license.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/track_n_drive/migrations/0011_insurance_user.py" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db.sqlite3" afterPath="$PROJECT_DIR$/db.sqlite3" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/track_n_drive/migrations/0001_initial.py" afterPath="$PROJECT_DIR$/track_n_drive/migrations/0001_initial.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/track_n_drive/models.py" afterPath="$PROJECT_DIR$/track_n_drive/models.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -41,8 +27,8 @@
       <file leaf-file-name="models.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/track_n_drive/models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="342">
-              <caret line="205" column="101" lean-forward="false" selection-start-line="205" selection-start-column="101" selection-end-line="205" selection-end-column="101" />
+            <state relative-caret-position="-684">
+              <caret line="199" column="6" lean-forward="false" selection-start-line="199" selection-start-column="6" selection-end-line="199" selection-end-column="6" />
               <folding>
                 <element signature="e#0#28#0" expanded="true" />
               </folding>
@@ -383,8 +369,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/track_n_drive/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="342">
-          <caret line="205" column="101" lean-forward="false" selection-start-line="205" selection-start-column="101" selection-end-line="205" selection-end-column="101" />
+        <state relative-caret-position="-684">
+          <caret line="199" column="6" lean-forward="false" selection-start-line="199" selection-start-column="6" selection-end-line="199" selection-end-column="6" />
           <folding>
             <element signature="e#0#28#0" expanded="true" />
           </folding>

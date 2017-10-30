@@ -197,7 +197,7 @@ class Notifications(models.Model):
     phone_timings = models.ManyToManyField(EmailTimings, help_text="When should you be notified via phone?")
     repair = models.ForeignKey(Repair, on_delete=models.CASCADE, null=True)
     date = models.DateField(null=True, blank=False)
-    technician = models.ForeignKey(Technician, on_delete=models.CASCADE, blank=True, null=True)
+    # technician = models.ForeignKey(Technician, on_delete=models.CASCADE, blank=True, null=True)
 
     def __str__(self):
         """
