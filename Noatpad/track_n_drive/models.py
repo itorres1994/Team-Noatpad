@@ -228,7 +228,6 @@ class Insurance(models.Model):
                                      default="Ins. #")
     company = models.CharField(max_length=30, help_text="Enter your company", blank=False, null=True)
     coverage = models.CharField(max_length=30, help_text="Enter your coverage", blank=False, null=True)
-    # policy = models.ForeignKey(Policy, on_delete=models.CASCADE)
     expiration_date = models.DateField(null=True, blank=False)
 
     def __str__(self):
