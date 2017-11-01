@@ -4,8 +4,6 @@
 
 {% block nav %}
 
-<p>{{ car }}</p>
-
 <nav class="navbar navbar-default">
 
     <div class="container-fluid">
@@ -275,7 +273,7 @@
                             <!-- This loop takes the added info of user and prints it -->
                             {% for info in user.info.all %}
                             <h4>
-                                {{ info.information_name }}: {{ info.information_contents }}
+                                {{ info.information_name|title }}: {{ info.information_contents|title }}
                             </h4>
                             {% endfor %}
                             <!-- Make a button group -->
