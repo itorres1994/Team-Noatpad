@@ -72,7 +72,7 @@ class Car(models.Model):
         """
         Returns the url to access a particular book instance.
         """
-        return reverse('detail', args=[str(self.unique_id)])
+        return reverse('car', args=[str(self.unique_id)])
 
 
 class FutureRepair(models.Model):
