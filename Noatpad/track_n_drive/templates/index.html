@@ -31,7 +31,7 @@
                     {% for car in cars %}
                     <li>
                         <!-- assign a unique url for each car -->
-                        <a href="#car-prof-{{ car.unique_id }}">{{ car.year }} {{ car.make }} {{ car.model }}</a>
+                        <a href="{{ car.getabsoluteurl }}">{{ car.year }} {{ car.make }} {{ car.model }}</a>
                     </li>
                     {% endfor %}
                     <li>

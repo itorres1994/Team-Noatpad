@@ -22,7 +22,7 @@ def index(request):
 def car_prof(request, unique_id):
     num_users = User.objects.all().count()
     cars = Car.objects.all()
-    car = Car.objects.filter(unique_id__exactly=unique_id)
+    car = Car.objects.get(unique_id=unique_id)
     techs = Technician.objects.all()
     future_repairs = FutureRepair.objects.all()
     return render(

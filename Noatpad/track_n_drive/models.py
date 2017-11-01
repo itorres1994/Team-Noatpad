@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse  # Used to generate URLs by reversing the URL patterns
 import uuid
 import datetime
 
@@ -66,6 +67,12 @@ class Car(models.Model):
         String for representing the Model object (in Admin site etc.)
         """
         return str(self.year) + " " + str(self.color) + " " + str(self.make) + " " + str(self.model)
+
+    def get_absolute_url(self):
+        """
+        Returns the url to access a particular book instance.
+        """
+        return reverse('detail', args=[str(self.unique_id)])
 
 
 class FutureRepair(models.Model):
