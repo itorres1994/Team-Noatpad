@@ -31,7 +31,7 @@
                     {% for car in cars %}
                     <li>
                         <!-- assign a unique url for each car -->
-                        <a href="#car-prof-{{ car.unique_id }}">{{ car.year }} {{ car.make }} {{ car.model }}</a>
+                        <a href="{{ car.get_absolute_url }}">{{ car.year }} {{ car.make }} {{ car.model }}</a>
                     </li>
                     {% endfor %}
                     <li>
@@ -238,13 +238,13 @@
                     <div class="panel panel-default">
                         <div class="panel-heading text-center">
                             <h3>
-                                User
+                                {{ car.year }} {{ car.make }} {{ car.model }}
                             </h3>
                         </div>
                         <div class="panel-body text-center">
                             <!-- Load the static resource (i.e. a picture) -->
                             {% load static %}
-                            <img class="center-block" src="{% static 'pic/car-guy_profile-pic.jpg' %}" alt="user1"
+                            <img class="center-block" src="{% static 'pic/2001_Jeep_Cherokee_green.jpg' %}" alt="user1"
                                  width="200"/>
                             <br/>
                             <button type="button" class="btn btn-primary">
@@ -261,21 +261,45 @@
                         <!-- Panel heading for User Info -->
                         <div class="panel-heading text-center">
                             <h3>
-                                User Info
+                                Car Info
                             </h3>
                         </div> <!-- End of User Info Panel Heading -->
 
                         <!-- Panel body for User Info -->
                         <div class="panel-body">
-                            <h4 title="Editable Field: User name">
-                                Name: {{ user.fname }} {{ user.lname }}
+                            <h4 title="Editable Field: Car Operator">
+                                Car Operator: {{ car.user.fname }} {{ car.user.lname }}
+                            </h4>
+                            <h4 title="Editable Field: Car Year">
+                                Year: {{ car.year }}
+                            </h4>
+                            <h4 title="Editable Field: Car Make">
+                                Make: {{ car.make }}
+                            </h4>
+                            <h4 title="Editable Field: Car Model">
+                                Model: {{ car.model }}
+                            </h4>
+                            <h4 title="Editable Field: Car Color">
+                                Color: {{ car.color }}
+                            </h4>
+                            <h4 title="Editable Field: Engine Type">
+                                Engine Type: {{ car.engine_type }}
+                            </h4>
+                            <h4 title="Editable Field: Oil Type">
+                                Oil Type: {{ car.oil_type }}
+                            </h4>
+                            <h4 title="Editable Field: Mileage">
+                                Mileage: {{ car.mileage }}
+                            </h4>
+                            <h4 title="Editable Field: VIN #">
+                                VIN: {{ car.vin_number }}
+                            </h4>
+                            <h4 title="Editable Field: Registration">
+                                Registration: {{ car.registration }}
                             </h4>
                             <!-- This loop takes the added info of user and prints it -->
-                            {% for info in user.info.all %}
                             <h4>
-                                {{ info.information_name|title }}: {{ info.information_contents|title }}
                             </h4>
-                            {% endfor %}
                             <!-- Make a button group -->
                             <div class="text-center btn-group">
 
