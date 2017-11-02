@@ -51,3 +51,19 @@ def tech_prof(request, unique_id):
         },
     )
 
+def stats(request, unique_id):
+    num_users = User.objects.all().count()
+    cars = Car.objects.all()
+    car = Car.objects.get(unique_id=unique_id)
+    reps = Repair.objects.all()
+    techs = Technician.objects.all()
+    future_repairs = FutureRepair.objects.all()
+    return render(
+        request,
+        'stat.html',
+        context={
+            'num_users': num_users, 'cars': cars, 'techs': techs,
+            'future_repairs': future_repairs, 'car': car,
+            'reps': reps,
+        },
+    )

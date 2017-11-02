@@ -19,7 +19,7 @@ class TechAddedInfo(models.Model):
         """
         String for representing the Model object (in Admin site etc.)
         """
-        return self.information_name + ": " + self.information_contents 
+        return self.information_name + ": " + self.information_contents
 
 
 class Technician(models.Model):
@@ -78,6 +78,9 @@ class Car(models.Model):
         Returns the url to access a particular book instance.
         """
         return reverse('car', args=[str(self.unique_id)])
+
+    def get_absolute_url2(self):
+        return reverse('stat', args=[str(self.unique_id)])
 
 
 class FutureRepair(models.Model):
