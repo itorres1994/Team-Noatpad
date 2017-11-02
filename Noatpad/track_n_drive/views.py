@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Car, User, Technician, FutureRepair, UserAddedInfo
+from .models import Car, User, Technician, FutureRepair, UserAddedInfo, Repair
 
 
 # Create your views here.
@@ -33,3 +33,21 @@ def car_prof(request, unique_id):
             'future_repairs': future_repairs, 'car': car,
         },
     )
+
+def tech_prof(request, unique_id):
+    num_users = User.objects.all().count()
+    cars = Car.objects.all()
+    tech = Technician.objects.get(unique_id=unique_id)
+    reps = Repair.objects.all()
+    techs = Technician.objects.all()
+    future_repairs = FutureRepair.objects.all()
+    return render(
+        request,
+        'tech.html',
+        context={
+            'num_users': num_users, 'cars': cars, 'techs': techs,
+            'future_repairs': future_repairs, 'tech': tech,
+            'reps': reps,
+        },
+    )
+

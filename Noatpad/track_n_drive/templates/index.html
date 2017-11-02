@@ -54,7 +54,7 @@
                 <ul class="dropdown-menu">
                     {% for tech in techs %}
                     <li>
-                        <a href="#">
+                        <a href="{{ tech.get_absolute_url }}">
                             {{ tech.fname }} {{ tech.lname }}
                         </a>
                     </li>

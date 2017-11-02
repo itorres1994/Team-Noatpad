@@ -13,13 +13,13 @@ class TechAddedInfo(models.Model):
     information_name = models.CharField(max_length=200, help_text="Information Category", default="info name")
     information_contents = models.CharField(max_length=200, help_text="Information to Add", default="info content")
     tech = models.ForeignKey('Technician', help_text='Technician', blank=True, null=True,
-                             on_delete=models.SET_NULL)
+                             on_delete=models.SET_NULL, related_name="info")
 
     def __str__(self):
         """
         String for representing the Model object (in Admin site etc.)
         """
-        return self.information_name + ": " + self.information_contents
+        return self.information_name + ": " + self.information_contents 
 
 
 class Technician(models.Model):
@@ -40,8 +40,13 @@ class Technician(models.Model):
         """
         String for representing the Model object (in Admin site etc.)
         """
-        return self.fname + " " + self.lname
+        return self.fname + " " + self.lname+ " " + self.street+ " " + self.city+ " " + self.company
 
+    def get_absolute_url(self):
+        """
+        Returns the url to access a particular book instance.
+        """
+        return reverse('tech', args=[str(self.unique_id)])
 
 class Car(models.Model):
     """

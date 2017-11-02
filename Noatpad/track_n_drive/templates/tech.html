@@ -244,8 +244,7 @@
                         <div class="panel-body text-center">
                             <!-- Load the static resource (i.e. a picture) -->
                             {% load static %}
-                            <img class="center-block" src="{% static 'pic/car-guy_profile-pic.jpg' %}" alt="user1"
-                                 width="200"/>
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d94296.76396018766!2d-72.5874496!3d42.3899634!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89e6d191bed1699d%3A0x245fdf0d5ea097b9!2sJiffy+Lube!5e0!3m2!1sen!2sus!4v1509580059669" width="300" height="300" frameborder="0" style="border:0" allowfullscreen></iframe>
                             <br/>
                             <button type="button" class="btn btn-primary">
                                 Change Image <span class="glyphicon glyphicon-list-alt"></span>
@@ -270,7 +269,20 @@
                             <h4 title="Editable Field: Tech name">
                                 Name: {{ tech.fname }} {{ tech.lname }}
                             </h4>
+
                             <!-- This loop takes the added info of user and prints it -->
+                            <h4 title="Editable Field: Tech street">
+                                Street: {{ tech.street }}
+                            </h4>
+
+                            <h4 title="Editable Field: Tech city">
+                                City: {{ tech.city }}
+                            </h4>
+
+                            <h4 title="Editable Field: Tech company">
+                                Company: {{ tech.company }}
+                            </h4>
+
                             {% for tech_info in tech.info.all %}
                             <h4>
                                 {{ tech_info.information_name|title }}: {{ tech_info.information_contents|title }}
@@ -341,8 +353,9 @@
                                                 <!-- Start of Panel body -->
                                                 <div class="panel-body">
                                                     <ul class="list-group list-var">
-                                                        {% for rep in car.repair.all %}
+                                                        {% for rep in reps.all  %}
                                                         <li>
+                                                            {% ifequal rep.technician.unique_id tech.unique_id %}
                                                             {% if '$' in rep.cost %}
                                                             {{ rep.name }} | {{ rep.cost }} | {{ rep.technician }} |
                                                             {{ rep.date_made }}
@@ -350,6 +363,7 @@
                                                             {{ rep.name }} | ${{ rep.cost }} | {{ rep.technician }} |
                                                             {{ rep.date_made }}
                                                             {% endif %}
+                                                            {% endifequal %}
                                                             <hr>
                                                         </li>
                                                         <!-- Horizontal line -->
