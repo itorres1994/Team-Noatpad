@@ -40,13 +40,14 @@ class Technician(models.Model):
         """
         String for representing the Model object (in Admin site etc.)
         """
-        return self.fname + " " + self.lname+ " " + self.street+ " " + self.city+ " " + self.company
+        return self.fname + " " + self.lname + " " + self.street + " " + self.city + " " + self.company
 
     def get_absolute_url(self):
         """
         Returns the url to access a particular book instance.
         """
         return reverse('tech', args=[str(self.unique_id)])
+
 
 class Car(models.Model):
     """
@@ -92,7 +93,8 @@ class FutureRepair(models.Model):
     technician = models.ForeignKey(Technician, help_text="Select the technician for the repair", blank=True, null=True,
                                    on_delete=models.SET_NULL)
     car = models.ForeignKey(Car, blank=False, help_text="Select the car that was repaired", related_name="futurerepair")
-    notification = models.ForeignKey('Notifications', help_text="Notification association", on_delete=models.CASCADE)
+    notification = models.ForeignKey('Notifications', help_text="Notification association", on_delete=models.CASCADE,
+                                     related_name="futurerepairnotif")
     date_of_repair = models.DateField(null=False, blank=False, default=datetime.date.today())
 
     def __str__(self):
@@ -113,7 +115,7 @@ class Repair(models.Model):
     name = models.CharField(max_length=200, help_text="Enter the name for the repair.")
     cost = models.CharField(max_length=20, help_text="Enter them cost for the repair")
     technician = models.ForeignKey(Technician, help_text="Select the technician for the repair", blank=True, null=True,
-                                   on_delete=models.SET_NULL)
+                                   on_delete=models.SET_NULL, related_name="repair")
     car = models.ForeignKey(Car, blank=False, help_text="Select the car that was repaired", on_delete=models.CASCADE,
                             related_name="repair")
     date_made = models.DateField(null=False, blank=False, default=datetime.date.today())
@@ -177,7 +179,7 @@ class PhoneTimings(models.Model):
     setting_ref = models.ForeignKey('Settings', help_text="User Settings", blank=False, null=False,
                                     on_delete=models.CASCADE)
     notification = models.ForeignKey('Notifications', help_text="Notification", blank=False, null=False,
-                                     on_delete=models.CASCADE)
+                                     on_delete=models.CASCADE, related_name="phonetiming")
 
     def __str__(self):
         """
@@ -220,7 +222,7 @@ class EmailTimings(models.Model):
     setting_ref = models.ForeignKey('Settings', help_text="User Settings", blank=False, null=False,
                                     on_delete=models.CASCADE)
     notification = models.ForeignKey('Notifications', help_text="Notification", blank=False, null=False,
-                                     on_delete=models.CASCADE)
+                                     on_delete=models.CASCADE, related_name="emailtiming")
 
     def __str__(self):
         """
@@ -297,7 +299,8 @@ class Insurance(models.Model):
     company = models.CharField(max_length=30, help_text="Enter your company", blank=False, null=True)
     coverage = models.CharField(max_length=30, help_text="Enter your coverage", blank=False, null=True)
     expiration_date = models.DateField(null=True, blank=False)
-    car = models.ForeignKey('Car', help_text="Car Insurance", blank=False, null=True, on_delete=models.SET_NULL)
+    car = models.ForeignKey('Car', help_text="Car Insurance", blank=False, null=True, on_delete=models.SET_NULL,
+                            related_name="insurance")
     # user = models.ForeignKey('User', help_text="User Insurance", blank=True, null=True)
 
     def __str__(self):

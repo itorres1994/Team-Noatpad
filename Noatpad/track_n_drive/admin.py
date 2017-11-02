@@ -69,10 +69,15 @@ class TechnicianInstanceInline(admin.TabularInline):
     extra = 0
 
 
+class TechnicianInstanceInlineRepairs(admin.TabularInline):
+    model = Repair
+    extra = 0
+
+
 @admin.register(Technician)
 class TechnicianAdmin(admin.ModelAdmin):
     list_display = ('fname', 'lname', 'street', 'city', 'company')
-    inlines = [TechnicianInstanceInline]
+    inlines = [TechnicianInstanceInline, TechnicianInstanceInlineRepairs]
 
 
 class UserInstanceInlineInfo(admin.TabularInline):

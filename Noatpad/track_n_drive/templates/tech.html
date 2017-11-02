@@ -80,7 +80,7 @@
                 <ul class="dropdown-menu">
                     {% for car in cars %}
                     <li>
-                        <a href="#">{{ car.year }} {{ car.make }} {{ car.model }}</a>
+                        <a href="{{ car.get_absolute_url2 }}">{{ car.year }} {{ car.make }} {{ car.model }}</a>
                     </li>
                     {% endfor %}
                 </ul>
@@ -98,12 +98,12 @@
                 <!-- Contents of dropdown menu -->
                 <ul class="dropdown-menu">
                     <li>
-                        <a href="#">Profile
+                        <a href="{% url 'index' %}">Profile
                             <span class="glyphicon glyphicon-user"></span>
                         </a>
                     </li>
                     <li>
-                        <a href="#">Settings
+                        <a href="{% url 'settings' %}">Settings
                             <span class="glyphicon glyphicon-asterisk"></span>
                         </a>
                     </li>
@@ -139,90 +139,83 @@
 
                         <!-- Start of collapse title -->
                         <p class="panel-title">
-                            <a data-toggle="collapse" data-parent="accordion"
-                               href="#notif">
-                                Notifications
-                            </a>
+                            Notifications
                         </p> <!-- End of collapse title -->
 
                     </div> <!-- End of Notification heading -->
 
-                    <!-- Get the reference from the Notification Panel -->
-                    <div id="notif" class="panel-collapse collapse">
 
-                        <!-- Start of Notification Panel Body -->
-                        <div class="panel-body">
+                    <!-- Start of Notification Panel Body -->
+                    <div class="panel-body">
 
-                            <!-- Make a list group of panels -->
-                            <ul class="list-group list-var">
-                                <!-- Loop through the number of cars we have in the db -->
-                                {% for car in cars %}
-                                <li>
-                                    <!-- Make Car Panel group -->
-                                    <div class="panel-group">
+                        <!-- Make a list group of panels -->
+                        <ul class="list-group list-var">
+                            <!-- Loop through the number of cars we have in the db -->
+                            {% for car in cars %}
+                            <li>
+                                <!-- Make Car Panel group -->
+                                <div class="panel-group">
 
-                                        <!-- Start of Panel structure -->
-                                        <div class="panel panel-default">
-                                            <div class="panel-heading text-center">
-                                                <p class="panel-title">
-                                                    <!-- The forloop.counter gives an index for a panel -->
-                                                    <a data-toggle="collapse" data-parent="accordion"
-                                                       href="#{{ forloop.counter }}">
-                                                        <!-- Output the cars into the dropdown -->
-                                                        {{ car.year }} {{ car.make }} {{ car.model }}
-                                                    </a>
-                                                </p>
-                                            </div>
+                                    <!-- Start of Panel structure -->
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading text-center">
+                                            <p class="panel-title">
+                                                <!-- The forloop.counter gives an index for a panel -->
+                                                <a data-toggle="collapse" data-parent="accordion"
+                                                   href="#{{ forloop.counter }}">
+                                                    <!-- Output the cars into the dropdown -->
+                                                    {{ car.year }} {{ car.make }} {{ car.model }}
+                                                </a>
+                                            </p>
+                                        </div>
 
-                                            <!-- Start of collapsible body -->
-                                            <div id="{{ forloop.counter }}" class="panel-collapse collapse">
+                                        <!-- Start of collapsible body -->
+                                        <div id="{{ forloop.counter }}" class="panel-collapse collapse">
 
-                                                <!-- Start of Panel body -->
-                                                <div class="panel-body">
-                                                    <ul class="list-group list-var">
-                                                        {% for rep in car.futurerepair.all %}
-                                                        <!-- ifequal rep.car.vin_number car.vin_number -->
-                                                        <li>
-                                                            {{ rep.technician.fname }}
-                                                            {{ rep.technician.lname }}<br/>
-                                                            {{ rep.name }}<br/>
-                                                            {{ rep.date_of_repair }}
-                                                        </li>
-                                                        <!-- Horizontal line -->
-                                                        <hr>
-                                                        <!-- endifequal -->
-                                                        {% endfor %}
-                                                    </ul>
-                                                    <!-- Make a button group -->
-                                                    <div class="text-center btn-group">
+                                            <!-- Start of Panel body -->
+                                            <div class="panel-body">
+                                                <ul class="list-group list-var">
+                                                    {% for rep in car.futurerepair.all %}
+                                                    <!-- ifequal rep.car.vin_number car.vin_number -->
+                                                    <li>
+                                                        {{ rep.technician.fname }}
+                                                        {{ rep.technician.lname }}<br/>
+                                                        {{ rep.name }}<br/>
+                                                        {{ rep.date_of_repair }}
+                                                    </li>
+                                                    <!-- Horizontal line -->
+                                                    <hr>
+                                                    <!-- endifequal -->
+                                                    {% endfor %}
+                                                </ul>
+                                                <!-- Make a button group -->
+                                                <div class="text-center btn-group">
 
-                                                        <!-- First Button of group -->
-                                                        <button type="button" class="btn btn-primary">
-                                                            Edit <span class="glyphicon glyphicon-list-alt"></span>
-                                                        </button> <!-- End of first button of group -->
+                                                    <!-- First Button of group -->
+                                                    <button type="button" class="btn btn-primary">
+                                                        Edit <span class="glyphicon glyphicon-list-alt"></span>
+                                                    </button> <!-- End of first button of group -->
 
-                                                        <!-- Second Button of group -->
-                                                        <button type="button" class="btn btn-primary">
-                                                            Add <span class="glyphicon glyphicon-plus"></span>
-                                                        </button> <!-- End of second button of group -->
+                                                    <!-- Second Button of group -->
+                                                    <button type="button" class="btn btn-primary">
+                                                        Add <span class="glyphicon glyphicon-plus"></span>
+                                                    </button> <!-- End of second button of group -->
 
-                                                    </div> <!-- End of button group -->
+                                                </div> <!-- End of button group -->
 
-                                                </div> <!-- End of Panel Body -->
+                                            </div> <!-- End of Panel Body -->
 
-                                            </div> <!-- End of collapsible body -->
+                                        </div> <!-- End of collapsible body -->
 
-                                        </div> <!-- End of Panel structure -->
+                                    </div> <!-- End of Panel structure -->
 
-                                    </div> <!-- End of Car 1 panel group -->
-                                </li>
-                                {% endfor %}
+                                </div> <!-- End of Car 1 panel group -->
+                            </li>
+                            {% endfor %}
 
-                            </ul> <!-- End of list group of panels -->
+                        </ul> <!-- End of list group of panels -->
 
-                        </div> <!-- End of notification panel body -->
-
-                    </div> <!-- End of Notification Panel collapsible -->
+                    </div> <!-- End of notification panel body -->
 
                 </div> <!-- End of notification panel contents -->
 
@@ -244,11 +237,9 @@
                         <div class="panel-body text-center">
                             <!-- Load the static resource (i.e. a picture) -->
                             {% load static %}
-                            <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d94296.76396018766!2d-72.5874496!3d42.3899634!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89e6d191bed1699d%3A0x245fdf0d5ea097b9!2sJiffy+Lube!5e0!3m2!1sen!2sus!4v1509580059669" width="300" height="300" frameborder="0" style="border:0" allowfullscreen></iframe>
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d94296.76396018766!2d-72.5874496!3d42.3899634!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89e6d191bed1699d%3A0x245fdf0d5ea097b9!2sJiffy+Lube!5e0!3m2!1sen!2sus!4v1509580059669"
+                                    width="300" height="300" frameborder="0" style="border:0" allowfullscreen></iframe>
                             <br/>
-                            <button type="button" class="btn btn-primary">
-                                Change Image <span class="glyphicon glyphicon-list-alt"></span>
-                            </button>
                         </div>
                     </div>
                 </div>
@@ -331,7 +322,8 @@
                             <!-- Make a list group of panels -->
                             <ul class="list-group list-var">
 
-                                {% for car in cars %}
+                                <!--for car in cars -->
+                                {% for ctk, ctv in car_tech.items %}
                                 <li>
                                     <!-- Make a Car Panel group -->
                                     <div class="panel-group">
@@ -342,7 +334,7 @@
                                                 <p class="panel-title">
                                                     <a data-toggle="collapse" data-parent="accordion"
                                                        href="#car-repair{{ forloop.counter }}">
-                                                        {{ car.year }} {{ car.make }} {{ car.model }}
+                                                        {{ ctk.year }} {{ ctk.make }} {{ ctk.model }}
                                                     </a>
                                                 </p>
                                             </div>
@@ -353,17 +345,21 @@
                                                 <!-- Start of Panel body -->
                                                 <div class="panel-body">
                                                     <ul class="list-group list-var">
-                                                        {% for rep in reps.all  %}
+                                                        <!--for rep in reps -->
+                                                        <!--ifequal rep.car.unique_id car.unique_id -->
+                                                        {% for rep in ctv %}
                                                         <li>
-                                                            {% ifequal rep.technician.unique_id tech.unique_id %}
                                                             {% if '$' in rep.cost %}
-                                                            {{ rep.name }} | {{ rep.cost }} | {{ rep.technician }} |
+                                                            {{ rep.name }} | {{ rep.cost }} | {{ rep.technician.fname }}
+                                                            {{ rep.technician.lname }} | {{ rep.technician.street }},
+                                                            {{ rep.technician.city }}, {{ rep.technician.company }} |
                                                             {{ rep.date_made }}
                                                             {% else %}
-                                                            {{ rep.name }} | ${{ rep.cost }} | {{ rep.technician }} |
+                                                            {{ rep.name }} | ${{ rep.cost }} | {{ rep.technician.fname}}
+                                                            {{ rep.technician.lname }} | {{ rep.technician.street }},
+                                                            {{ rep.technician.city }}, {{ rep.technician.company }} |
                                                             {{ rep.date_made }}
                                                             {% endif %}
-                                                            {% endifequal %}
                                                             <hr>
                                                         </li>
                                                         <!-- Horizontal line -->

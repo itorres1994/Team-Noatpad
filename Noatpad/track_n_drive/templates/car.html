@@ -54,7 +54,7 @@
                 <ul class="dropdown-menu">
                     {% for tech in techs %}
                     <li>
-                        <a href="#">
+                        <a href="{{ tech.get_absolute_url }}">
                             {{ tech.fname }} {{ tech.lname }}
                         </a>
                     </li>
@@ -80,7 +80,7 @@
                 <ul class="dropdown-menu">
                     {% for car in cars %}
                     <li>
-                        <a href="#">{{ car.year }} {{ car.make }} {{ car.model }}</a>
+                        <a href="{{ car.get_absolute_url2 }}">{{ car.year }} {{ car.make }} {{ car.model }}</a>
                     </li>
                     {% endfor %}
                 </ul>
@@ -98,12 +98,12 @@
                 <!-- Contents of dropdown menu -->
                 <ul class="dropdown-menu">
                     <li>
-                        <a href="#">Profile
+                        <a href="{% url 'index' %}">Profile
                             <span class="glyphicon glyphicon-user"></span>
                         </a>
                     </li>
                     <li>
-                        <a href="#">Settings
+                        <a href="{% url 'settings' %}">Settings
                             <span class="glyphicon glyphicon-asterisk"></span>
                         </a>
                     </li>
@@ -292,8 +292,11 @@
                                 Registration: {{ car.registration }}
                             </h4>
                             <!-- This loop takes the added info of user and prints it -->
-                            <h4>
+                            {% for ins in car.insurance.all %}
+                            <h4 title="Editable Field: Insurance Number">
+                                Ins # / Type: {{ ins.insurance_num }} / {{ ins.coverage }}
                             </h4>
+                            {% endfor %}
                             <!-- Make a button group -->
                             <div class="text-center btn-group">
 
@@ -355,10 +358,14 @@
                                                     {% for rep in car.repair.all %}
                                                     <li>
                                                         {% if '$' in rep.cost %}
-                                                        {{ rep.name }} | {{ rep.cost }} | {{ rep.technician }} |
+                                                        {{ rep.name }} | {{ rep.cost }} | {{ rep.technician.fname }}
+                                                        {{ rep.technician.lname }} | {{ rep.technician.street }},
+                                                        {{ rep.technician.city }}, {{ rep.technician.company }} |
                                                         {{ rep.date_made }}
                                                         {% else %}
-                                                        {{ rep.name }} | ${{ rep.cost }} | {{ rep.technician }} |
+                                                        {{ rep.name }} | ${{ rep.cost }} | {{ rep.technician.fname }}
+                                                        {{ rep.technician.lname }} | {{ rep.technician.street }},
+                                                        {{ rep.technician.city }}, {{ rep.technician.company }} |
                                                         {{ rep.date_made }}
                                                         {% endif %}
                                                         <hr>
