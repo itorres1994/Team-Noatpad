@@ -8,6 +8,10 @@ import datetime
 from .models import Technician, TechAddedInfo, Car, FutureRepair, Repair, Phone, Email,  \
     UserAddedInfo, EmailTimings, PhoneTimings
 
+#ModelForm automatically includes all fields and help texts, exclude is used to
+#specifically exclude those fields, and labels overrides the default labels.
+#Any info specified here overrides what is shown on models.py
+
 class AddTechnicianForm(ModelForm):
     class Meta:
         model = Technician
