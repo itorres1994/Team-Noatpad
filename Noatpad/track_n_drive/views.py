@@ -136,57 +136,57 @@ def add_technician(request, unique_id):
 
     return render(request, 'add_technician.html', {'form': form, 'techinst':tech_inst})
 
-#def add_technician_info(request, unique_id):
-#    """
-#    View function for adding technician info
-#    """
-#
-#    techinfo_inst=get_object_or_404(TechAddedInfo, unique_id = unique_id)
-#
-#    if request.method == 'POST':
-#
-#        form = AddTechAddedInfoForm(request.POST)
-#
-#        if form.is_valid():
-#            # process the data in form.cleaned_data as required (here we just write it to the model due_back field)
-#            tech_inst.due_back = form.cleaned_data['']
-#            book_inst.save()
-#
-#            # redirect to a new URL:
-#            return HttpResponseRedirect(reverse('all-borrowed') )
-#
-#    # If this is a GET (or any other method) create the default form.
-#    else:
-#        form = AddTechAddedInfoForm()
-#
-#    return render(request, 'catalog/book_renew_librarian.html', {'form': form, 'bookinst':book_inst})
-#
-#def add_car(request, unique_id):
-#    """
-#    View function for adding a Car
-#    """
-#
-#    car_inst=get_object_or_404(Car, unique_id = unique_id)
-#
-#    if request.method == 'POST':
-#
-#        form = AddCarForm(request.POST)
-#
-#        if form.is_valid():
-#            # process the data in form.cleaned_data as required (here we just write it to the model due_back field)
-#            car_inst.make = form.cleaned_data['make']
-#            car_inst.year = form.cleaned_data['year']
-#
-#            car_inst.save()
-#            # redirect to a new URL:
-#            return HttpResponseRedirect(reverse('all-borrowed') )
-#
-#    # If this is a GET (or any other method) create the default form.
-#    else:
-#        form = AddCarForm()
-#
-#    return render(request, 'catalog/book_renew_librarian.html', {'form': form, 'bookinst':book_inst})
-#
+def add_technician_info(request, unique_id):
+   """
+   View function for adding technician info
+   """
+
+   techinfo_inst=get_object_or_404(TechAddedInfo, unique_id = unique_id)
+
+   if request.method == 'POST':
+
+       form = AddTechAddedInfoForm(request.POST)
+
+       if form.is_valid():
+           # process the data in form.cleaned_data as required (here we just write it to the model due_back field)
+           tech_inst.due_back = form.cleaned_data['']
+           book_inst.save()
+
+           # redirect to a new URL:
+           return HttpResponseRedirect(reverse('all-borrowed') )
+
+   # If this is a GET (or any other method) create the default form.
+   else:
+       form = AddTechAddedInfoForm()
+
+   return render(request, 'add_technician_info.html', {'form': form, 'techinfo_inst':techinfo_inst})
+
+def add_car(request, unique_id):
+   """
+   View function for adding a Car
+   """
+
+   car_inst=get_object_or_404(Car, unique_id = unique_id)
+
+   if request.method == 'POST':
+
+       form = AddCarForm(request.POST)
+
+       if form.is_valid():
+           # process the data in form.cleaned_data as required (here we just write it to the model due_back field)
+           car_inst.make = form.cleaned_data['make']
+           car_inst.year = form.cleaned_data['year']
+
+           car_inst.save()
+           # redirect to a new URL:
+           return HttpResponseRedirect(reverse('all-borrowed') )
+
+   # If this is a GET (or any other method) create the default form.
+   else:
+       form = AddCarForm()
+
+   return render(request, 'catalog/book_renew_librarian.html', {'form': form, 'bookinst':book_inst})
+
 #def add_future_repair(request, unique_id):
 #    """
 #    View function for adding Future Repairs
