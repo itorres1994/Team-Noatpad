@@ -21,6 +21,7 @@ class AddTechnicianForm(ModelForm):
 class AddTechAddedInfoForm(ModelForm):
     class Meta:
         model = TechAddedInfo
+        exclude = { 'tech' }
 
 class AddCarForm(ModelForm):
     class Meta:
@@ -40,14 +41,17 @@ class AddRepairForm(ModelForm):
 class AddPhoneForm(ModelForm):
     class Meta:
         model = Phone
+        exclude = { 'user' }
 
 class AddEmailForm(ModelForm):
     class Meta:
         model = Email
+        exclude = { 'user' }
 
 class AddUserAddedInfoForm(ModelForm):
     class Meta:
         model = UserAddedInfo
+        exclude = { 'user_info' }
 
 # class AddPhoneTimingsForm(ModelForm):
 #     class Meta:
