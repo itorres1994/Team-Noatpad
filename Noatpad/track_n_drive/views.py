@@ -196,10 +196,40 @@ def add_technician_info(request, unique_id):
 #    else:
 #        form = AddCarForm()
 #    return render(request, 'add_car.html', {'form': form, 'car_inst':car_inst})
+def add_car1(request):
+    """
+   View function for adding a Car
+   """
+    car_inst = Car()
+
+    if request.method == 'POST':
+
+        form = AddCarForm(request.POST)
+        if form.is_valid():
+            car_inst.make = form.cleaned_data['make']
+            car_inst.model = form.cleaned_data['model']
+            car_inst.profile = request.user.profile
+            car_inst.year = form.cleaned_data['year']
+            car_inst.profile = request.user.profile
+            car_inst.engine_type = form.cleaned_data['engine_type']
+            car_inst.mileage = form.cleaned_data['mileage']
+            car_inst.oil_type = form.cleaned_data['oil_type']
+            car_inst.color = form.cleaned_data['color']
+            car_inst.registration = form.cleaned_data['registration']
+            car_inst.vin_number = form.cleaned_data['vin_number']
+            car_inst.save()
+            return HttpResponseRedirect(reverse('car', args=[str(car_inst.unique_id)]))
+
+            # If this is a GET (or any other method) create the default form.
+    else:
+        form = AddCarForm(initial={'make': car_inst.make, 'model': car_inst.model, 'year': car_inst.year,
+                                   'engine_type': car_inst.engine_type, 'mileage': car_inst.mileage,
+                                   'oil_type': car_inst.oil_type, 'color': car_inst.color,
+                                   'registration': car_inst.registration, 'vin_number': car_inst.vin_number})
+    return render(request, 'add_car.html', {'form': form, 'car_inst': car_inst, 'car': car_inst})
 
 
-
-def add_car(request, unique_id):
+def add_car2(request, unique_id):
     """
    View function for adding a Car
    """
@@ -224,12 +254,15 @@ def add_car(request, unique_id):
             car_inst.registration = form.cleaned_data['registration']
             car_inst.vin_number = form.cleaned_data['vin_number']
             car_inst.save()
-            return HttpResponseRedirect(reverse('car', args=[str(car_inst.unique_id)]))
+            return HttpResponseRedirect(reverse('car', args=[str(unique_id)]))
 
             # If this is a GET (or any other method) create the default form.
     else:
-        form = AddCarForm()
-    return render(request, 'add_car.html', {'form': form, 'car_inst': car_inst})
+        form = AddCarForm(initial={'make': car_inst.make, 'model': car_inst.model, 'year': car_inst.year,
+                                   'engine_type': car_inst.engine_type, 'mileage': car_inst.mileage,
+                                   'oil_type': car_inst.oil_type, 'color': car_inst.color,
+                                   'registration': car_inst.registration, 'vin_number': car_inst.vin_number})
+    return render(request, 'add_car.html', {'form': form, 'car_inst': car_inst, 'car': car_inst})
 
 
 class UpdateCar(UpdateView):
