@@ -172,11 +172,41 @@ def add_technician_info(request, unique_id):
     return render(request, 'add_technician_info.html', {'form': form, 'techinfo_inst': techinfo_inst})
 
 
-def add_car(request):
+# def add_car(request, unique_id):
+#    """
+#    View function for adding a Car
+#    """
+#    try:
+#        car_inst=get_object_or_404(Car, unique_id = unique_id)
+#    except:
+#        car_inst = Car()
+#
+#
+#    if request.method == 'POST':
+#
+#        form = AddCarForm(request.POST)
+#        if form.is_valid():
+#
+#            car_inst.make = form.cleaned_data['make']
+#            car_inst.year = form.cleaned_data['year']
+#            car_inst.save()
+#            return HttpResponseRedirect(reverse('car', args=[str(unique_id)]))
+#
+#    # If this is a GET (or any other method) create the default form.
+#    else:
+#        form = AddCarForm()
+#    return render(request, 'add_car.html', {'form': form, 'car_inst':car_inst})
+
+
+
+def add_car(request, unique_id):
     """
-    View function for adding a Car
-    """
-    car_inst = Car()
+   View function for adding a Car
+   """
+    try:
+        car_inst = get_object_or_404(Car, unique_id=unique_id)
+    except:
+        car_inst = Car()
 
     if request.method == 'POST':
 
@@ -196,7 +226,7 @@ def add_car(request):
             car_inst.save()
             return HttpResponseRedirect(reverse('car', args=[str(car_inst.unique_id)]))
 
-    # If this is a GET (or any other method) create the default form.
+            # If this is a GET (or any other method) create the default form.
     else:
         form = AddCarForm()
     return render(request, 'add_car.html', {'form': form, 'car_inst': car_inst})
