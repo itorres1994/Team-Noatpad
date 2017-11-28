@@ -24,12 +24,12 @@
 
     <!-- jQuery library -->
     <script
-        src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+            src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js">
     </script>
 
     <!-- Latest compiled JavaScript -->
     <script
-        src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js">
+            src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js">
     </script>
     <!-- Add additional CSS in static file -->
     {% load static %}
@@ -37,8 +37,8 @@
 </head>
 
 <body>
-
-<div class="container">
+{% if user.is_authenticated %}
+    <div class="container">
 
     <div class="row">
         <div class="col-md-12">
@@ -50,7 +50,9 @@
             </div>
         </div>
     </div>
-
+{% else %}
+    <meta http-equiv="refresh" content="0;URL={% url 'login' %}?next={{ request.path }}"/>
+{% endif %}
 </div>
 </body>
 </html>

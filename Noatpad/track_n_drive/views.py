@@ -1,37 +1,45 @@
 from django.shortcuts import render
-from .models import Car, User, Technician, FutureRepair, PhoneTimings, EmailTimings, Notifications, Repair
+from .models import Car, Profile, Technician, FutureRepair, PhoneTimings, EmailTimings, Notifications, Repair, \
+    TechAddedInfo, Phone, Email, ProfileAddedInfo
 
 from django.contrib.auth.decorators import permission_required
-
+from django.http import HttpResponseNotFound
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
-
-from .forms import AddTechnicianForm, AddTechAddedInfoForm, AddCarForm, AddFutureRepairForm, AddRepairForm, AddPhoneForm, AddEmailForm, AddUserAddedInfoForm
+from django.views.generic.edit import UpdateView
+from .forms import AddTechnicianForm, AddTechAddedInfoForm, AddCarForm, AddFutureRepairForm, AddRepairForm, \
+    AddPhoneForm, AddEmailForm, AddUserAddedInfoForm, EditCarForm
 
 import datetime
 
 
 # Create your views here.
 def index(request):
-    user = User.objects.all()[0]
-    cars = Car.objects.all()
-    techs = Technician.objects.all()
-    # future_repairs = FutureRepair.objects.all()
-    # user_added_info = User.info.all()
-    return render(
-        request,
-        'index.html',
-        context={
-            'user': user, 'cars': cars, 'techs': techs,
-            # 'future_repairs': future_repairs,
-        },
-    )
+    if not request.user.is_anonymous():
+        profile = Profile.objects.get(id=request.user.profile.id)
+        cars = Car.objects.all()
+        user_cars = list(c for c in cars if c.profile == profile)
+        techs = Technician.objects.all()
+        # future_repairs = FutureRepair.objects.all()
+        # user_added_info = User.info.all()
+        return render(
+            request,
+            'index.html',
+            context={
+                'profile': profile, 'cars': user_cars, 'techs': techs,
+                # 'future_repairs': future_repairs,
+            },
+        )
+    else:
+        return render(request, 'registration/login.html')
 
 
 def car_prof(request, unique_id):
-    num_users = User.objects.all().count()
+    num_users = Profile.objects.all().count()
+    profile = Profile.objects.get(id=request.user.profile.id)
     cars = Car.objects.all()
+    user_cars = list(c for c in cars if c.profile == profile)
     car = Car.objects.get(unique_id=unique_id)
     techs = Technician.objects.all()
     future_repairs = FutureRepair.objects.all()
@@ -39,14 +47,14 @@ def car_prof(request, unique_id):
         request,
         'car.html',
         context={
-            'num_users': num_users, 'cars': cars, 'techs': techs,
+            'num_users': num_users, 'cars': user_cars, 'techs': techs,
             'future_repairs': future_repairs, 'car': car,
         },
     )
 
 
 def tech_prof(request, unique_id):
-    num_users = User.objects.all().count()
+    num_users = Profile.objects.all().count()
     cars = Car.objects.all()
     tech = Technician.objects.get(unique_id=unique_id)
     reps = Repair.objects.filter(technician=tech)
@@ -71,7 +79,7 @@ def tech_prof(request, unique_id):
 
 
 def stats(request, unique_id):
-    num_users = User.objects.all().count()
+    num_users = Profile.objects.all().count()
     cars = Car.objects.all()
     car = Car.objects.get(unique_id=unique_id)
     reps = Repair.objects.all()
@@ -105,6 +113,7 @@ def setting(request):
         }
     )
 
+
 ##### Views for Forms
 
 def add_technician(request, unique_id):
@@ -112,7 +121,7 @@ def add_technician(request, unique_id):
     View function for adding a Technician
     """
     try:
-        tech_inst=get_object_or_404(Technician, unique_id = unique_id)
+        tech_inst = get_object_or_404(Technician, unique_id=unique_id)
     except:
         tech_inst = Technician()
 
@@ -136,184 +145,194 @@ def add_technician(request, unique_id):
     else:
         form = AddTechnicianForm()
 
-    return render(request, 'add_technician.html', {'form': form, 'techinst':tech_inst})
+    return render(request, 'add_technician.html', {'form': form, 'techinst': tech_inst})
 
 
 def add_technician_info(request, unique_id):
-   """
-   View function for adding technician info
-   """
-   try:
-       techinfo_inst=get_object_or_404(TechAddedInfo, unique_id = unique_id)
-   except:
-       techinto_inst = TechAddedInfo()
+    """
+    View function for adding technician info
+    """
+    try:
+        techinfo_inst = get_object_or_404(TechAddedInfo, unique_id=unique_id)
+    except:
+        techinto_inst = TechAddedInfo()
 
-   if request.method == 'POST':
+    if request.method == 'POST':
 
-       form = AddTechAddedInfoForm(request.POST)
+        form = AddTechAddedInfoForm(request.POST)
 
-       if form.is_valid():
+        if form.is_valid():
+            techinfo_inst.information_name = form.cleaned_data['information_name']
+            techinfo_inst.information_contents = form.cleaned_data['information_contents']
 
-           techinfo_inst.information_name = form.cleaned_data['information_name']
-           techinfo_inst.information_contents = form.cleaned_data['information_contents']
-
-           techinfo_inst.save()
-           return HttpResponseRedirect(reverse('tech', args=[str(unique_id)]))
-   else:
-       form = AddTechAddedInfoForm()
-   return render(request, 'add_technician_info.html', {'form': form, 'techinfo_inst':techinfo_inst})
-
-def add_car(request, unique_id):
-   """
-   View function for adding a Car
-   """
-   try:
-       car_inst=get_object_or_404(Car, unique_id = unique_id)
-   except:
-       car_inst = Car()
+            techinfo_inst.save()
+            return HttpResponseRedirect(reverse('tech', args=[str(unique_id)]))
+    else:
+        form = AddTechAddedInfoForm()
+    return render(request, 'add_technician_info.html', {'form': form, 'techinfo_inst': techinfo_inst})
 
 
-   if request.method == 'POST':
+def add_car(request):
+    """
+    View function for adding a Car
+    """
+    car_inst = Car()
 
-       form = AddCarForm(request.POST)
-       if form.is_valid():
+    if request.method == 'POST':
 
-           car_inst.make = form.cleaned_data['make']
-           car_inst.year = form.cleaned_data['year']
-           car_inst.save()
-           return HttpResponseRedirect(reverse('car', args=[str(unique_id)]))
+        form = AddCarForm(request.POST)
+        if form.is_valid():
+            car_inst.make = form.cleaned_data['make']
+            car_inst.model = form.cleaned_data['model']
+            car_inst.profile = request.user.profile
+            car_inst.year = form.cleaned_data['year']
+            car_inst.profile = request.user.profile
+            car_inst.engine_type = form.cleaned_data['engine_type']
+            car_inst.mileage = form.cleaned_data['mileage']
+            car_inst.oil_type = form.cleaned_data['oil_type']
+            car_inst.color = form.cleaned_data['color']
+            car_inst.registration = form.cleaned_data['registration']
+            car_inst.vin_number = form.cleaned_data['vin_number']
+            car_inst.save()
+            return HttpResponseRedirect(reverse('car', args=[str(car_inst.unique_id)]))
 
-   # If this is a GET (or any other method) create the default form.
-   else:
-       form = AddCarForm()
-   return render(request, 'add_car.html', {'form': form, 'car_inst':car_inst})
+    # If this is a GET (or any other method) create the default form.
+    else:
+        form = AddCarForm()
+    return render(request, 'add_car.html', {'form': form, 'car_inst': car_inst})
 
-def add_future_repair(request, unique_id):
-   """
-   View function for adding Future Repairs
-   """
-   try:
-       future_repairs_inst=get_object_or_404(FutureRepair, unique_id = unique_id)
-   except:
-       future_repairs_inst = FutureRepair()
 
-   if request.method == 'POST':
+class UpdateCar(UpdateView):
+    model = Car
+    fields = ['make', 'model', 'year', 'engine_type', 'mileage', 'oil_type', 'color', 'registration', 'vin_number']
+    template_name = 'edit_car'
 
-       form = AddFutureRepairForm(request.POST)
-       if form.is_valid():
-           future_repairs_inst.name = form.cleaned_data['name']
-           future_repairs_inst.date_of_repair= form.cleaned_data['date_of_repair']
-           #Add technician, car, and notification, ForeignKey
-           future_repairs_inst.save()
-
-           return HttpResponseRedirect(reverse('car', args=[str(unique_id)]))
-   else:
-       form = AddFutureRepairForm()
-
-   return render(request, 'add_future_repairs.html', {'form': form, 'future_repairs_inst':future_repairs_inst})
-
-def add_repair(request, unique_id):
-   """
-   View function for adding a repair
-   """
-   try:
-       repair_inst=get_object_or_404(Repair, unique_id = unique_id)
-   except:
-       tech_inst = Repair()
-
-   if request.method == 'POST':
-
-       form = AddRepairForm(request.POST)
-       if form.is_valid():
-           repair_inst.name = form.cleaned_data['name']
-           repair_inst.cost = form.cleaned_data['cost']
-           repair_inst.date_made = form.cleaned_data['date_made']
-           repair_inst.save()
-
-           return HttpResponseRedirect(reverse('car', args=[str(unique_id)]))
-
-   # If this is a GET (or any other method) create the default form.
-   else:
-       form = AddRepairForm(initial={'renewal_date': proposed_renewal_date,})
-
-   return render(request, 'add_repair.html', {'form': form, 'repair_inst':repair_inst})
-
-def add_phone(request, unique_id):
-   """
-   View function for adding a phone number
-   """
-   try:
-       phone_inst=get_object_or_404(Phone, unique_id = unique_id)
-   except:
-       phone_inst = Phone()
-
-   if request.method == 'POST':
-
-       form = AddPhoneForm(request.POST)
-       if form.is_valid():
-
-           phone_inst.number = form.cleaned_data['number']
-           #add user, ForeignKey
-           phone_inst.save()
-
-           return HttpResponseRedirect(reverse('settings') )
-
-   else:
-
-       form = AddPhoneForm()
-
-   return render(request, 'add_phone.html', {'form': form, 'phone_inst':phone_inst})
-
-def add_email(request, unique_id):
-   """
-   View function for adding an email
-   """
-   try:
-       email_inst=get_object_or_404(Email, unique_id = unique_id)
-   except:
-       email_inst = Email()
-
-   if request.method == 'POST':
-
-       form = AddEmailForm(request.POST)
-
-       if form.is_valid():
-
-           email_inst.address = form.cleaned_data['address']
-           #add user, ForeignKey
-           email_inst.save()
-
-           return HttpResponseRedirect(reverse('settings') )
-
-   else:
-
-       form = AddEmailForm()
-
-   return render(request, 'add_email.html', {'form': form, 'email_inst':email_inst})
-
-def add_user_info(request, unique_id):
-   """
-   View function for adding User Info
-   """
-   try:
-       userinfo_inst=get_object_or_404(UserAddedInfo, unique_id = unique_id)
-   except:
-       userinfo_inst = UserAddedInfo()
-
-   if request.method == 'POST':
-
-       form = AddUserAddedInfoForm(request.POST)
-
-       if form.is_valid():
-
-           userinfo_inst.information_name = form.cleaned_data['information_name']
-           userinfo_inst.contents = form.cleaned_data['contents']
-           userinfo_inst.save()
-
-           return HttpResponseRedirect(reverse('settings') )
-
-   # If this is a GET (or any other method) create the default form.
-   else:
-       form = AddUserAddedInfoForm()
-   return render(request, 'add_user_info', {'form': form, 'userinfo_inst':userinfo_inst})
-
+# def add_future_repair(request, unique_id):
+#     """
+#     View function for adding Future Repairs
+#     """
+#     try:
+#         future_repairs_inst = get_object_or_404(FutureRepair, unique_id=unique_id)
+#     except:
+#         future_repairs_inst = FutureRepair()
+#
+#     if request.method == 'POST':
+#
+#         form = AddFutureRepairForm(request.POST)
+#         if form.is_valid():
+#             future_repairs_inst.name = form.cleaned_data['name']
+#             future_repairs_inst.date_of_repair = form.cleaned_data['date_of_repair']
+#             # Add technician, car, and notification, ForeignKey
+#             future_repairs_inst.save()
+#
+#             return HttpResponseRedirect(reverse('car', args=[str(unique_id)]))
+#     else:
+#         form = AddFutureRepairForm()
+#
+#     return render(request, 'add_future_repairs.html', {'form': form, 'future_repairs_inst': future_repairs_inst})
+#
+#
+# def add_repair(request, unique_id):
+#     """
+#     View function for adding a repair
+#     """
+#     try:
+#         repair_inst = get_object_or_404(Repair, unique_id=unique_id)
+#     except:
+#         tech_inst = Repair()
+#
+#     if request.method == 'POST':
+#
+#         form = AddRepairForm(request.POST)
+#         if form.is_valid():
+#             repair_inst.name = form.cleaned_data['name']
+#             repair_inst.cost = form.cleaned_data['cost']
+#             repair_inst.date_made = form.cleaned_data['date_made']
+#             repair_inst.save()
+#
+#             return HttpResponseRedirect(reverse('car', args=[str(unique_id)]))
+#
+#     # If this is a GET (or any other method) create the default form.
+#     else:
+#         form = AddRepairForm(initial={'renewal_date': proposed_renewal_date, })
+#
+#     return render(request, 'add_repair.html', {'form': form, 'repair_inst': repair_inst})
+#
+#
+# def add_phone(request, unique_id):
+#     """
+#     View function for adding a phone number
+#     """
+#     try:
+#         phone_inst = get_object_or_404(Phone, unique_id=unique_id)
+#     except:
+#         phone_inst = Phone()
+#
+#     if request.method == 'POST':
+#
+#         form = AddPhoneForm(request.POST)
+#         if form.is_valid():
+#             phone_inst.number = form.cleaned_data['number']
+#             # add user, ForeignKey
+#             phone_inst.save()
+#
+#             return HttpResponseRedirect(reverse('settings'))
+#
+#     else:
+#
+#         form = AddPhoneForm()
+#
+#     return render(request, 'add_phone.html', {'form': form, 'phone_inst': phone_inst})
+#
+#
+# def add_email(request, unique_id):
+#     """
+#     View function for adding an email
+#     """
+#     try:
+#         email_inst = get_object_or_404(Email, unique_id=unique_id)
+#     except:
+#         email_inst = Email()
+#
+#     if request.method == 'POST':
+#
+#         form = AddEmailForm(request.POST)
+#
+#         if form.is_valid():
+#             email_inst.address = form.cleaned_data['address']
+#             # add user, ForeignKey
+#             email_inst.save()
+#
+#             return HttpResponseRedirect(reverse('settings'))
+#
+#     else:
+#
+#         form = AddEmailForm()
+#
+#     return render(request, 'add_email.html', {'form': form, 'email_inst': email_inst})
+#
+#
+# def add_user_info(request, unique_id):
+#     """
+#     View function for adding User Info
+#     """
+#     try:
+#         userinfo_inst = get_object_or_404(ProfileAddedInfo, unique_id=unique_id)
+#     except:
+#         userinfo_inst = ProfileAddedInfo()
+#
+#     if request.method == 'POST':
+#
+#         form = AddUserAddedInfoForm(request.POST)
+#
+#         if form.is_valid():
+#             userinfo_inst.information_name = form.cleaned_data['information_name']
+#             userinfo_inst.contents = form.cleaned_data['contents']
+#             userinfo_inst.save()
+#
+#             return HttpResponseRedirect(reverse('settings'))
+#
+#     # If this is a GET (or any other method) create the default form.
+#     else:
+#         form = AddUserAddedInfoForm()
+#     return render(request, 'add_user_info', {'form': form, 'userinfo_inst': userinfo_inst})

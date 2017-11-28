@@ -6,7 +6,7 @@ from django.utils.translation import ugettext_lazy as _
 import datetime
 
 from .models import Technician, TechAddedInfo, Car, FutureRepair, Repair, Phone, Email,  \
-    UserAddedInfo, EmailTimings, PhoneTimings
+    ProfileAddedInfo, EmailTimings, PhoneTimings
 
 #ModelForm automatically includes all fields and help texts, exclude is used to
 #specifically exclude those fields, and labels overrides the default labels.
@@ -26,7 +26,12 @@ class AddTechAddedInfoForm(ModelForm):
 class AddCarForm(ModelForm):
     class Meta:
         model = Car
-        exclude = { 'unique_id' }
+        exclude = { 'unique_id', 'profile' }
+
+class EditCarForm(ModelForm):
+    class Meta:
+        model = Car
+        exclude = { 'unique_id', 'profile' }
 
 class AddFutureRepairForm(ModelForm):
     class Meta:
@@ -50,7 +55,7 @@ class AddEmailForm(ModelForm):
 
 class AddUserAddedInfoForm(ModelForm):
     class Meta:
-        model = UserAddedInfo
+        model = ProfileAddedInfo
         exclude = { 'user_info' }
 
 # class AddPhoneTimingsForm(ModelForm):

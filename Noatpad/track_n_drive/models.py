@@ -1,5 +1,8 @@
 from django.db import models
 from django.urls import reverse  # Used to generate URLs by reversing the URL patterns
+from django.contrib.auth.models import User
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 import uuid
 import datetime
 
@@ -34,6 +37,7 @@ class Technician(models.Model):
     city = models.CharField(max_length=100, help_text="Enter the city of the technician.",
                             blank=False, null=False)
     company = models.CharField(max_length=100, help_text="Enter the company of the technician.", blank=True, null=True)
+
     # other_info = models.ForeignKey(TechAddedInfo, help_text="Additional Information", blank=True, null=True)
 
     def __str__(self):
@@ -58,8 +62,8 @@ class Car(models.Model):
     model = models.CharField(max_length=50, help_text="Enter the model of the car.", null=False, default="model")
     year = models.IntegerField(help_text="Enter the year of the car.", null=False, default=1)
     engine_type = models.CharField(max_length=50, help_text="Enter the engine type of the car.", null=True)
-    user = models.ForeignKey('User', help_text="Which user owns this car?", blank=False, null=False,
-                             on_delete=models.CASCADE)
+    profile = models.ForeignKey('Profile', help_text="Which user owns this car?", blank=False, null=False,
+                                on_delete=models.CASCADE, related_name="car")
     # repairs = models.ForeignKey(Repair, on_delete=models.CASCADE, blank=True, null=True)
     mileage = models.IntegerField(help_text="Enter the mileage of the car", null=True)
     oil_type = models.CharField(max_length=50, help_text="Enter the oil type of the car.", null=True)
@@ -95,7 +99,8 @@ class FutureRepair(models.Model):
     car = models.ForeignKey(Car, blank=False, help_text="Select the car that was repaired", related_name="futurerepair")
     notification = models.ForeignKey('Notifications', help_text="Notification association", on_delete=models.CASCADE,
                                      related_name="futurerepairnotif")
-    date_of_repair = models.DateField(null=False, blank=False, default=datetime.date.today(), help_text="Enter a date for this repair")
+    date_of_repair = models.DateField(null=False, blank=False, default=datetime.date.today(),
+                                      help_text="Enter a date for this repair")
 
     def __str__(self):
         """
@@ -118,7 +123,8 @@ class Repair(models.Model):
                                    on_delete=models.SET_NULL, related_name="repair")
     car = models.ForeignKey(Car, blank=False, help_text="Select the car that was repaired", on_delete=models.CASCADE,
                             related_name="repair")
-    date_made = models.DateField(null=False, blank=False, default=datetime.date.today(), help_text="Enter the date of repair")
+    date_made = models.DateField(null=False, blank=False, default=datetime.date.today(),
+                                 help_text="Enter the date of repair")
 
     def __str__(self):
         """
@@ -130,14 +136,14 @@ class Repair(models.Model):
         ordering = ["date_made"]
 
 
-class UserAddedInfo(models.Model):
+class ProfileAddedInfo(models.Model):
     """
     Model representing the User Information.
     """
     information_name = models.CharField(max_length=200, help_text="Information Category", default="info name")
     information_contents = models.CharField(max_length=200, help_text="Information to Add", default="info content")
-    user_info = models.ForeignKey('User', help_text="User", blank=True, null=True, on_delete=models.SET_NULL,
-                                  related_name="info")
+    profile_info = models.ForeignKey('Profile', help_text="User", blank=True, null=True, on_delete=models.SET_NULL,
+                                     related_name="info")
 
     def __str__(self):
         """
@@ -154,7 +160,7 @@ class Phone(models.Model):
     number = models.CharField(primary_key=True, max_length=15,
                               help_text="Enter your phone number.",
                               default="0000000000")
-    user = models.ForeignKey('User', help_text="User Phone", blank=True, null=True, on_delete=models.SET_NULL)
+    profile = models.ForeignKey('Profile', help_text="User Phone", blank=True, null=True, on_delete=models.SET_NULL)
 
     def __str__(self):
         """
@@ -197,7 +203,7 @@ class Email(models.Model):
     address = models.EmailField(primary_key=True, max_length=254,
                                 help_text="Enter your Email.",
                                 default="you@example.com")
-    user = models.ForeignKey('User', help_text="User Email", blank=True, null=True, on_delete=models.SET_NULL)
+    profile = models.ForeignKey('Profile', help_text="User Email", blank=True, null=True, on_delete=models.SET_NULL)
 
     def __str__(self):
         """
@@ -238,7 +244,8 @@ class Settings(models.Model):
     unique_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     email = models.ForeignKey(Email, help_text="Select an email", on_delete=models.CASCADE)
     phone = models.ForeignKey(Phone, help_text="Select a phone", on_delete=models.CASCADE)
-    user = models.ForeignKey('User', help_text="User Settings", on_delete=models.CASCADE)
+    profile = models.ForeignKey('Profile', help_text="User Settings", on_delete=models.CASCADE)
+
     # email_timings = models.ForeignKey(EmailTimings, help_text="Select an email timing.")
     # phone_timings = models.ForeignKey(PhoneTimings, help_text="Select a phone timing.")
 
@@ -246,7 +253,7 @@ class Settings(models.Model):
         """
         String for representing the Model object (in Admin site etc.)
         """
-        return self.user.__str__()
+        return self.profile.__str__()
 
 
 class Notifications(models.Model):
@@ -258,7 +265,8 @@ class Notifications(models.Model):
     # phone_timings = models.ManyToManyField(PhoneTimings, help_text="When should you be notified via phone?")
     # repair = models.ForeignKey(FutureRepair, on_delete=models.CASCADE, null=True)
     date = models.DateField(null=True, blank=False)
-    user = models.ForeignKey('User', help_text="Notify User", blank=False, null=False, on_delete=models.CASCADE)
+    profile = models.ForeignKey('Profile', help_text="Notify User", blank=False, null=False, on_delete=models.CASCADE)
+
     # future_repair = models.ForeignKey(FutureRepair, help_text="Future Repair Association", blank=False, null=False,
     #                                   on_delete=models.CASCADE)
 
@@ -266,7 +274,7 @@ class Notifications(models.Model):
         """
         String for representing the Model object (in Admin site etc.)
         """
-        return self.date.__str__() + " - " + self.user.__str__()
+        return self.date.__str__() + " - " + self.profile.__str__()
 
     class Meta:
         ordering = ["date"]
@@ -279,7 +287,7 @@ class License(models.Model):
     license_num = models.CharField(primary_key=True, max_length=50, help_text="Enter your license number")
     license_class = models.CharField(max_length=50, help_text="Enter your license class")
     expiration_date = models.DateField(null=False, blank=False)
-    user = models.ForeignKey('User', help_text="User License", blank=True, null=True, on_delete=models.SET_NULL)
+    profile = models.ForeignKey('Profile', help_text="User License", blank=True, null=True, on_delete=models.SET_NULL)
 
     def __str__(self):
         """
@@ -301,6 +309,7 @@ class Insurance(models.Model):
     expiration_date = models.DateField(null=True, blank=False)
     car = models.ForeignKey('Car', help_text="Car Insurance", blank=False, null=True, on_delete=models.SET_NULL,
                             related_name="insurance")
+
     # user = models.ForeignKey('User', help_text="User Insurance", blank=True, null=True)
 
     def __str__(self):
@@ -313,14 +322,16 @@ class Insurance(models.Model):
         ordering = ["expiration_date"]
 
 
-class User(models.Model):
+class Profile(models.Model):
     """
     Model representing the User profile.
     """
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     fname = models.CharField(max_length=30, help_text="Enter your first name.", default="Joe")
     lname = models.CharField(max_length=30, help_text="Enter your last name.", default="Schmo")
     password = models.CharField(max_length=30, help_text="Enter your password.", default="password")
+
     # cars = models.ManyToManyField(Car, help_text="Select a car for this User.",
     #                               default=True, null=True)
     # phone = models.ForeignKey(Phone, help_text="Select a phone for this User.",
@@ -335,6 +346,15 @@ class User(models.Model):
     # settings = models.ForeignKey(Settings, help_text="Select settings")
     # notifications = models.ForeignKey(Notifications, help_text="Notifications for this User.",
     #                                   blank=True, null=True)
+
+    @receiver(post_save, sender=User)
+    def create_user_profile(sender, instance, created, **kwargs):
+        if created:
+            Profile.objects.create(user=instance)
+
+    @receiver(post_save, sender=User)
+    def save_user_profile(sender, instance, **kwargs):
+        instance.profile.save()
 
     def __str__(self):
         """

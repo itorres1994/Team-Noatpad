@@ -3,7 +3,7 @@ from django.contrib import admin
 # Register your models here.
 
 from .models import Car, Phone, PhoneTimings, Email, EmailTimings, Settings, TechAddedInfo, Technician, Repair, \
-    UserAddedInfo, Notifications, License, Insurance, User, FutureRepair
+    ProfileAddedInfo, Notifications, License, Insurance, Profile, FutureRepair
 
 admin.site.register(Phone)
 admin.site.register(Email)
@@ -81,7 +81,7 @@ class TechnicianAdmin(admin.ModelAdmin):
 
 
 class UserInstanceInlineInfo(admin.TabularInline):
-    model = UserAddedInfo
+    model = ProfileAddedInfo
     extra = 0
 
 
@@ -110,8 +110,8 @@ class UserInstanceInlineSettings(admin.TabularInline):
     extra = 0
 
 
-@admin.register(User)
-class UserAdmin(admin.ModelAdmin):
+@admin.register(Profile)
+class ProfileAdmin(admin.ModelAdmin):
     list_display = ('fname', 'lname')
     inlines = [UserInstanceInlineInfo, UserInstanceInlineCars,
                UserInstanceInlinePhones, UserInstanceInlineEmails,
@@ -119,7 +119,7 @@ class UserAdmin(admin.ModelAdmin):
 
 
 # admin.site.register(Technician)
-admin.site.register(UserAddedInfo)
+admin.site.register(ProfileAddedInfo)
 admin.site.register(License)
 admin.site.register(Insurance)
 # admin.site.register(User)

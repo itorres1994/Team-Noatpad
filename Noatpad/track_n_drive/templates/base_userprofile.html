@@ -38,20 +38,23 @@
 </head>
 
 <body>
+{% if user.is_authenticated %}
+    <div class="container">
 
-<div class="container">
-
-    <div class="row">
-        <div class="col-md-12">
-            <div class="row">
-                {% block nav %}{% endblock %}
-            </div>
-            <div class="row">
-                {% block usercontent %}{% endblock %}
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    {% block nav %}{% endblock %}
+                </div>
+                <div class="row">
+                    {% block usercontent %}{% endblock %}
+                </div>
             </div>
         </div>
-    </div>
 
-</div>
+    </div>
+{% else %}
+    <meta http-equiv="refresh" content="0;URL={% url 'login' %}?next={{ request.path }}" />
+{% endif %}
 </body>
 </html>

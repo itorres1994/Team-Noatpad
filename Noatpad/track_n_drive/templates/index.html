@@ -35,7 +35,7 @@
                     </li>
                     {% endfor %}
                     <li>
-                        <a href="#">Add Car
+                        <a href="{% url 'add_car' %}">Add Car
                             <span class="glyphicon glyphicon-plus"></span>
                         </a>
                     </li>
@@ -105,6 +105,11 @@
                     <li>
                         <a href="{% url 'settings' %}">Settings
                             <span class="glyphicon glyphicon-asterisk"></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'logout' %}">Logout
+                            <span class="glyphicon glyphicon-eye-close"></span>
                         </a>
                     </li>
                 </ul>
@@ -261,10 +266,10 @@
                         <!-- Panel body for User Info -->
                         <div class="panel-body">
                             <h4 title="Editable Field: User name">
-                                Name: {{ user.fname }} {{ user.lname }}
+                                Name: {{ profile.fname }} {{ profile.lname }}
                             </h4>
                             <!-- This loop takes the added info of user and prints it -->
-                            {% for info in user.info.all %}
+                            {% for info in profile.info.all %}
                             <h4>
                                 {{ info.information_name|title }}: {{ info.information_contents|title }}
                             </h4>

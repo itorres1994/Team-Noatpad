@@ -1,0 +1,73 @@
+body{
+    background:url("../pic/back.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+
+.form-body{
+    background:#fff;
+    padding:20px;
+    margin-top: 5px;
+    border-radius: 20px;
+    width: 350px; 
+}
+
+.final-login li{
+	width:50%;
+}
+
+
+.nav-tabs {
+    border-bottom: none !important;
+}
+
+.nav-tabs>li{
+	color:#222 !important;
+}
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus {
+    color: rgb(255, 255, 255);
+    background-color:  rgb(38, 142, 206);
+    border: none !important;
+    border-bottom-color: transparent;
+    border-radius:5px;
+    margin-bottom: 8px;
+}
+.nav-tabs>li>a {
+    margin-right: 2px;
+    border: none !important;
+    border-radius:none !important;
+	text-transform:uppercase;
+	font-size:16px;
+}
+
+.sa-innate-form input[type=text], input[type=password], input[type=file], textarea, select, email{
+    font-size:13px;
+	padding:10px;
+	border:1px solid#ccc;
+	outline:none;
+	width:100%;
+    margin:8px 0;
+    border-radius: 5px;
+
+    
+}
+
+.bt{
+    text-align: center
+}
+.sa-innate-form button{
+    border:1px solid rgb(101, 230, 118);
+	background: rgb(101, 230, 118);
+	color:#fff;
+	padding:10px 25px;
+	font-size:14px;
+    margin-top:5px;
+    width: 200px;
+    border-radius: 5px;
+	}
+.reset{
+    margin-top: 7px;
+    text-align: center
+}

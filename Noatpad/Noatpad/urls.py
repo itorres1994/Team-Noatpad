@@ -25,3 +25,8 @@ urlpatterns = [
     url(r'^track_n_drive/', include('track_n_drive.urls')),
     url(r'^$', RedirectView.as_view(url='/track_n_drive/', permanent=True)),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
+# Add Django site authentication urls (for login, logout, password management)
+urlpatterns += [
+    url(r'^accounts/', include('django.contrib.auth.urls')),
+]
