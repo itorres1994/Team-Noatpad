@@ -95,7 +95,7 @@ class FutureRepair(models.Model):
     car = models.ForeignKey(Car, blank=False, help_text="Select the car that was repaired", related_name="futurerepair")
     notification = models.ForeignKey('Notifications', help_text="Notification association", on_delete=models.CASCADE,
                                      related_name="futurerepairnotif")
-    date_of_repair = models.DateField(null=False, blank=False, default=datetime.date.today())
+    date_of_repair = models.DateField(null=False, blank=False, default=datetime.date.today(), help_text="Enter a date for this repair")
 
     def __str__(self):
         """
@@ -118,7 +118,7 @@ class Repair(models.Model):
                                    on_delete=models.SET_NULL, related_name="repair")
     car = models.ForeignKey(Car, blank=False, help_text="Select the car that was repaired", on_delete=models.CASCADE,
                             related_name="repair")
-    date_made = models.DateField(null=False, blank=False, default=datetime.date.today())
+    date_made = models.DateField(null=False, blank=False, default=datetime.date.today(), help_text="Enter the date of repair")
 
     def __str__(self):
         """
