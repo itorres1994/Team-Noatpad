@@ -28,4 +28,8 @@
     list-style-type: none;
 }
 
+.alert {
+  background-color: crimson;
+}
+
 

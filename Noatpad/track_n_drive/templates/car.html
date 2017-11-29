@@ -180,33 +180,25 @@
                                                     <!-- Start of Panel body -->
                                                     <div class="panel-body">
                                                         <ul class="list-group list-var">
-                                                            {% for rep in car.futurerepair.all %}
-                                                                <!-- ifequal rep.car.vin_number car.vin_number -->
+                                                            {% if car.futurerepair.all|length == 1 %}
                                                                 <li>
-                                                                    {{ rep.technician.fname }}
-                                                                    {{ rep.technician.lname }}<br/>
-                                                                    {{ rep.name }}<br/>
-                                                                    {{ rep.date_of_repair }}
+                                                                    No Repairs Scheduled...
                                                                 </li>
-                                                                <!-- Horizontal line -->
-                                                                <hr>
-                                                                <!-- endifequal -->
-                                                            {% endfor %}
+                                                            {% else %}
+                                                                {% for rep in car.futurerepair.all %}
+                                                                    <!-- ifequal rep.car.vin_number car.vin_number -->
+                                                                    <li>
+                                                                        {{ rep.technician.fname }}
+                                                                        {{ rep.technician.lname }}<br/>
+                                                                        {{ rep.name }}<br/>
+                                                                        {{ rep.date_of_repair }}
+                                                                    </li>
+                                                                    <!-- Horizontal line -->
+                                                                    <hr>
+                                                                    <!-- endifequal -->
+                                                                {% endfor %}
+                                                            {% endif %}
                                                         </ul>
-                                                        <!-- Make a button group -->
-                                                        <div class="text-center btn-group">
-
-                                                            <!-- First Button of group -->
-                                                            <button type="button" class="btn btn-primary">
-                                                                Edit <span class="glyphicon glyphicon-list-alt"></span>
-                                                            </button> <!-- End of first button of group -->
-
-                                                            <!-- Second Button of group -->
-                                                            <button type="button" class="btn btn-primary">
-                                                                Add <span class="glyphicon glyphicon-plus"></span>
-                                                            </button> <!-- End of second button of group -->
-
-                                                        </div> <!-- End of button group -->
 
                                                     </div> <!-- End of Panel Body -->
 
@@ -220,6 +212,20 @@
 
                             </ul> <!-- End of list group of panels -->
 
+                            <!-- Make a button group -->
+                            <div class="text-center btn-group">
+
+                                <!-- First Button of group -->
+                                <button type="button" class="btn btn-primary">
+                                    Edit <span class="glyphicon glyphicon-list-alt"></span>
+                                </button> <!-- End of first button of group -->
+
+                                <!-- Second Button of group -->
+                                <button type="button" class="btn btn-primary">
+                                    Add <span class="glyphicon glyphicon-plus"></span>
+                                </button> <!-- End of second button of group -->
+
+                            </div> <!-- End of button group -->
                         </div> <!-- End of notification panel body -->
 
                     </div> <!-- End of notification panel contents -->
@@ -306,15 +312,14 @@
                                 <div class="text-center btn-group">
 
                                     <!-- First Button of group -->
-                                    <a href="{{ car.get_absolute_url }}add-car">
-                                        <button type="button" class="btn btn-primary">
+                                    <a class="btn btn-primary" href="{{ car.get_absolute_url }}add-car">
                                             Edit <span class="glyphicon glyphicon-list-alt"></span>
-                                        </button><!-- End of first button of group -->
-                                    </a>
+
+                                    </a> <!-- End of first button of group -->
                                     <!-- Second Button of group -->
-                                    <button type="button" class="btn btn-primary">
+                                    <a class="btn btn-primary" href="{% url 'add_car' %}">
                                         Add <span class="glyphicon glyphicon-plus"></span>
-                                    </button> <!-- End of second button of group -->
+                                    </a> <!-- End of second button of group -->
 
                                 </div> <!-- End of button group -->
 
