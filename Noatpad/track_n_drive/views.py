@@ -115,8 +115,36 @@ def setting(request):
 
 
 ##### Views for Forms
+def add_technician1(request):
+    """
+    View function for adding a Technician
+    """
+    tech_inst = Technician()
 
-def add_technician(request, unique_id):
+    if request.method == 'POST':
+
+        form = AddTechnicianForm(request.POST)
+
+        if form.is_valid():
+            # process the data in form.cleaned_data as required (here we just write it to the model due_back field)
+            tech_inst.fname = form.cleaned_data['fname']
+            tech_inst.lname = form.cleaned_data['lname']
+            tech_inst.street = form.cleaned_data['street']
+            tech_inst.city = form.cleaned_data['city']
+            tech_inst.company = form.cleaned_data['company']
+
+            tech_inst.save()
+            # redirect to a new URL:
+            return HttpResponseRedirect(reverse('tech', args=[str(tech_inst.unique_id)]))
+
+    # If this is a GET (or any other method) create the default form.
+    else:
+        form = AddTechnicianForm()
+
+    return render(request, 'add_technician.html', {'form': form, 'techinst': tech_inst})
+
+
+def add_technician2(request, unique_id):
     """
     View function for adding a Technician
     """
@@ -143,7 +171,9 @@ def add_technician(request, unique_id):
 
     # If this is a GET (or any other method) create the default form.
     else:
-        form = AddTechnicianForm()
+        form = AddTechnicianForm(initial={'fname': tech_inst.fname, 'lname': tech_inst.lname,
+                                          'street': tech_inst.street, 'city': tech_inst.city,
+                                          'company': tech_inst.company})
 
     return render(request, 'add_technician.html', {'form': form, 'techinst': tech_inst})
 
