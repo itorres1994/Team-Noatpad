@@ -35,7 +35,7 @@
                     </li>
                     {% endfor %}
                     <li>
-                        <a href="#">Add Car
+                        <a href="{% url 'add_car' %}">Add Car
                             <span class="glyphicon glyphicon-plus"></span>
                         </a>
                     </li>
@@ -60,7 +60,7 @@
                     </li>
                     {% endfor %}
                     <li>
-                        <a href="#">Add Technician
+                        <a href="{% url 'add_technician' %}">Add Technician
                             <span class="glyphicon glyphicon-plus"></span>
                         </a>
                     </li>
@@ -288,10 +288,11 @@
                             <div class="text-center btn-group">
 
                                 <!-- First Button of group -->
-                                <button type="button" class="btn btn-primary">
-                                    Edit <span class="glyphicon glyphicon-list-alt"></span>
-                                </button> <!-- End of first button of group -->
-
+                                <a href="{{ tech.get_absolute_url }}add-tech">
+                                    <button type="button" class="btn btn-primary">
+                                        Edit <span class="glyphicon glyphicon-list-alt"></span>
+                                    </button> <!-- End of first button of group -->
+                                </a>
                                 <!-- Second Button of group -->
                                 <button type="button" class="btn btn-primary">
                                     Add <span class="glyphicon glyphicon-plus"></span>
