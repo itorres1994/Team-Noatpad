@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
  <!-- Webpage Pixel Icon -->
-  <link rel="icon" type="image/gif" href="./img/pixel-gif-drawing.gif">
+  {% load static %}
+    <link rel="icon" type="image/gif" href="{% static 'pic/pixel-gif-drawing.gif' %}">
 
   {% block title %}<title>Track N&apos; Drive</title>{% endblock %}
   <meta charset="utf-8">

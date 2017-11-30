@@ -230,6 +230,12 @@ def add_car1(request):
     """
    View function for adding a Car
    """
+
+    profile = Profile.objects.get(id=request.user.profile.id)
+    cars = Car.objects.all()
+    user_cars = list(c for c in cars if c.profile == profile)
+    techs = Technician.objects.all()
+
     car_inst = Car()
 
     if request.method == 'POST':
@@ -256,7 +262,8 @@ def add_car1(request):
                                    'engine_type': car_inst.engine_type, 'mileage': car_inst.mileage,
                                    'oil_type': car_inst.oil_type, 'color': car_inst.color,
                                    'registration': car_inst.registration, 'vin_number': car_inst.vin_number})
-    return render(request, 'add_car.html', {'form': form, 'car_inst': car_inst, 'car': car_inst})
+    return render(request, 'add_car.html', {'form': form, 'car_inst': car_inst, 'car': car_inst, 'cars': user_cars,
+                    'techs': techs, 'profile': profile})
 
 
 def add_car2(request, unique_id):

@@ -1,12 +1,53 @@
+
+
 {% extends "test_generic.html" %}
 {% block content %}
+<style>
 
-    <form action="" method="post">
-        {% csrf_token %}
-        <table>
-        {{ form }}
-        </table>
-        <input type="submit" value="Submit" />
-    </form>
+.helptext{
+  visibility: hidden;
+}
+
+</style>
+
+<div class="form-body">
+<div class="tab-content">
+<div id="sectionA" class="tab-pane fade in active">
+<div class="innter-form">
+<form class="sa-innate-form" action="" method="post">
+{% csrf_token %}
+
+
+
+<div class="panel panel-default">
+
+
+<div class="panel-heading text-center">
+<p class="panel-title"> Add Cars  </p>
+</div>
+
+   <div class="panel-body">
+   <table>
+   {{ form }}
+   </table>
+   </div>
+
+   <div class ="bt">
+   <button type="submit">Add Car</button>
+   </div>
+   
+
+
+
+
+</div>
+
+  
+</form>
+</div>
+</div>
+</div>
+</div>
 
 {% endblock %}
+

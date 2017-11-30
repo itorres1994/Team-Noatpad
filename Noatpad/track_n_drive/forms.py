@@ -27,6 +27,7 @@ class AddCarForm(ModelForm):
     class Meta:
         model = Car
         exclude = { 'unique_id', 'profile' }
+        help_texts=''
 
 class EditCarForm(ModelForm):
     class Meta:
