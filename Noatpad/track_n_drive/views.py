@@ -1,5 +1,6 @@
 from django.shortcuts import render
-from .models import Car, CarAddedInfo, Profile, Technician, FutureRepair, PhoneTimings, EmailTimings, Notifications, Repair, \
+from .models import Car, CarAddedInfo, Profile, Technician, FutureRepair, PhoneTimings, EmailTimings, Notifications, \
+    Repair, \
     TechAddedInfo, Phone, Email, ProfileAddedInfo
 
 from django.contrib.auth.decorators import permission_required
@@ -251,10 +252,10 @@ def add_car_info(request, unique_id):
             # If this is a GET (or any other method) create the default form.
     else:
         form = EditCarForm()
-    return render(request, 'add_car_info.html', {'form': form, 'car_info_inst': car_info_inst,})
+    return render(request, 'add_car_info.html', {'form': form, 'car_info_inst': car_info_inst, })
 
 
-def add_car1(request):
+def add_car(request):
     """
    View function for adding a Car
    """
@@ -284,60 +285,45 @@ def add_car1(request):
     return render(request, 'add_car.html', {'form': form, 'car': car_inst})
 
 
-class UpdateCarView(UpdateView):
-    def add_car2(request, unique_id):
-        """
-       View function for adding a Car
-       """
-        try:
-            car_inst = get_object_or_404(Car, unique_id=unique_id)
-            car_info_inst = get_list_or_404(CarAddedInfo, car=car_inst)
-        except:
-            return HttpResponseNotFound('Hey Tim :)')
+def edit_car(request, unique_id):
+    """
+   View function for adding a Car
+   """
+    try:
+        car_inst = get_object_or_404(Car, unique_id=unique_id)
+    except:
+        return HttpResponseNotFound('Hey Tim :)')
 
-        if request.method == 'POST':
+    if request.method == 'POST':
 
-            form = AddEditCarForm(request.POST)
-            if form.is_valid():
-                car_inst.make = form['car'].cleaned_data['make']
-                car_inst.model = form['car'].cleaned_data['model']
-                car_inst.profile = request.user.profile
-                car_inst.year = form['car'].cleaned_data['year']
-                car_inst.engine_type = form['car'].cleaned_data['engine_type']
-                car_inst.mileage = form['car'].cleaned_data['mileage']
-                car_inst.oil_type = form['car'].cleaned_data['oil_type']
-                car_inst.color = form['car'].cleaned_data['color']
-                car_inst.registration = form['car'].cleaned_data['registration']
-                car_inst.vin_number = form['car'].cleaned_data['vin_number']
-                for info in car_info_inst:
-                    info.information_name = form['caraddedinfo'].cleaned_data['information_name']
-                    info.information_contents = form['caraddedinfo'].cleaned_data['information_contents']
-                    info.save()
-                car_inst.save()
-                # car_info_inst.save()
-                return HttpResponseRedirect(reverse('car', args=[str(unique_id)]))
+        form = AddCarForm(request.POST)
+        if form.is_valid():
+            car_inst.make = form.cleaned_data['make']
+            car_inst.model = form.cleaned_data['model']
+            car_inst.profile = request.user.profile
+            car_inst.year = form.cleaned_data['year']
+            car_inst.engine_type = form.cleaned_data['engine_type']
+            car_inst.mileage = form.cleaned_data['mileage']
+            car_inst.oil_type = form.cleaned_data['oil_type']
+            car_inst.color = form.cleaned_data['color']
+            car_inst.registration = form.cleaned_data['registration']
+            car_inst.vin_number = form.cleaned_data['vin_number']
+            car_inst.save()
+            # car_info_inst.save()
+            return HttpResponseRedirect(reverse('car', args=[str(unique_id)]))
 
-                # If this is a GET (or any other method) create the default form.
-        else:
-            instance = {
-                'car': {
-                    'make': car_inst.make, 'model': car_inst.model, 'year': car_inst.year,
-                    'engine_type': car_inst.engine_type, 'mileage': car_inst.mileage,
-                    'oil_type': car_inst.oil_type, 'color': car_inst.color,
-                    'registration': car_inst.registration, 'vin_number': car_inst.vin_number
-                },
-                'caraddedinfo': {
-                    'information_name': [], 'information_contents': []
-                }
-            }
-            for info in car_info_inst:
-                instance['caraddedinfo']['information_name'].append(info.information_name)
-                instance['caraddedinfo']['information_contents'].append(info.information_contents)
-            # for info in car_info_inst:
-            #     instance[info.information_contents] = info.information_contents
-            print(instance)
-            form = AddEditCarForm(instance)
-        return render(request, 'add_car.html', {'form': form, 'car': car_inst})
+            # If this is a GET (or any other method) create the default form.
+    else:
+        initial = {
+            'make': car_inst.make, 'model': car_inst.model, 'year': car_inst.year,
+            'engine_type': car_inst.engine_type, 'mileage': car_inst.mileage,
+            'oil_type': car_inst.oil_type, 'color': car_inst.color,
+            'registration': car_inst.registration, 'vin_number': car_inst.vin_number
+        }
+        print(initial)
+        form = AddCarForm(initial)
+    return render(request, 'add_car.html', {'form': form, 'car': car_inst})
+
 
 def add_future_repair(request, unique_id):
     """
@@ -362,7 +348,6 @@ def add_future_repair(request, unique_id):
         form = AddFutureRepairForm()
 
     return render(request, 'add_future_repairs.html', {'form': form, 'future_repairs_inst': future_repairs_inst})
-
 
 # def add_repair(request, unique_id):
 #     """
