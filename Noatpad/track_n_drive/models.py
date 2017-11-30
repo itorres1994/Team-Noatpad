@@ -34,6 +34,8 @@ class Technician(models.Model):
     lname = models.CharField(max_length=30, help_text="Enter technician last name.", blank=False, null=False)
     street = models.CharField(max_length=100, help_text="Enter the street address of the technician.",
                               blank=False, null=False)
+    profile = models.ForeignKey('Profile', help_text="Customer", blank=False, null=False,
+                                on_delete=models.CASCADE, related_name="tech")
     city = models.CharField(max_length=100, help_text="Enter the city of the technician.",
                             blank=False, null=False)
     company = models.CharField(max_length=100, help_text="Enter the company of the technician.", blank=True, null=True)
@@ -115,7 +117,7 @@ class FutureRepair(models.Model):
                                    on_delete=models.SET_NULL)
     car = models.ForeignKey(Car, blank=False, help_text="Select the car that was repaired", related_name="futurerepair")
     notification = models.ForeignKey('Notifications', help_text="Notification association", on_delete=models.CASCADE,
-                                     related_name="futurerepairnotif")
+                                     related_name="futurerepairnotif", blank=True, null=True)
     date_of_repair = models.DateField(null=False, blank=False, default=datetime.date.today(),
                                       help_text="Enter a date for this repair")
 

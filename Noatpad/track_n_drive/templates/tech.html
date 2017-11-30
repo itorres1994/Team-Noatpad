@@ -180,6 +180,9 @@
                                             <!-- Start of Panel body -->
                                             <div class="panel-body">
                                                 <ul class="list-group list-var">
+                                                {% if car.futurerepair.all|length == 0 %}
+                                                    No Repairs Scheduled...
+                                                {% else %}
                                                     {% for rep in car.futurerepair.all %}
                                                     <!-- ifequal rep.car.vin_number car.vin_number -->
                                                     <li>
@@ -192,6 +195,7 @@
                                                     <hr>
                                                     <!-- endifequal -->
                                                     {% endfor %}
+                                                {% endif %}
                                                 </ul>
                                                 <!-- Make a button group -->
                                                 <div class="text-center btn-group">
