@@ -24,9 +24,17 @@
                             </div>
 
                             <div class="panel-body">
-                                <table>
-                                    {{ form }}
-                                </table>
+                                <form action="" method="post">{% csrf_token %}
+                                    <label for="fname">First Name</label>
+                                    <input id="fname" type="text" value="{{ prof_ins.fname }}">
+                                    <label for="lname" type="text">Last Name</label>
+                                    <input id="lname" type="text" value="{{ prof_ins.lname }}">
+                                    {% for info in prof_info_inst %}
+                                        <input type="text" value="{{ info.information_name }}">
+                                        <input type="text" value="{{ info.information_contents }}">
+                                    {% endfor %}
+                                    <input type="submit" value="Update"/>
+                                </form>
 
                             </div>
 

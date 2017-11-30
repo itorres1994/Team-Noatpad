@@ -408,12 +408,17 @@ def edit_user(request):
         except:
             return HttpResponseNotFound('hello :)')
 
+        prof_info_ins = get_list_or_404(ProfileAddedInfo, profile_info=prof_inst)
         if request.method == 'POST':
 
             form = EditUserForm(request.POST)
             if form.is_valid():
                 prof_inst.fname = form.cleaned_data['fname']
                 prof_inst.lname = form.cleaned_data['lname']
+                for info in prof_info_ins:
+                    info.information_name = form.cleaned_data['information_name']
+                    info.information_contents = form.cleaned_data['information_contents']
+                    info.save()
                 prof_inst.save()
 
                 return HttpResponseRedirect(reverse('index'))
@@ -422,11 +427,13 @@ def edit_user(request):
                 'fname': prof_inst.fname, 'lname': prof_inst.lname
             })
 
-        return render(request, 'edit_user.html', {'form': form, 'prof_inst': prof_inst,
+        return render(request, 'edit_user.html', {'form': form, 'prof_inst': prof_inst, 'prof_info_inst': prof_info_ins,
                                                   'cars': user_cars, 'techs': techs})
 
     else:
         return render(request, 'registration/login.html')
+
+
 
 # def add_repair(request, unique_id):
 #     """
