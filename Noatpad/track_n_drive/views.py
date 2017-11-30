@@ -172,7 +172,7 @@ def add_technician1(request):
             form = AddTechnicianForm()
 
         return render(request, 'add_technician.html', {'form': form, 'techinst': tech_inst, 'cars': user_cars,
-                        'techs': user_techs, 'profile': profile})
+                                                       'techs': user_techs, 'profile': profile})
     else:
         return render(request, 'registration/login.html')
 
@@ -182,6 +182,11 @@ def add_technician2(request, unique_id):
         """
         View function for adding a Technician
         """
+        profile = Profile.objects.get(id=request.user.profile.id)
+        cars = Car.objects.all()
+        user_cars = list(c for c in cars if c.profile == profile)
+        techs = Technician.objects.all()
+        user_techs = list(t for t in techs if t.profile == profile)
         try:
             tech_inst = get_object_or_404(Technician, unique_id=unique_id)
         except:
@@ -209,7 +214,8 @@ def add_technician2(request, unique_id):
                                               'street': tech_inst.street, 'city': tech_inst.city,
                                               'company': tech_inst.company})
 
-        return render(request, 'add_technician.html', {'form': form, 'techinst': tech_inst})
+        return render(request, 'add_technician.html', {'form': form, 'techinst': tech_inst, 'cars': user_cars,
+                                                       'techs': user_techs, 'profile': profile})
     else:
         return render(request, 'registration/login.html')
 
@@ -308,7 +314,7 @@ def add_car(request):
                                        'oil_type': car_inst.oil_type, 'color': car_inst.color,
                                        'registration': car_inst.registration, 'vin_number': car_inst.vin_number})
         return render(request, 'add_car.html', {'form': form, 'car_inst': car_inst, 'car': car_inst, 'cars': user_cars,
-                        'techs': user_techs, 'profile': profile})
+                                                'techs': user_techs, 'profile': profile})
     else:
         return render(request, 'registration/login.html')
 
