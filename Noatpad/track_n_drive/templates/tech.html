@@ -35,7 +35,7 @@
                     </li>
                     {% endfor %}
                     <li>
-                        <a href="#">Add Car
+                        <a href="{% url 'add_car' %}">Add Car
                             <span class="glyphicon glyphicon-plus"></span>
                         </a>
                     </li>
@@ -60,7 +60,7 @@
                     </li>
                     {% endfor %}
                     <li>
-                        <a href="#">Add Technician
+                        <a href="{% url 'add_technician' %}">Add Technician
                             <span class="glyphicon glyphicon-plus"></span>
                         </a>
                     </li>
@@ -180,6 +180,9 @@
                                             <!-- Start of Panel body -->
                                             <div class="panel-body">
                                                 <ul class="list-group list-var">
+                                                {% if car.futurerepair.all|length == 0 %}
+                                                    No Repairs Scheduled...
+                                                {% else %}
                                                     {% for rep in car.futurerepair.all %}
                                                     <!-- ifequal rep.car.vin_number car.vin_number -->
                                                     <li>
@@ -192,6 +195,7 @@
                                                     <hr>
                                                     <!-- endifequal -->
                                                     {% endfor %}
+                                                {% endif %}
                                                 </ul>
                                                 <!-- Make a button group -->
                                                 <div class="text-center btn-group">
@@ -288,10 +292,9 @@
                             <div class="text-center btn-group">
 
                                 <!-- First Button of group -->
-                                <button type="button" class="btn btn-primary">
+                                <a class="btn btn-primary" href="{{ tech.get_absolute_url }}add-tech">
                                     Edit <span class="glyphicon glyphicon-list-alt"></span>
-                                </button> <!-- End of first button of group -->
-
+                                </a>
                                 <!-- Second Button of group -->
                                 <button type="button" class="btn btn-primary">
                                     Add <span class="glyphicon glyphicon-plus"></span>

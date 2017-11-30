@@ -60,7 +60,7 @@
                             </li>
                         {% endfor %}
                         <li>
-                            <a href="#">Add Technician
+                            <a href="{% url 'add_technician' %}">Add Technician
                                 <span class="glyphicon glyphicon-plus"></span>
                             </a>
                         </li>
@@ -180,18 +180,24 @@
                                                     <!-- Start of Panel body -->
                                                     <div class="panel-body">
                                                         <ul class="list-group list-var">
-                                                            {% for rep in car.futurerepair.all %}
-                                                                <!-- ifequal rep.car.vin_number car.vin_number -->
+                                                            {% if car.futurerepair.all|length == 0 %}
                                                                 <li>
-                                                                    {{ rep.technician.fname }}
-                                                                    {{ rep.technician.lname }}<br/>
-                                                                    {{ rep.name }}<br/>
-                                                                    {{ rep.date_of_repair }}
+                                                                    No Repairs Scheduled...
                                                                 </li>
-                                                                <!-- Horizontal line -->
-                                                                <hr>
-                                                                <!-- endifequal -->
-                                                            {% endfor %}
+                                                            {% else %}
+                                                                {% for rep in car.futurerepair.all %}
+                                                                    <!-- ifequal rep.car.vin_number car.vin_number -->
+                                                                    <li>
+                                                                        {{ rep.technician.fname }}
+                                                                        {{ rep.technician.lname }}<br/>
+                                                                        {{ rep.name }}<br/>
+                                                                        {{ rep.date_of_repair }}
+                                                                    </li>
+                                                                    <!-- Horizontal line -->
+                                                                    <hr>
+                                                                    <!-- endifequal -->
+                                                                {% endfor %}
+                                                            {% endif %}
                                                         </ul>
                                                         <!-- Make a button group -->
                                                         <div class="text-center btn-group">
@@ -202,9 +208,10 @@
                                                             </button> <!-- End of first button of group -->
 
                                                             <!-- Second Button of group -->
-                                                            <button type="button" class="btn btn-primary">
+                                                            <a class="btn btn-primary"
+                                                               href="{{ car.get_absolute_url }}add-future-repair">
                                                                 Add <span class="glyphicon glyphicon-plus"></span>
-                                                            </button> <!-- End of second button of group -->
+                                                            </a> <!-- End of second button of group -->
 
                                                         </div> <!-- End of button group -->
 
@@ -217,6 +224,7 @@
                                         </div> <!-- End of Car 1 panel group -->
                                     </li>
                                 {% endfor %}
+
 
                             </ul> <!-- End of list group of panels -->
 
@@ -302,21 +310,14 @@
                                         Ins # / Type: {{ ins.insurance_num }} / {{ ins.coverage }}
                                     </h4>
                                 {% endfor %}
-                                <!-- Make a button group -->
-                                <div class="text-center btn-group">
 
-                                    <!-- First Button of group -->
 
-                                    <button type="button" class="btn btn-primary">
-                                        Edit <span class="glyphicon glyphicon-list-alt"></span>
-                                    </button><!-- End of first button of group -->
+                                <!-- First Button of group -->
+                                <a class="btn btn-primary" href="{{ car.get_absolute_url }}add-car">
+                                    Edit <span class="glyphicon glyphicon-list-alt"></span>
 
-                                    <!-- Second Button of group -->
-                                    <button type="button" class="btn btn-primary">
-                                        Add <span class="glyphicon glyphicon-plus"></span>
-                                    </button> <!-- End of second button of group -->
+                                </a> <!-- End of first button of group -->
 
-                                </div> <!-- End of button group -->
 
                             </div> <!-- End of Car Info panel body -->
 
