@@ -14,6 +14,7 @@ urlpatterns = [
     url(r'^car-prof-(?P<unique_id>[-\w]+)/add-car-info', views.add_car_info, name='add_car_info'),
     url(r'^car-prof-(?P<unique_id>[-\w]+)/add-car$', views.UpdateCarView.add_car2, name='add_car'),
     # url(r'^car-prof-(?P<unique_id>[-\w]+)/add-future-repair$', views.add_future_repair, name='add_future_repairs'),
+    url(r'^car-prof-(?P<unique_id>[-\w]+)/add-future-repair$', views.add_future_repair, name='add_future_repairs'),
     # url(r'^car-prof-(?P<unique_id>[-\w]+)/add-repair$', views.add_repair, name='add_repair'),
     # url(r'^setting/add-phone$', views.add_phone, name='add_phone'),
     # url(r'^setting/add-email$', views.add_email, name='add_email'),

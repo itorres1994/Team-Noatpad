@@ -339,37 +339,31 @@ class UpdateCarView(UpdateView):
             form = AddEditCarForm(instance)
         return render(request, 'add_car.html', {'form': form, 'car': car_inst})
 
+def add_future_repair(request, unique_id):
+    """
+    View function for adding Future Repairs
+    """
+    try:
+        future_repairs_inst = get_object_or_404(FutureRepair, unique_id=unique_id)
+    except:
+        future_repairs_inst = FutureRepair()
 
-class UpdateCar(UpdateView):
-    model = Car
-    fields = ['make', 'model', 'year', 'engine_type', 'mileage', 'oil_type', 'color', 'registration', 'vin_number']
-    template_name = 'edit_car'
+    if request.method == 'POST':
 
-# def add_future_repair(request, unique_id):
-#     """
-#     View function for adding Future Repairs
-#     """
-#     try:
-#         future_repairs_inst = get_object_or_404(FutureRepair, unique_id=unique_id)
-#     except:
-#         future_repairs_inst = FutureRepair()
-#
-#     if request.method == 'POST':
-#
-#         form = AddFutureRepairForm(request.POST)
-#         if form.is_valid():
-#             future_repairs_inst.name = form.cleaned_data['name']
-#             future_repairs_inst.date_of_repair = form.cleaned_data['date_of_repair']
-#             # Add technician, car, and notification, ForeignKey
-#             future_repairs_inst.save()
-#
-#             return HttpResponseRedirect(reverse('car', args=[str(unique_id)]))
-#     else:
-#         form = AddFutureRepairForm()
-#
-#     return render(request, 'add_future_repairs.html', {'form': form, 'future_repairs_inst': future_repairs_inst})
-#
-#
+        form = AddFutureRepairForm(request.POST)
+        if form.is_valid():
+            future_repairs_inst.name = form.cleaned_data['name']
+            future_repairs_inst.date_of_repair = form.cleaned_data['date_of_repair']
+            # Add technician, car, and notification, ForeignKey
+            future_repairs_inst.save()
+
+            return HttpResponseRedirect(reverse('car', args=[str(unique_id)]))
+    else:
+        form = AddFutureRepairForm()
+
+    return render(request, 'add_future_repairs.html', {'form': form, 'future_repairs_inst': future_repairs_inst})
+
+
 # def add_repair(request, unique_id):
 #     """
 #     View function for adding a repair
