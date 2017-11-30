@@ -1,15 +1,16 @@
 from django.shortcuts import render
-from .models import Car, Profile, Technician, FutureRepair, PhoneTimings, EmailTimings, Notifications, Repair, \
+from .models import Car, CarAddedInfo, Profile, Technician, FutureRepair, PhoneTimings, EmailTimings, Notifications, \
+    Repair, \
     TechAddedInfo, Phone, Email, ProfileAddedInfo
 
 from django.contrib.auth.decorators import permission_required
 from django.http import HttpResponseNotFound
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, get_list_or_404
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.views.generic.edit import UpdateView
 from .forms import AddTechnicianForm, AddTechAddedInfoForm, AddCarForm, AddFutureRepairForm, AddRepairForm, \
-    AddPhoneForm, AddEmailForm, AddUserAddedInfoForm, EditCarForm
+    AddPhoneForm, AddEmailForm, AddUserAddedInfoForm, EditCarForm, AddEditCarForm
 
 import datetime
 
@@ -194,7 +195,6 @@ def add_technician_info(request, unique_id):
         if form.is_valid():
             techinfo_inst.information_name = form.cleaned_data['information_name']
             techinfo_inst.information_contents = form.cleaned_data['information_contents']
-
             techinfo_inst.save()
             return HttpResponseRedirect(reverse('tech', args=[str(unique_id)]))
     else:
@@ -226,7 +226,36 @@ def add_technician_info(request, unique_id):
 #    else:
 #        form = AddCarForm()
 #    return render(request, 'add_car.html', {'form': form, 'car_inst':car_inst})
-def add_car1(request):
+def add_car_info(request, unique_id):
+    """
+       View function for adding a Car
+       """
+    try:
+        car_inst = get_object_or_404(Car, unique_id=unique_id)
+    except:
+        return HttpResponseNotFound('Hey Tim :)')
+    try:
+        car_info_inst = get_object_or_404(CarAddedInfo, car=car_inst)
+    except:
+        car_info_inst = CarAddedInfo(car=car_inst)
+    # return HttpResponseNotFound('Found it...')
+
+    if request.method == 'POST':
+
+        form = EditCarForm(request.POST)
+        if form.is_valid():
+            car_info_inst.information_name = form.cleaned_data['information_name']
+            car_info_inst.information_contents = form.cleaned_data['information_contents']
+            car_info_inst.save()
+            return HttpResponseRedirect(reverse('car', args=[str(unique_id)]))
+
+            # If this is a GET (or any other method) create the default form.
+    else:
+        form = EditCarForm()
+    return render(request, 'add_car_info.html', {'form': form, 'car_info_inst': car_info_inst, })
+
+
+def add_car(request):
     """
    View function for adding a Car
    """
@@ -258,22 +287,27 @@ def add_car1(request):
 
             # If this is a GET (or any other method) create the default form.
     else:
+<<<<<<< HEAD
         form = AddCarForm(initial={'make': car_inst.make, 'model': car_inst.model, 'year': car_inst.year,
                                    'engine_type': car_inst.engine_type, 'mileage': car_inst.mileage,
                                    'oil_type': car_inst.oil_type, 'color': car_inst.color,
                                    'registration': car_inst.registration, 'vin_number': car_inst.vin_number})
     return render(request, 'add_car.html', {'form': form, 'car_inst': car_inst, 'car': car_inst, 'cars': user_cars,
                     'techs': techs, 'profile': profile})
+=======
+        form = AddCarForm()
+    return render(request, 'add_car.html', {'form': form, 'car': car_inst})
+>>>>>>> e960086e4dcb5d25550866a354e732381718a0a7
 
 
-def add_car2(request, unique_id):
+def edit_car(request, unique_id):
     """
    View function for adding a Car
    """
     try:
         car_inst = get_object_or_404(Car, unique_id=unique_id)
     except:
-        car_inst = Car()
+        return HttpResponseNotFound('Hey Tim :)')
 
     if request.method == 'POST':
 
@@ -283,7 +317,6 @@ def add_car2(request, unique_id):
             car_inst.model = form.cleaned_data['model']
             car_inst.profile = request.user.profile
             car_inst.year = form.cleaned_data['year']
-            car_inst.profile = request.user.profile
             car_inst.engine_type = form.cleaned_data['engine_type']
             car_inst.mileage = form.cleaned_data['mileage']
             car_inst.oil_type = form.cleaned_data['oil_type']
@@ -291,47 +324,46 @@ def add_car2(request, unique_id):
             car_inst.registration = form.cleaned_data['registration']
             car_inst.vin_number = form.cleaned_data['vin_number']
             car_inst.save()
+            # car_info_inst.save()
             return HttpResponseRedirect(reverse('car', args=[str(unique_id)]))
 
             # If this is a GET (or any other method) create the default form.
     else:
-        form = AddCarForm(initial={'make': car_inst.make, 'model': car_inst.model, 'year': car_inst.year,
-                                   'engine_type': car_inst.engine_type, 'mileage': car_inst.mileage,
-                                   'oil_type': car_inst.oil_type, 'color': car_inst.color,
-                                   'registration': car_inst.registration, 'vin_number': car_inst.vin_number})
-    return render(request, 'add_car.html', {'form': form, 'car_inst': car_inst, 'car': car_inst})
+        initial = {
+            'make': car_inst.make, 'model': car_inst.model, 'year': car_inst.year,
+            'engine_type': car_inst.engine_type, 'mileage': car_inst.mileage,
+            'oil_type': car_inst.oil_type, 'color': car_inst.color,
+            'registration': car_inst.registration, 'vin_number': car_inst.vin_number
+        }
+        print(initial)
+        form = AddCarForm(initial)
+    return render(request, 'add_car.html', {'form': form, 'car': car_inst})
 
 
-class UpdateCar(UpdateView):
-    model = Car
-    fields = ['make', 'model', 'year', 'engine_type', 'mileage', 'oil_type', 'color', 'registration', 'vin_number']
-    template_name = 'edit_car'
+def add_future_repair(request, unique_id):
+    """
+    View function for adding Future Repairs
+    """
+    try:
+        future_repairs_inst = get_object_or_404(FutureRepair, unique_id=unique_id)
+    except:
+        future_repairs_inst = FutureRepair()
 
-# def add_future_repair(request, unique_id):
-#     """
-#     View function for adding Future Repairs
-#     """
-#     try:
-#         future_repairs_inst = get_object_or_404(FutureRepair, unique_id=unique_id)
-#     except:
-#         future_repairs_inst = FutureRepair()
-#
-#     if request.method == 'POST':
-#
-#         form = AddFutureRepairForm(request.POST)
-#         if form.is_valid():
-#             future_repairs_inst.name = form.cleaned_data['name']
-#             future_repairs_inst.date_of_repair = form.cleaned_data['date_of_repair']
-#             # Add technician, car, and notification, ForeignKey
-#             future_repairs_inst.save()
-#
-#             return HttpResponseRedirect(reverse('car', args=[str(unique_id)]))
-#     else:
-#         form = AddFutureRepairForm()
-#
-#     return render(request, 'add_future_repairs.html', {'form': form, 'future_repairs_inst': future_repairs_inst})
-#
-#
+    if request.method == 'POST':
+
+        form = AddFutureRepairForm(request.POST)
+        if form.is_valid():
+            future_repairs_inst.name = form.cleaned_data['name']
+            future_repairs_inst.date_of_repair = form.cleaned_data['date_of_repair']
+            # Add technician, car, and notification, ForeignKey
+            future_repairs_inst.save()
+
+            return HttpResponseRedirect(reverse('car', args=[str(unique_id)]))
+    else:
+        form = AddFutureRepairForm()
+
+    return render(request, 'add_future_repairs.html', {'form': form, 'future_repairs_inst': future_repairs_inst})
+
 # def add_repair(request, unique_id):
 #     """
 #     View function for adding a repair

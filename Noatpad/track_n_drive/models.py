@@ -88,6 +88,23 @@ class Car(models.Model):
         return reverse('stat', args=[str(self.unique_id)])
 
 
+class CarAddedInfo(models.Model):
+    """
+        Model representing the Technician Information.
+        """
+    # unique_id = models.ForeignKey(Technician, on_delete=models.CASCADE) #Add unique id to Technician
+    information_name = models.CharField(max_length=200, help_text="Information Category", default="info name")
+    information_contents = models.CharField(max_length=200, help_text="Information to Add", default="info content")
+    car = models.ForeignKey(Car, help_text='Car', blank=True, null=True,
+                            on_delete=models.SET_NULL, related_name="info")
+
+    def __str__(self):
+        """
+        String for representing the Model object (in Admin site etc.)
+        """
+        return self.information_name + ": " + self.information_contents
+
+
 class FutureRepair(models.Model):
     """
     Model representing the Repair profile.

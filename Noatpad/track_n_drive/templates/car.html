@@ -180,7 +180,7 @@
                                                     <!-- Start of Panel body -->
                                                     <div class="panel-body">
                                                         <ul class="list-group list-var">
-                                                            {% if car.futurerepair.all|length == 1 %}
+                                                            {% if car.futurerepair.all|length == 0 %}
                                                                 <li>
                                                                     No Repairs Scheduled...
                                                                 </li>
@@ -210,22 +210,9 @@
                                     </li>
                                 {% endfor %}
 
+
                             </ul> <!-- End of list group of panels -->
 
-                            <!-- Make a button group -->
-                            <div class="text-center btn-group">
-
-                                <!-- First Button of group -->
-                                <button type="button" class="btn btn-primary">
-                                    Edit <span class="glyphicon glyphicon-list-alt"></span>
-                                </button> <!-- End of first button of group -->
-
-                                <!-- Second Button of group -->
-                                <button type="button" class="btn btn-primary">
-                                    Add <span class="glyphicon glyphicon-plus"></span>
-                                </button> <!-- End of second button of group -->
-
-                            </div> <!-- End of button group -->
                         </div> <!-- End of notification panel body -->
 
                     </div> <!-- End of notification panel contents -->
@@ -308,20 +295,14 @@
                                         Ins # / Type: {{ ins.insurance_num }} / {{ ins.coverage }}
                                     </h4>
                                 {% endfor %}
-                                <!-- Make a button group -->
-                                <div class="text-center btn-group">
 
-                                    <!-- First Button of group -->
-                                    <a class="btn btn-primary" href="{{ car.get_absolute_url }}add-car">
-                                            Edit <span class="glyphicon glyphicon-list-alt"></span>
 
-                                    </a> <!-- End of first button of group -->
-                                    <!-- Second Button of group -->
-                                    <a class="btn btn-primary" href="{% url 'add_car' %}">
-                                        Add <span class="glyphicon glyphicon-plus"></span>
-                                    </a> <!-- End of second button of group -->
+                                <!-- First Button of group -->
+                                <a class="btn btn-primary" href="{{ car.get_absolute_url }}add-car">
+                                    Edit <span class="glyphicon glyphicon-list-alt"></span>
 
-                                </div> <!-- End of button group -->
+                                </a> <!-- End of first button of group -->
+
 
                             </div> <!-- End of Car Info panel body -->
 
