@@ -10,7 +10,7 @@ from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.views.generic.edit import UpdateView
 from .forms import AddTechnicianForm, AddTechAddedInfoForm, AddCarForm, AddFutureRepairForm, AddRepairForm, \
-    AddPhoneForm, AddEmailForm, AddUserAddedInfoForm, EditCarForm, AddEditCarForm
+    AddPhoneForm, AddEmailForm, AddUserAddedInfoForm, EditCarForm
 
 import datetime
 
@@ -120,6 +120,10 @@ def add_technician1(request):
     """
     View function for adding a Technician
     """
+    profile = Profile.objects.get(id=request.user.profile.id)
+    cars = Car.objects.all()
+    user_cars = list(c for c in cars if c.profile == profile)
+    techs = Technician.objects.all()
     tech_inst = Technician()
 
     if request.method == 'POST':
@@ -142,7 +146,8 @@ def add_technician1(request):
     else:
         form = AddTechnicianForm()
 
-    return render(request, 'add_technician.html', {'form': form, 'techinst': tech_inst})
+    return render(request, 'add_technician.html', {'form': form, 'techinst': tech_inst, 'cars': user_cars,
+                    'techs': techs, 'profile': profile})
 
 
 def add_technician2(request, unique_id):
@@ -287,17 +292,12 @@ def add_car(request):
 
             # If this is a GET (or any other method) create the default form.
     else:
-<<<<<<< HEAD
         form = AddCarForm(initial={'make': car_inst.make, 'model': car_inst.model, 'year': car_inst.year,
                                    'engine_type': car_inst.engine_type, 'mileage': car_inst.mileage,
                                    'oil_type': car_inst.oil_type, 'color': car_inst.color,
                                    'registration': car_inst.registration, 'vin_number': car_inst.vin_number})
     return render(request, 'add_car.html', {'form': form, 'car_inst': car_inst, 'car': car_inst, 'cars': user_cars,
                     'techs': techs, 'profile': profile})
-=======
-        form = AddCarForm()
-    return render(request, 'add_car.html', {'form': form, 'car': car_inst})
->>>>>>> e960086e4dcb5d25550866a354e732381718a0a7
 
 
 def edit_car(request, unique_id):

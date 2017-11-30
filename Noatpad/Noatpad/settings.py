@@ -36,7 +36,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'betterforms',
     'track_n_drive.apps.TrackNDriveConfig',
     'django.contrib.admin',
 ]

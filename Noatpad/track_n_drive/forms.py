@@ -1,5 +1,4 @@
 from django.forms import ModelForm
-from betterforms.multiform import MultiModelForm
 
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
@@ -34,12 +33,6 @@ class EditCarForm(ModelForm):
     class Meta:
         model = CarAddedInfo
         exclude = { 'car' }
-
-class AddEditCarForm(MultiModelForm):
-    form_classes = {
-        'car': AddCarForm,
-        'caraddedinfo': EditCarForm
-    }
 
 class AddFutureRepairForm(ModelForm):
     class Meta:
