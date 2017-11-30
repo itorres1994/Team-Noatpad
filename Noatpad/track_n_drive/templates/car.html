@@ -180,7 +180,7 @@
                                                     <!-- Start of Panel body -->
                                                     <div class="panel-body">
                                                         <ul class="list-group list-var">
-                                                            {% if car.futurerepair.all|length == 1 %}
+                                                            {% if car.futurerepair.all|length == 0 %}
                                                                 <li>
                                                                     No Repairs Scheduled...
                                                                 </li>
@@ -308,16 +308,20 @@
                                         Ins # / Type: {{ ins.insurance_num }} / {{ ins.coverage }}
                                     </h4>
                                 {% endfor %}
+                                {% for info in car.info.all %}
+                                    <h4>
+                                        {{ info.information_name|title }}: {{ info.information_contents|title }}
+                                    </h4>
+                                {% endfor %}
                                 <!-- Make a button group -->
                                 <div class="text-center btn-group">
 
                                     <!-- First Button of group -->
                                     <a class="btn btn-primary" href="{{ car.get_absolute_url }}add-car">
-                                            Edit <span class="glyphicon glyphicon-list-alt"></span>
-
+                                        Edit <span class="glyphicon glyphicon-list-alt"></span>
                                     </a> <!-- End of first button of group -->
                                     <!-- Second Button of group -->
-                                    <a class="btn btn-primary" href="{% url 'add_car' %}">
+                                    <a class="btn btn-primary" href="{{ car.get_absolute_url }}add-car-info"">
                                         Add <span class="glyphicon glyphicon-plus"></span>
                                     </a> <!-- End of second button of group -->
 

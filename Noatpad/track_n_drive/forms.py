@@ -1,16 +1,17 @@
 from django.forms import ModelForm
+from betterforms.multiform import MultiModelForm
 
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
 
 import datetime
 
-from .models import Technician, TechAddedInfo, Car, FutureRepair, Repair, Phone, Email,  \
+from .models import Technician, TechAddedInfo, Car, CarAddedInfo, FutureRepair, Repair, Phone, Email,  \
     ProfileAddedInfo, EmailTimings, PhoneTimings
 
-#ModelForm automatically includes all fields and help texts, exclude is used to
-#specifically exclude those fields, and labels overrides the default labels.
-#Any info specified here overrides what is shown on models.py
+# ModelForm automatically includes all fields and help texts, exclude is used to
+# specifically exclude those fields, and labels overrides the default labels.
+# Any info specified here overrides what is shown on models.py
 
 class AddTechnicianForm(ModelForm):
     class Meta:
@@ -30,8 +31,14 @@ class AddCarForm(ModelForm):
 
 class EditCarForm(ModelForm):
     class Meta:
-        model = Car
-        exclude = { 'unique_id', 'profile' }
+        model = CarAddedInfo
+        exclude = { 'car' }
+
+class AddEditCarForm(MultiModelForm):
+    form_classes = {
+        'car': AddCarForm,
+        'caraddedinfo': EditCarForm
+    }
 
 class AddFutureRepairForm(ModelForm):
     class Meta:

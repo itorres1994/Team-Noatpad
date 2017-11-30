@@ -2,9 +2,10 @@ from django.contrib import admin
 
 # Register your models here.
 
-from .models import Car, Phone, PhoneTimings, Email, EmailTimings, Settings, TechAddedInfo, Technician, Repair, \
+from .models import Car, CarAddedInfo, Phone, PhoneTimings, Email, EmailTimings, Settings, TechAddedInfo, Technician, Repair, \
     ProfileAddedInfo, Notifications, License, Insurance, Profile, FutureRepair
 
+admin.site.register(CarAddedInfo)
 admin.site.register(Phone)
 admin.site.register(Email)
 admin.site.register(TechAddedInfo)
