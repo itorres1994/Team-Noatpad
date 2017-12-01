@@ -71,7 +71,7 @@ class AddEmailForm(ModelForm):
 class AddUserAddedInfoForm(ModelForm):
     class Meta:
         model = ProfileAddedInfo
-        exclude = {'user_info'}
+        exclude = {'profile_info'}
 
 
 class EditUserForm(ModelForm):

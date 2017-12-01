@@ -393,6 +393,39 @@ def add_future_repair(request, unique_id):
         return render(request, 'registration/login.html')
 
 
+def add_user_info(request):
+    if not request.user.is_anonymous:
+        try:
+            profile = Profile.objects.get(id=request.user.profile.id)
+            cars = Car.objects.all()
+            user_cars = list(c for c in cars if c.profile == profile)
+            techs = Technician.objects.all()
+            user_techs = list(t for t in techs if t.profile == profile)
+            pass
+        except:
+            return HttpResponseNotFound('hello :)')
+        profile = Profile.objects.get(id=request.user.profile.id)
+        prof_info_inst = ProfileAddedInfo(profile_info=profile)
+        if request.method == 'POST':
+
+            form = AddUserAddedInfoForm(request.POST)
+            if form.is_valid():
+                prof_info_inst.information_name = form.cleaned_data['information_name']
+                prof_info_inst.information_contents = form.cleaned_data['information_contents']
+                prof_info_inst.profile_info = profile
+                prof_info_inst.save()
+
+                return HttpResponseRedirect(reverse('index'))
+        else:
+            form = AddUserAddedInfoForm()
+
+        return render(request, 'add_user_info.html', {'form': form, 'prof_info_inst': prof_info_inst,
+                                                      'cars': user_cars, 'techs': user_techs,
+                                                      'profile': profile})
+    else:
+        return render(request, 'registration/login.html')
+
+
 def edit_user(request):
     if not request.user.is_anonymous():
         """
@@ -411,29 +444,33 @@ def edit_user(request):
         prof_info_ins = get_list_or_404(ProfileAddedInfo, profile_info=prof_inst)
         if request.method == 'POST':
 
-            form = EditUserForm(request.POST)
-            if form.is_valid():
-                prof_inst.fname = form.cleaned_data['fname']
-                prof_inst.lname = form.cleaned_data['lname']
-                for info in prof_info_ins:
-                    info.information_name = form.cleaned_data['information_name']
-                    info.information_contents = form.cleaned_data['information_contents']
-                    info.save()
-                prof_inst.save()
+            # form = EditUserForm(request.POST)
+            # if form.is_valid():
+            prof_inst.fname = request.POST.get('fname')
+            prof_inst.lname = request.POST.get('lname')
+            prof_inst.save()
+            i = 0
+            for key, content in request.POST.items():
+                if 'name' in key:
+                    prof_info_ins.__getitem__(i).information_name = content
+                elif 'content' in key:
+                    prof_info_ins.__getitem__(i).information_contents = content
+                    prof_info_ins.__getitem__(i).save()
+                    i += 1
 
-                return HttpResponseRedirect(reverse('index'))
-        else:
-            form = EditUserForm(initial={
-                'fname': prof_inst.fname, 'lname': prof_inst.lname
-            })
+            print(prof_inst)
 
-        return render(request, 'edit_user.html', {'form': form, 'prof_inst': prof_inst, 'prof_info_inst': prof_info_ins,
+            return HttpResponseRedirect(reverse('index'))
+        # else:
+        #     form = EditUserForm(initial={
+        #         'fname': prof_inst.fname, 'lname': prof_inst.lname
+        #     })
+
+        return render(request, 'edit_user.html', {'prof_inst': prof_inst, 'prof_info_inst': prof_info_ins,
                                                   'cars': user_cars, 'techs': techs})
 
     else:
         return render(request, 'registration/login.html')
-
-
 
 # def add_repair(request, unique_id):
 #     """

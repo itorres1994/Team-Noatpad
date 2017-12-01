@@ -24,16 +24,23 @@
                             </div>
 
                             <div class="panel-body">
-                                <form action="" method="post">{% csrf_token %}
-                                    <label for="fname">First Name</label>
-                                    <input id="fname" type="text" value="{{ prof_ins.fname }}">
+                                <form method="post">{% csrf_token %}
+                                    <label for="fname" type="text">First Name</label>
+                                    <input name="fname" id="fname" type="text" value="{{ prof_inst.fname }}"
+                                        required>
                                     <label for="lname" type="text">Last Name</label>
-                                    <input id="lname" type="text" value="{{ prof_ins.lname }}">
+                                    <input name="lname" id="lname" type="text" value="{{ prof_inst.lname }}"
+                                        required>
+                                    <hr>
                                     {% for info in prof_info_inst %}
-                                        <input type="text" value="{{ info.information_name }}">
-                                        <input type="text" value="{{ info.information_contents }}">
+                                        <input name="{{ forloop.counter }}name" id = name{{ forloop.counter }}
+                                               type="text" value="{{ info.information_name }}" required>
+                                        <input name="{{ forloop.counter }}content"
+                                               type="text" value="{{ info.information_contents }}" required>
+                                        {% if forloop.counter < prof_info_inst|length %}
+                                            <hr>
+                                        {% endif %}
                                     {% endfor %}
-                                    <input type="submit" value="Update"/>
                                 </form>
 
                             </div>

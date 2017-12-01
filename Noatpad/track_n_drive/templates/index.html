@@ -272,11 +272,23 @@
                                 <h4 title="Editable Field: User name">
                                     Name: {{ profile.fname }} {{ profile.lname }}
                                 </h4>
-                                <!-- Button -->
-                                <a class="btn btn-primary" href="{% url 'edit_user' %}">
-                                    Edit <span class="glyphicon glyphicon-list-alt"></span>
-                                </a> <!-- End of button -->
+                                {% for info in profile.info.all %}
+                                   <h4 title="Editable Field: User name">
+                                    {{ info.information_name }}: {{ info.information_contents }}
+                                   </h4>
+                                {% endfor %}
+                                <!-- Make a button group -->
+                                <div class="text-center btn-group">
+                                    <!-- First Button in group -->
+                                    <a class="btn btn-primary" href="{% url 'edit_user' %}">
+                                        Edit <span class="glyphicon glyphicon-list-alt"></span>
+                                    </a> <!-- End of First button in group -->
 
+                                    <!-- Second Button in group -->
+                                    <a class="btn btn-primary" href="{% url 'add_user_info' %}">
+                                        Add <span class="glyphicon glyphicon-plus"></span>
+                                    </a> <!-- End of Second button in group -->
+                                </div>
 
                             </div> <!-- End of Car Info panel body -->
 
