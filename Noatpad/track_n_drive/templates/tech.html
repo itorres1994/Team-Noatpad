@@ -359,8 +359,6 @@
                                                         <!-- Start of Panel body -->
                                                         <div class="panel-body">
                                                             <ul class="list-group list-var">
-                                                                <!--for rep in reps -->
-                                                                <!--ifequal rep.car.unique_id car.unique_id -->
                                                                 {% for rep in ctv %}
                                                                     <li>
                                                                         {% if '$' in rep.cost %}
@@ -369,7 +367,7 @@
                                                                             {{ rep.technician.lname }} |
                                                                             {{ rep.technician.street }},
                                                                             {{ rep.technician.city }},
-                                                                            {{ rep.technician.company }} |
+                                                                            {{ rep.technician.company }}|
                                                                             {{ rep.date_made }}
                                                                         {% else %}
                                                                             {{ rep.name }} | ${{ rep.cost }} |
@@ -377,29 +375,28 @@
                                                                             {{ rep.technician.lname }} |
                                                                             {{ rep.technician.street }},
                                                                             {{ rep.technician.city }},
-                                                                            {{ rep.technician.company }} |
+                                                                            {{ rep.technician.company }}|
                                                                             {{ rep.date_made }}
                                                                         {% endif %}
-                                                                        <hr>
+                                                                        <!-- Make a button group -->
+                                                                        <div class="text-center btn-group">
+                                                                            <a class="btn btn-primary" href="edit-repair-{{ rep.unique_id }}/{{ car.unique_id }}">
+                                                                                Edit <span class="glyphicon glyphicon-list"></span>
+                                                                            </a>
+                                                                            <a class="btn btn-danger" href="remove-repair-{{ rep.unique_id }}">
+                                                                                Remove <span class="glyphicon glyphicon-remove"></span>
+                                                                            </a>
+                                                                        </div>
                                                                     </li>
+                                                                    <hr>
                                                                     <!-- Horizontal line -->
                                                                 {% endfor %}
                                                             </ul>
-                                                            <!-- Make a button group -->
-                                                            <div class="text-center btn-group">
 
-                                                                <!-- First Button of group -->
-                                                                <button type="button" class="btn btn-primary">
-                                                                    Edit <span
-                                                                        class="glyphicon glyphicon-list-alt"></span>
-                                                                </button> <!-- End of first button of group -->
-
-                                                                <!-- Second Button of group -->
-                                                                <button type="button" class="btn btn-primary">
-                                                                    Add <span class="glyphicon glyphicon-plus"></span>
-                                                                </button> <!-- End of second button of group -->
-
-                                                            </div> <!-- End of button group -->
+                                                            <!-- Second Button of group -->
+                                                            <a href="add-repair-{{ ctk.unique_id }}" type="button" class="btn btn-primary">
+                                                                Add <span class="glyphicon glyphicon-plus"></span>
+                                                            </a> <!-- End of second button of group -->
 
                                                         </div> <!-- End of Panel Body -->
 

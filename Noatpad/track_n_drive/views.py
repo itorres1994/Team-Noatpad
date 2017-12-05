@@ -11,7 +11,7 @@ from django.core.urlresolvers import reverse
 from django.views.generic.edit import UpdateView
 from .forms import AddTechnicianForm, AddTechAddedInfoForm, AddCarForm, AddFutureRepairForm, AddRepairForm, \
     AddPhoneForm, AddEmailForm, AddUserAddedInfoForm, EditCarForm, EditUserForm, EditUserAddedInfoForm, \
-    EditFutureRepairForm
+    EditFutureRepairForm, EditRepairForm
 
 import datetime
 
@@ -563,6 +563,92 @@ def edit_user(request):
 
     else:
         return render(request, 'registration/login.html')
+
+
+def add_repair(request, unique_id):
+    if not request.user.is_anonymous():
+        profile = Profile.objects.get(id=request.user.profile.id)
+        cars = Car.objects.all()
+        user_cars = list(c for c in cars if c.profile == profile)
+        car_inst = Car.objects.get(unique_id=unique_id)
+        techs = Technician.objects.all()
+        user_techs = list(t for t in techs if t.profile == profile)
+        """
+        View function for adding Future Repairs
+        """
+        if request.method == 'POST':
+
+            form = AddRepairForm(request.user.profile, request.POST)
+            if form.is_valid():
+                repair = Repair(name=form.cleaned_data['name'], date_made=form.cleaned_data['date_made'],
+                                technician=form.cleaned_data['technician'], cost=form.cleaned_data['cost'],
+                                car=car_inst)
+                repair.save()
+                # Add technician, car, and notification, ForeignKey
+
+                return HttpResponseRedirect(reverse('index'))
+        else:
+            form = AddRepairForm(request.user.profile, initial={'name': 'Repair Name',
+                                                                'cost': 'xx.xx',
+                                                                'date_made': datetime.date.today})
+
+        return render(request, 'edit_repair.html', {'form': form, 'cars': user_cars, 'techs': user_techs,
+                                                    'profile': profile})
+
+    else:
+        return render(request, 'registration/login.html')
+    pass
+
+
+def edit_repair(request, unique_id, car_id):
+    if not request.user.is_anonymous():
+        profile = Profile.objects.get(id=request.user.profile.id)
+        cars = Car.objects.all()
+        user_cars = list(c for c in cars if c.profile == profile)
+        car_inst = Car.objects.get(unique_id=car_id)
+        techs = Technician.objects.all()
+        user_techs = list(t for t in techs if t.profile == profile)
+        """
+        View function for adding Future Repairs
+        """
+        repair_inst = get_object_or_404(Repair, unique_id=unique_id)
+        print(repair_inst)
+        if request.method == 'POST':
+
+            form = EditRepairForm(request.user.profile, request.POST)
+            if form.is_valid():
+                repair_inst.name = form.cleaned_data['name']
+                repair_inst.date_made = form.cleaned_data['date_made']
+                repair_inst.cost = form.cleaned_data['cost']
+                repair_inst.technician = form.cleaned_data['technician']
+                repair_inst.save()
+
+                return HttpResponseRedirect(reverse('index'))
+        else:
+            form = EditRepairForm(request.user.profile, initial={'name': repair_inst.name,
+                                                                 'cost': repair_inst.cost,
+                                                                 'date_made': repair_inst.date_made,
+                                                                 'technician': repair_inst.technician})
+
+        return render(request, 'edit_repair.html', {'form': form, 'repair_inst': repair_inst,
+                                                    'cars': user_cars, 'techs': user_techs,
+                                                    'profile': profile})
+
+    else:
+        return render(request, 'registration/login.html')
+
+
+def remove_repair(request, unique_id):
+    if not request.user.is_anonymous():
+        try:
+            repair_inst = get_object_or_404(Repair, unique_id=unique_id)
+            repair_inst.delete()
+            return HttpResponseRedirect(reverse('index'))
+        except:
+            return HttpResponseNotFound('No repair here...')
+    else:
+        return render(request, 'registration/login.html')
+
 
 def delete_user_info(request):
     pass
