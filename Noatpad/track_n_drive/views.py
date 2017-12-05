@@ -10,7 +10,8 @@ from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.views.generic.edit import UpdateView
 from .forms import AddTechnicianForm, AddTechAddedInfoForm, AddCarForm, AddFutureRepairForm, AddRepairForm, \
-    AddPhoneForm, AddEmailForm, AddUserAddedInfoForm, EditCarForm, EditUserForm, EditUserAddedInfoForm
+    AddPhoneForm, AddEmailForm, AddUserAddedInfoForm, EditCarForm, EditUserForm, EditUserAddedInfoForm, \
+    EditFutureRepairForm
 
 import datetime
 
@@ -321,6 +322,11 @@ def add_car(request):
 
 def edit_car(request, unique_id):
     if not request.user.is_anonymous():
+        profile = Profile.objects.get(id=request.user.profile.id)
+        cars = Car.objects.all()
+        user_cars = list(c for c in cars if c.profile == profile)
+        techs = Technician.objects.all()
+        user_techs = list(t for t in techs if t.profile == profile)
         """
        View function for adding a Car
        """
@@ -357,13 +363,19 @@ def edit_car(request, unique_id):
             }
             print(initial)
             form = AddCarForm(initial)
-        return render(request, 'add_car.html', {'form': form, 'car': car_inst})
+        return render(request, 'add_car.html', {'form': form, 'car': car_inst, 'cars': user_cars,
+                                                'techs': user_techs, 'profile': profile})
     else:
         return render(request, 'registration/login.html')
 
 
 def add_future_repair(request, unique_id):
     if not request.user.is_anonymous():
+        profile = Profile.objects.get(id=request.user.profile.id)
+        cars = Car.objects.all()
+        user_cars = list(c for c in cars if c.profile == profile)
+        techs = Technician.objects.all()
+        user_techs = list(t for t in techs if t.profile == profile)
         """
         View function for adding Future Repairs
         """
@@ -388,7 +400,81 @@ def add_future_repair(request, unique_id):
         else:
             form = AddFutureRepairForm(request.user.profile)
 
-        return render(request, 'add_future_repairs.html', {'form': form, 'future_repairs_inst': future_repairs_inst})
+        return render(request, 'add_future_repairs.html', {'form': form, 'future_repairs_inst': future_repairs_inst,
+                                                           'cars': user_cars, 'techs': user_techs, 'profile': profile})
+    else:
+        return render(request, 'registration/login.html')
+
+
+def edit_future_repair(request, unique_id):
+    if not request.user.is_anonymous():
+        profile = Profile.objects.get(id=request.user.profile.id)
+        cars = Car.objects.all()
+        user_cars = list(c for c in cars if c.profile == profile)
+        techs = Technician.objects.all()
+        user_techs = list(t for t in techs if t.profile == profile)
+        """
+        View function for adding Future Repairs
+        """
+        future_repair_inst = get_object_or_404(FutureRepair, unique_id=unique_id)
+        print(future_repair_inst)
+        if request.method == 'POST':
+
+            form = EditFutureRepairForm(request.user.profile, request.POST)
+            if form.is_valid():
+                future_repair_inst.name = form.cleaned_data['name']
+                future_repair_inst.date_of_repair = form.cleaned_data['date_of_repair']
+                future_repair_inst.technician = form.cleaned_data['technician']
+                # Add technician, car, and notification, ForeignKey
+                future_repair_inst.save()
+
+                return HttpResponseRedirect(reverse('index'))
+        else:
+            form = EditFutureRepairForm(request.user.profile, initial={'name': future_repair_inst.name,
+                                                                       'date_of_repair': future_repair_inst.date_of_repair,
+                                                                       'technician': future_repair_inst.technician})
+
+        return render(request, 'add_future_repairs.html', {'form': form, 'future_repair_inst': future_repair_inst,
+                                                           'cars': user_cars, 'techs': user_techs,
+                                                           'profile': profile})
+
+    else:
+        return render(request, 'registration/login.html')
+
+
+def done_future_repair(request, unique_id, car_id):
+    if not request.user.is_anonymous():
+        profile = Profile.objects.get(id=request.user.profile.id)
+        car_inst = Car.objects.get(unique_id=car_id)
+        cars = Car.objects.all()
+        user_cars = list(c for c in cars if c.profile == profile)
+        techs = Technician.objects.all()
+        user_techs = list(t for t in techs if t.profile == profile)
+        """
+        View function for adding Future Repairs
+        """
+        future_repair_inst = get_object_or_404(FutureRepair, unique_id=unique_id)
+        print(future_repair_inst)
+        if request.method == 'POST':
+
+            form = AddRepairForm(request.user.profile, request.POST)
+            if form.is_valid():
+                repair = Repair(name=form.cleaned_data['name'], date_made=form.cleaned_data['date_made'],
+                                technician=form.cleaned_data['technician'], cost=form.cleaned_data['cost'],
+                                car=car_inst)
+                repair.save()
+                # Add technician, car, and notification, ForeignKey
+                future_repair_inst.delete()
+
+                return HttpResponseRedirect(reverse('index'))
+        else:
+            form = AddRepairForm(request.user.profile, initial={'name': future_repair_inst.name,
+                                                                'date_made': datetime.date.today,
+                                                                'technician': future_repair_inst.technician})
+
+        return render(request, 'add_future_repairs.html', {'form': form, 'cars': user_cars, 'techs': user_techs,
+                                                           'profile': profile})
+
     else:
         return render(request, 'registration/login.html')
 
@@ -428,6 +514,7 @@ def add_user_info(request):
 
 def edit_user(request):
     if not request.user.is_anonymous():
+        empty = False
         """
         View function for adding Future Repairs
         """
@@ -441,36 +528,44 @@ def edit_user(request):
         except:
             return HttpResponseNotFound('hello :)')
 
-        prof_info_ins = get_list_or_404(ProfileAddedInfo, profile_info=prof_inst)
-        if request.method == 'POST':
+        try:
+            prof_info_ins = get_list_or_404(ProfileAddedInfo, profile_info=prof_inst)
+        except:
+            empty = True
+        finally:
+            if request.method == 'POST':
 
-            # form = EditUserForm(request.POST)
-            # if form.is_valid():
-            prof_inst.fname = request.POST.get('fname')
-            prof_inst.lname = request.POST.get('lname')
-            prof_inst.save()
-            i = 0
-            for key, content in request.POST.items():
-                if 'name' in key:
-                    prof_info_ins.__getitem__(i).information_name = content
-                elif 'content' in key:
-                    prof_info_ins.__getitem__(i).information_contents = content
-                    prof_info_ins.__getitem__(i).save()
-                    i += 1
+                # form = EditUserForm(request.POST)
+                # if form.is_valid():
+                prof_inst.fname = request.POST.get('fname')
+                prof_inst.lname = request.POST.get('lname')
+                prof_inst.save()
+                i = 0
+                print(empty)
+                if not empty:
+                    for key, content in request.POST.items():
+                        if 'name' in key:
+                            prof_info_ins.__getitem__(i).information_name = content
+                        elif 'content' in key:
+                            prof_info_ins.__getitem__(i).information_contents = content
+                            prof_info_ins.__getitem__(i).save()
+                            i += 1
+                        print(prof_inst)
 
-            print(prof_inst)
+                return HttpResponseRedirect(reverse('index'))
 
-            return HttpResponseRedirect(reverse('index'))
-        # else:
-        #     form = EditUserForm(initial={
-        #         'fname': prof_inst.fname, 'lname': prof_inst.lname
-        #     })
-
-        return render(request, 'edit_user.html', {'prof_inst': prof_inst, 'prof_info_inst': prof_info_ins,
-                                                  'cars': user_cars, 'techs': techs})
+            if not empty:
+                return_structure = {'prof_inst': prof_inst, 'prof_info_inst': prof_info_ins,
+                                    'cars': user_cars, 'techs': techs}
+            else:
+                return_structure = {'prof_inst': prof_inst, 'cars': user_cars, 'techs': techs}
+            return render(request, 'edit_user.html', return_structure)
 
     else:
         return render(request, 'registration/login.html')
+
+def delete_user_info(request):
+    pass
 
 # def add_repair(request, unique_id):
 #     """

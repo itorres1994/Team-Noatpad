@@ -191,26 +191,26 @@
                                                                         {{ rep.name }}<br/>
                                                                         {{ rep.date_of_repair }}
                                                                     </li>
+                                                                    <div class="text-center btn-group">
+                                                                        <a class="btn btn-primary"
+                                                                           href="edit-future-repair-{{ rep.unique_id }}">
+                                                                            Edit <span class="glyphicon glyphicon-list-alt"></span>
+                                                                        </a>
+                                                                        <a class="btn btn-success"
+                                                                           href="edit-future-repair-{{ rep.unique_id }}/{{ car.unique_id }}">
+                                                                            Done <span class="glyphicon glyphicon-check"></span>
+                                                                        </a>
+                                                                    </div>
                                                                     <!-- Horizontal line -->
                                                                     <hr>
                                                                     <!-- endifequal -->
                                                                 {% endfor %}
                                                             {% endif %}
                                                         </ul>
-                                                        <!-- Make a button group -->
-                                                        <div class="text-center btn-group">
-
-                                                            <!-- First Button of group -->
-                                                            <button type="button" class="btn btn-primary">
-                                                                Edit <span class="glyphicon glyphicon-list-alt"></span>
-                                                            </button> <!-- End of first button of group -->
-
-                                                            <!-- Second Button of group -->
+                                                            <!-- Button -->
                                                             <a class="btn btn-primary" href="{{ car.get_absolute_url }}add-future-repair">
                                                                 Add <span class="glyphicon glyphicon-plus"></span>
-                                                            </a> <!-- End of second button of group -->
-
-                                                        </div> <!-- End of button group -->
+                                                            </a> <!-- End of button  -->
 
                                                     </div> <!-- End of Panel Body -->
 

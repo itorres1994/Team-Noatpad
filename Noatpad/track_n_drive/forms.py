@@ -50,10 +50,26 @@ class AddFutureRepairForm(ModelForm):
         self.fields['technician'].queryset = Technician.objects.filter(profile=profile)
 
 
+class EditFutureRepairForm(ModelForm):
+    class Meta:
+        model = FutureRepair
+        exclude = {'unique_id', 'car', 'notification'}
+
+    def __init__(self, profile, *args, **kwargs):
+        super(EditFutureRepairForm, self).__init__(*args, **kwargs)
+        self.fields['date_of_repair'].widget = SelectDateWidget()
+        self.fields['technician'].queryset = Technician.objects.filter(profile=profile)
+
+
 class AddRepairForm(ModelForm):
     class Meta:
         model = Repair
-        exclude = {'unique_id'}
+        exclude = {'unique_id', 'car'}
+
+    def __init__(self, profile, *args, **kwargs):
+        super(AddRepairForm, self).__init__(*args, **kwargs)
+        self.fields['date_made'].widget = SelectDateWidget()
+        self.fields['technician'].queryset = Technician.objects.filter(profile=profile)
 
 
 class AddPhoneForm(ModelForm):

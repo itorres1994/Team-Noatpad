@@ -159,6 +159,7 @@ class ProfileAddedInfo(models.Model):
     """
     Model representing the User Information.
     """
+    unique_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     information_name = models.CharField(max_length=200, help_text="Information Category", default="info name")
     information_contents = models.CharField(max_length=200, help_text="Information to Add", default="info content")
     profile_info = models.ForeignKey('Profile', help_text="User", blank=True, null=True, on_delete=models.SET_NULL,
