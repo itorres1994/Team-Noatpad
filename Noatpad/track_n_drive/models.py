@@ -54,6 +54,12 @@ class Technician(models.Model):
         """
         return reverse('tech', args=[str(self.unique_id)])
 
+    def google_readable_street(self):
+        return self.street.replace(' ', '+')
+
+    def google_readable_city(self):
+        return self.city.replace(' ', '+')
+
 
 class Car(models.Model):
     """
@@ -117,7 +123,7 @@ class FutureRepair(models.Model):
                                    on_delete=models.SET_NULL)
     car = models.ForeignKey(Car, blank=False, help_text="Select the car that was repaired", related_name="futurerepair")
     notification = models.ForeignKey('Notifications', help_text="Notification association", on_delete=models.CASCADE,
-                                     related_name="futurerepairnotif", blank=True, null=True)
+                                     related_name="futurerepair", blank=True, null=True)
     date_of_repair = models.DateField(null=False, blank=False, default=datetime.date.today(),
                                       help_text="Enter a date for this repair")
 
@@ -284,7 +290,7 @@ class Notifications(models.Model):
     # email_timings = models.ManyToManyField(EmailTimings, help_text="When should you be notified via email?")
     # phone_timings = models.ManyToManyField(PhoneTimings, help_text="When should you be notified via phone?")
     # repair = models.ForeignKey(FutureRepair, on_delete=models.CASCADE, null=True)
-    date = models.DateField(null=True, blank=False)
+    date = models.DateField(null=True, blank=False, default=datetime.date.today())
     profile = models.ForeignKey('Profile', help_text="Notify User", blank=False, null=False, on_delete=models.CASCADE)
 
     # future_repair = models.ForeignKey(FutureRepair, help_text="Future Repair Association", blank=False, null=False,

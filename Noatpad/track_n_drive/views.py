@@ -1,7 +1,6 @@
 from django.shortcuts import render
 from .models import Car, CarAddedInfo, Profile, Technician, FutureRepair, PhoneTimings, EmailTimings, Notifications, \
-    Repair, \
-    TechAddedInfo, Phone, Email, ProfileAddedInfo
+    Repair, TechAddedInfo, Phone, Email, ProfileAddedInfo
 
 from django.contrib.auth.decorators import permission_required
 from django.http import HttpResponseNotFound
@@ -11,7 +10,7 @@ from django.core.urlresolvers import reverse
 from django.views.generic.edit import UpdateView
 from .forms import AddTechnicianForm, AddTechAddedInfoForm, AddCarForm, AddFutureRepairForm, AddRepairForm, \
     AddPhoneForm, AddEmailForm, AddUserAddedInfoForm, EditCarForm, EditUserForm, EditUserAddedInfoForm, \
-    EditFutureRepairForm, EditRepairForm
+    EditFutureRepairForm, EditRepairForm, AddNotification
 
 import datetime
 
@@ -123,7 +122,11 @@ def setting(request):
         user_techs = list(t for t in techs if t.profile == profile)
         phone_timings = PhoneTimings.objects.all()
         email_timings = EmailTimings.objects.all()
-        notifications = Notifications.objects.all()
+        notifications = Notifications.objects.filter(profile=profile)
+        print(notifications)
+        print(notifications[0].date)
+        print(notifications[1].futurerepair)
+        print(Notifications._meta.get_fields())
         # note_phone = [(note, pt.phone) for pt in phone_timings for note in pt.notification]
         return render(
             request,
@@ -388,19 +391,24 @@ def add_future_repair(request, unique_id):
         if request.method == 'POST':
 
             form = AddFutureRepairForm(request.user.profile, request.POST)
-            if form.is_valid():
+            form2 = AddNotification(request.POST)
+            if all([form.is_valid(), form2.is_valid()]):
                 future_repairs_inst.car = car_inst
                 future_repairs_inst.name = form.cleaned_data['name']
                 future_repairs_inst.date_of_repair = form.cleaned_data['date_of_repair']
                 future_repairs_inst.technician = form.cleaned_data['technician']
+                notification = Notifications(date=form2.cleaned_data['date'], profile=profile)
+                future_repairs_inst.notification = notification
                 # Add technician, car, and notification, ForeignKey
                 future_repairs_inst.save()
+                notification.save()
 
                 return HttpResponseRedirect(reverse('car', args=[str(unique_id)]))
         else:
             form = AddFutureRepairForm(request.user.profile)
+            form2 = AddNotification()
 
-        return render(request, 'add_future_repairs.html', {'form': form, 'future_repairs_inst': future_repairs_inst,
+        return render(request, 'add_future_repairs.html', {'form': form, 'form2': form2, 'future_repairs_inst': future_repairs_inst,
                                                            'cars': user_cars, 'techs': user_techs, 'profile': profile})
     else:
         return render(request, 'registration/login.html')
@@ -454,6 +462,7 @@ def done_future_repair(request, unique_id, car_id):
         View function for adding Future Repairs
         """
         future_repair_inst = get_object_or_404(FutureRepair, unique_id=unique_id)
+        notification = get_object_or_404(Notifications, futurerepair=future_repair_inst)
         print(future_repair_inst)
         if request.method == 'POST':
 
@@ -465,6 +474,7 @@ def done_future_repair(request, unique_id, car_id):
                 repair.save()
                 # Add technician, car, and notification, ForeignKey
                 future_repair_inst.delete()
+                notification.delete()
 
                 return HttpResponseRedirect(reverse('index'))
         else:
@@ -472,8 +482,8 @@ def done_future_repair(request, unique_id, car_id):
                                                                 'date_made': datetime.date.today,
                                                                 'technician': future_repair_inst.technician})
 
-        return render(request, 'add_future_repairs.html', {'form': form, 'cars': user_cars, 'techs': user_techs,
-                                                           'profile': profile})
+        return render(request, 'done_future_repair.html', {'form': form, 'cars': user_cars, 'techs': user_techs,
+                                                            'profile': profile})
 
     else:
         return render(request, 'registration/login.html')

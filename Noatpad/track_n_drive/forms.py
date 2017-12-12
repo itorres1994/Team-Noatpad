@@ -7,7 +7,7 @@ from django.utils.translation import ugettext_lazy as _
 import datetime
 
 from .models import Technician, TechAddedInfo, Car, CarAddedInfo, FutureRepair, Repair, Phone, Email, \
-    ProfileAddedInfo, Profile, EmailTimings, PhoneTimings
+    ProfileAddedInfo, Profile, EmailTimings, PhoneTimings, Notifications
 
 
 # ModelForm automatically includes all fields and help texts, exclude is used to
@@ -42,7 +42,7 @@ class EditCarForm(ModelForm):
 class AddFutureRepairForm(ModelForm):
     class Meta:
         model = FutureRepair
-        exclude = {'unique_id', 'car', 'notification'}
+        exclude = {'unique_id', 'car'}
 
     def __init__(self, profile, *args, **kwargs):
         super(AddFutureRepairForm, self).__init__(*args, **kwargs)
@@ -50,10 +50,20 @@ class AddFutureRepairForm(ModelForm):
         self.fields['technician'].queryset = Technician.objects.filter(profile=profile)
 
 
+class AddNotification(ModelForm):
+    class Meta:
+        model = Notifications
+        exclude = {'profile', 'unique_id'}
+
+    def __init__(self, *args, **kwargs):
+        super(AddNotification, self).__init__(*args, **kwargs)
+        self.fields['date'].widget = SelectDateWidget()
+
+
 class EditFutureRepairForm(ModelForm):
     class Meta:
         model = FutureRepair
-        exclude = {'unique_id', 'car', 'notification'}
+        exclude = {'unique_id', 'car', 'reminder1', 'reminder2'}
 
     def __init__(self, profile, *args, **kwargs):
         super(EditFutureRepairForm, self).__init__(*args, **kwargs)

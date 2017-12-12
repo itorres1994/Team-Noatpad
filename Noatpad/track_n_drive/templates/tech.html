@@ -198,7 +198,7 @@
                                                                                 class="glyphicon glyphicon-list-alt"></span>
                                                                         </a>
                                                                         <a class="btn btn-success"
-                                                                           href="edit-future-repair-{{ rep.unique_id }}/{{ car.unique_id }}">
+                                                                           href="done-future-repair-{{ rep.unique_id }}/{{ car.unique_id }}">
                                                                             Done <span
                                                                                 class="glyphicon glyphicon-check"></span>
                                                                         </a>
@@ -250,9 +250,11 @@
                             <div class="panel-body text-center">
                                 <!-- Load the static resource (i.e. a picture) -->
                                 {% load static %}
-                                <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d94296.76396018766!2d-72.5874496!3d42.3899634!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89e6d191bed1699d%3A0x245fdf0d5ea097b9!2sJiffy+Lube!5e0!3m2!1sen!2sus!4v1509580059669"
+                                <iframe
                                         width="300" height="300" frameborder="0" style="border:0"
-                                        allowfullscreen></iframe>
+                                        src="https://www.google.com/maps/embed/v1/search?key=AIzaSyC54dH3I1bWlL8_RJ6gwYGCKq4k17Mt8PQ&q={{ tech.google_readable_street }},{{ tech.google_readable_city }}"
+                                        allowfullscreen>
+                                </iframe>
                                 <br/>
                             </div>
                         </div>
@@ -293,19 +295,13 @@
                                         {{ tech_info.information_name|title }}: {{ tech_info.information_contents|title }}
                                     </h4>
                                 {% endfor %}
-                                <!-- Make a button group -->
-                                <div class="text-center btn-group">
 
-                                    <!-- First Button of group -->
-                                    <a class="btn btn-primary" href="{{ tech.get_absolute_url }}add-tech">
-                                        Edit <span class="glyphicon glyphicon-list-alt"></span>
-                                    </a>
-                                    <!-- Second Button of group -->
-                                    <button type="button" class="btn btn-primary">
-                                        Add <span class="glyphicon glyphicon-plus"></span>
-                                    </button> <!-- End of second button of group -->
 
-                                </div> <!-- End of button group -->
+                                <!-- First Button of group -->
+                                <a class="btn btn-primary" href="{{ tech.get_absolute_url }}add-tech">
+                                    Edit <span class="glyphicon glyphicon-list-alt"></span>
+                                </a>
+
 
                             </div> <!-- End of Car Info panel body -->
 
@@ -380,11 +376,15 @@
                                                                         {% endif %}
                                                                         <!-- Make a button group -->
                                                                         <div class="text-center btn-group">
-                                                                            <a class="btn btn-primary" href="edit-repair-{{ rep.unique_id }}/{{ car.unique_id }}">
-                                                                                Edit <span class="glyphicon glyphicon-list"></span>
+                                                                            <a class="btn btn-primary"
+                                                                               href="edit-repair-{{ rep.unique_id }}/{{ car.unique_id }}">
+                                                                                Edit <span
+                                                                                    class="glyphicon glyphicon-list"></span>
                                                                             </a>
-                                                                            <a class="btn btn-danger" href="remove-repair-{{ rep.unique_id }}">
-                                                                                Remove <span class="glyphicon glyphicon-remove"></span>
+                                                                            <a class="btn btn-danger"
+                                                                               href="remove-repair-{{ rep.unique_id }}">
+                                                                                Remove <span
+                                                                                    class="glyphicon glyphicon-remove"></span>
                                                                             </a>
                                                                         </div>
                                                                     </li>
@@ -394,7 +394,8 @@
                                                             </ul>
 
                                                             <!-- Second Button of group -->
-                                                            <a href="add-repair-{{ ctk.unique_id }}" type="button" class="btn btn-primary">
+                                                            <a href="add-repair-{{ ctk.unique_id }}" type="button"
+                                                               class="btn btn-primary">
                                                                 Add <span class="glyphicon glyphicon-plus"></span>
                                                             </a> <!-- End of second button of group -->
 

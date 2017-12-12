@@ -143,49 +143,22 @@
             <ul class="list-group list-var">
 
                 <h3>
-                    Phone Notifications
+                    Future Repair Notifications
                 </h3> <br/>
-                {% for pt in phone_timings %}
-                {% for note in notifications.all %}
-                {% for fr in note.futurerepairnotif.all %}
+{#                {% for note in notifications.futurerepair.all %}#}
+{##}
+{#                <li>#}
+{#                    {{ note }}#}
+{#                    <hr>#}
+{#                </li>#}
+{##}
+{#                {% endfor %}#}
                 <li>
-                    {{ pt.phone }}: {{ fr.name }} | {{ fr.date_of_repair }} |
-                    {{ fr.car.year }} {{ fr.car.make }}  {{ fr.car.model }}
-                    <hr>
-                </li>
-                {% endfor %}
-                {% endfor %}
-                {% endfor %}
-                <!-- Edit Button -->
-                <button type="button" class="btn btn-primary"
-                        title="Edit: Email Address Notification Timings">
-                    Edit <span class="glyphicon glyphicon-list-alt"></span>
-                </button> <!-- End of edit button -->
-
-            </ul> <!-- End of notification settings list -->
-
-            <!-- Notification Settings List -->
-            <ul class="list-group list-var">
-
-                <h3>
-                    Email Notifications
-                </h3> <br/>
-                {% for et in email_timings %}
-                {% for note in notifications.all %}
-                {% for fr in note.futurerepairnotif.all %}
+                    2017-12-01: Change Oil <button type="button" class="btn btn-primary">Edit <span class="glyphicon glyphicon-list"></span></button>
+                </li><hr>
                 <li>
-                    {{ et.email }}: {{ fr.name }} | {{ fr.date_of_repair }} |
-                    {{ fr.car.year }} {{ fr.car.make }}  {{ fr.car.model }}
-                    <hr>
+                    2017-12-02: Change Filter <button type="button" class="btn btn-primary">Edit <span class="glyphicon glyphicon-list"></span></button>
                 </li>
-                {% endfor %}
-                {% endfor %}
-                {% endfor %}
-                <!-- Edit Button -->
-                <button type="button" class="btn btn-primary"
-                        title="Edit: Email Address Notification Timings">
-                    Edit <span class="glyphicon glyphicon-list-alt"></span>
-                </button> <!-- End of edit button -->
 
             </ul> <!-- End of notification settings list -->
 
@@ -213,38 +186,25 @@
             <!-- Contact Settings List -->
             <ul class="list-group list-var">
                 <li>
-                    {% for ptime in phone_timings.all %}
+
                     <h3>
-                        Mobile Phone: {{ ptime.phone }}
+                        Mobile Phone: 0000000000
                         <!-- Edit Button -->
                         <button type="button" class="btn btn-primary"
                                 title="Edit: Email Address">
                             Edit <span class="glyphicon glyphicon-list-alt"></span>
                         </button> <!-- End of edit button -->
                     </h3>
-                    {% endfor %}
-                    <!-- Add Button -->
-                    <button type="button" class="btn btn-primary"
-                            title="Add: Email Address">
-                        Add <span class="glyphicon glyphicon-plus"></span>
-                    </button> <!-- End of add button -->
                 </li>
                 <li>
-                    {% for etime in email_timings.all %}
                     <h3>
-                        Email: {{ etime.email }}
+                        Email: something@example.com
                         <!-- Edit Button -->
                         <button type="button" class="btn btn-primary"
-                                title="Edit: Mobile Phone Number">
+                                title="Edit: Email Address">
                             Edit <span class="glyphicon glyphicon-list-alt"></span>
                         </button> <!-- End of edit button -->
                     </h3>
-                    {% endfor %}
-                    <!-- Add Button -->
-                    <button type="button" class="btn btn-primary"
-                            title="Add: Mobile Phone Number">
-                        Add <span class="glyphicon glyphicon-plus"></span>
-                    </button> <!-- End of add button -->
                 </li>
             </ul> <!-- End of notification settings list -->
 
