@@ -193,27 +193,30 @@
                                                                         {{ rep.name }}<br/>
                                                                         {{ rep.date_of_repair }}
                                                                     </li>
+                                                                    <div class="text-center btn-group">
+                                                                        <a class="btn btn-primary"
+                                                                           href="edit-future-repair-{{ rep.unique_id }}">
+                                                                            Edit <span
+                                                                                class="glyphicon glyphicon-list-alt"></span>
+                                                                        </a>
+                                                                        <a class="btn btn-success"
+                                                                           href="edit-future-repair-{{ rep.unique_id }}/{{ car.unique_id }}">
+                                                                            Done <span
+                                                                                class="glyphicon glyphicon-check"></span>
+                                                                        </a>
+                                                                    </div>
                                                                     <!-- Horizontal line -->
                                                                     <hr>
                                                                     <!-- endifequal -->
                                                                 {% endfor %}
                                                             {% endif %}
                                                         </ul>
-                                                        <!-- Make a button group -->
-                                                        <div class="text-center btn-group">
 
-                                                            <!-- First Button of group -->
-                                                            <button type="button" class="btn btn-primary">
-                                                                Edit <span class="glyphicon glyphicon-list-alt"></span>
-                                                            </button> <!-- End of first button of group -->
-
-                                                            <!-- Second Button of group -->
-                                                            <a class="btn btn-primary"
-                                                               href="{{ car.get_absolute_url }}add-future-repair">
-                                                                Add <span class="glyphicon glyphicon-plus"></span>
-                                                            </a> <!-- End of second button of group -->
-
-                                                        </div> <!-- End of button group -->
+                                                        <!-- Button -->
+                                                        <a class="btn btn-primary"
+                                                           href="{{ car.get_absolute_url }}add-future-repair">
+                                                            Add <span class="glyphicon glyphicon-plus"></span>
+                                                        </a> <!-- End of button -->
 
                                                     </div> <!-- End of Panel Body -->
 
@@ -250,7 +253,7 @@
                             <div class="panel-body text-center">
                                 <!-- Load the static resource (i.e. a picture) -->
                                 {% load static %}
-                                <img class="center-block" src="{% static 'pic/generic_car.png' %}"
+                                <img class="center-block" src="{% static 'pic/bugatti-chiron-black-blue-02.jpg' %}"
                                      alt="Upload Your Car Photo Here!"
                                      width="200"/>
                                 <br/>
@@ -362,44 +365,54 @@
                                                 <!-- Start of Panel body -->
                                                 <div class="panel-body">
                                                     <ul class="list-group list-var">
-                                                        {% for rep in car.repair.all %}
+                                                        {% if car.repair.all|length == 0 %}
                                                             <li>
-                                                                {% if '$' in rep.cost %}
-                                                                    {{ rep.name }} | {{ rep.cost }} |
-                                                                    {{ rep.technician.fname }}
-                                                                    {{ rep.technician.lname }} |
-                                                                    {{ rep.technician.street }},
-                                                                    {{ rep.technician.city }},
-                                                                    {{ rep.technician.company }} |
-                                                                    {{ rep.date_made }}
-                                                                {% else %}
-                                                                    {{ rep.name }} | ${{ rep.cost }} |
-                                                                    {{ rep.technician.fname }}
-                                                                    {{ rep.technician.lname }} |
-                                                                    {{ rep.technician.street }},
-                                                                    {{ rep.technician.city }},
-                                                                    {{ rep.technician.company }} |
-                                                                    {{ rep.date_made }}
-                                                                {% endif %}
-                                                                <hr>
+                                                                No Repairs made...
                                                             </li>
-                                                            <!-- Horizontal line -->
-                                                        {% endfor %}
+                                                        {% else %}
+                                                            {% for rep in car.repair.all %}
+                                                                <li>
+                                                                    {% if '$' in rep.cost %}
+                                                                        {{ rep.name }} | {{ rep.cost }} |
+                                                                        {{ rep.technician.fname }}
+                                                                        {{ rep.technician.lname }} |
+                                                                        {{ rep.technician.street }},
+                                                                        {{ rep.technician.city }},
+                                                                        {{ rep.technician.company }} |
+                                                                        {{ rep.date_made }}
+                                                                    {% else %}
+                                                                        {{ rep.name }} | ${{ rep.cost }} |
+                                                                        {{ rep.technician.fname }}
+                                                                        {{ rep.technician.lname }} |
+                                                                        {{ rep.technician.street }},
+                                                                        {{ rep.technician.city }},
+                                                                        {{ rep.technician.company }} |
+                                                                        {{ rep.date_made }}
+                                                                    {% endif %}
+                                                                    <!-- Make a button group -->
+                                                                    <div class="text-center btn-group">
+                                                                        <a class="btn btn-primary"
+                                                                           href="edit-repair-{{ rep.unique_id }}/{{ car.unique_id }}">
+                                                                            Edit <span
+                                                                                class="glyphicon glyphicon-list"></span>
+                                                                        </a>
+                                                                        <a class="btn btn-danger"
+                                                                           href="remove-repair-{{ rep.unique_id }}">
+                                                                            Remove <span
+                                                                                class="glyphicon glyphicon-remove"></span>
+                                                                        </a>
+                                                                    </div>
+                                                                    <hr>
+                                                                </li>
+                                                                <!-- Horizontal line -->
+                                                            {% endfor %}
+                                                        {% endif %}
                                                     </ul>
-                                                    <!-- Make a button group -->
-                                                    <div class="text-center btn-group">
-
-                                                        <!-- First Button of group -->
-                                                        <button type="button" class="btn btn-primary">
-                                                            Edit <span class="glyphicon glyphicon-list-alt"></span>
-                                                        </button> <!-- End of first button of group -->
-
-                                                        <!-- Second Button of group -->
-                                                        <button type="button" class="btn btn-primary">
-                                                            Add <span class="glyphicon glyphicon-plus"></span>
-                                                        </button> <!-- End of second button of group -->
-
-                                                    </div> <!-- End of button group -->
+                                                    <!-- Second Button of group -->
+                                                    <a href="add-repair-{{ car.unique_id }}" type="button"
+                                                       class="btn btn-primary">
+                                                        Add <span class="glyphicon glyphicon-plus"></span>
+                                                    </a> <!-- End of second button of group -->
 
                                                 </div> <!-- End of Panel Body -->
 

@@ -24,9 +24,24 @@
                             </div>
 
                             <div class="panel-body">
-                                <table>
-                                    {{ form }}
-                                </table>
+                                <form method="post">{% csrf_token %}
+                                    <label for="fname" type="text">First Name</label>
+                                    <input name="fname" id="fname" type="text" value="{{ prof_inst.fname }}"
+                                        required>
+                                    <label for="lname" type="text">Last Name</label>
+                                    <input name="lname" id="lname" type="text" value="{{ prof_inst.lname }}"
+                                        required>
+                                    <hr>
+                                    {% for info in prof_info_inst %}
+                                        <input name="{{ forloop.counter }}name" id = name{{ forloop.counter }}
+                                               type="text" value="{{ info.information_name }}" required>
+                                        <input name="{{ forloop.counter }}content"
+                                               type="text" value="{{ info.information_contents }}" required>
+                                        {% if forloop.counter < prof_info_inst|length %}
+                                            <hr>
+                                        {% endif %}
+                                    {% endfor %}
+                                </form>
 
                             </div>
 
